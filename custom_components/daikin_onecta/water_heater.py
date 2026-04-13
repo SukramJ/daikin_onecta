@@ -70,7 +70,6 @@ class DaikinWaterTank(CoordinatorEntity, WaterHeaterEntity):
             _LOGGER.debug("Device '%s' tank temperature is settable", device.name)
 
     def update_state(self) -> None:
-        self._attr_name = self._device.name
         self._attr_supported_features = self.get_supported_features()
         self._attr_current_temperature = self.get_current_temperature()
         self._attr_target_temperature = self.get_target_temperature()
