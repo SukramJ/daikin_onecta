@@ -297,7 +297,7 @@
 # name: test_altherma3m[binary_sensor.altherma_domestichotwatertank_is_holiday_mode_active-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Is holiday mode active',
+      'friendly_name': 'Altherma Is holiday mode active',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -349,7 +349,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'problem',
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in emergency state',
+      'friendly_name': 'Altherma Is in emergency state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -401,7 +401,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'problem',
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in error state',
+      'friendly_name': 'Altherma Is in error state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -452,7 +452,7 @@
 # name: test_altherma3m[binary_sensor.altherma_domestichotwatertank_is_in_installer_state-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in installer state',
+      'friendly_name': 'Altherma Is in installer state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -504,7 +504,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'problem',
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in warning state',
+      'friendly_name': 'Altherma Is in warning state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -555,7 +555,7 @@
 # name: test_altherma3m[binary_sensor.altherma_domestichotwatertank_is_powerful_mode_active-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Is powerful mode active',
+      'friendly_name': 'Altherma Is powerful mode active',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -789,7 +789,7 @@
 # name: test_altherma3m[select.altherma_domestichotwatertank_schedule-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Schedule',
+      'friendly_name': 'Altherma Schedule',
       'icon': 'mdi:calendar-clock',
       'options': list([
         'User defined',
@@ -1350,7 +1350,7 @@
 # name: test_altherma3m[sensor.altherma_domestichotwatertank_error_code-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Error code',
+      'friendly_name': 'Altherma Error code',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -1401,7 +1401,7 @@
 # name: test_altherma3m[sensor.altherma_domestichotwatertank_heat_up_mode-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Heat up mode',
+      'friendly_name': 'Altherma Heat up mode',
       'icon': 'mdi:alphabetical',
     }),
     'context': <ANY>,
@@ -1458,7 +1458,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating daily electrical consumption',
+      'friendly_name': 'Altherma Heating daily electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -1517,7 +1517,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating monthly electrical consumption',
+      'friendly_name': 'Altherma Heating monthly electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -1576,7 +1576,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating weekly electrical consumption',
+      'friendly_name': 'Altherma Heating weekly electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -1635,7 +1635,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating yearly electrical consumption',
+      'friendly_name': 'Altherma Heating yearly electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -1688,7 +1688,7 @@
 # name: test_altherma3m[sensor.altherma_domestichotwatertank_setpoint_mode-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Setpoint mode',
+      'friendly_name': 'Altherma Setpoint mode',
       'icon': 'mdi:alphabetical',
     }),
     'context': <ANY>,
@@ -1745,7 +1745,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'temperature',
-      'friendly_name': 'Altherma DomesticHotWaterTank Tank temperature',
+      'friendly_name': 'Altherma Tank temperature',
       'icon': 'mdi:bathtub-outline',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
@@ -1912,7 +1912,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'current_temperature': 46.0,
-      'friendly_name': 'Altherma DomesticHotWaterTank Altherma',
+      'friendly_name': 'Altherma',
       'max_temp': 50.0,
       'min_temp': 30.0,
       'operation_list': list([
@@ -37133,7 +37133,7 @@
 # name: test_climate[button.altherma_refresh-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Sanne Refresh',
+      'friendly_name': 'Altherma Refresh',
       'icon': 'mdi:refresh',
     }),
     'context': <ANY>,
@@ -37184,7 +37184,7 @@
 # name: test_climate[button.johnny_maaike_refresh-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Sanne Refresh',
+      'friendly_name': 'Johnny&Maaike Refresh',
       'icon': 'mdi:refresh',
     }),
     'context': <ANY>,
@@ -37235,7 +37235,7 @@
 # name: test_climate[button.linde_refresh-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Sanne Refresh',
+      'friendly_name': 'Linde Refresh',
       'icon': 'mdi:refresh',
     }),
     'context': <ANY>,
@@ -37337,7 +37337,7 @@
 # name: test_climate[button.werkkamer_refresh-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Sanne Refresh',
+      'friendly_name': 'Werkkamer Refresh',
       'icon': 'mdi:refresh',
     }),
     'context': <ANY>,
@@ -37402,7 +37402,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'current_temperature': 27,
-      'friendly_name': 'Sanne Leaving Water Offset',
+      'friendly_name': 'Altherma Leaving Water Offset',
       'hvac_modes': list([
         <HVACMode.OFF: 'off'>,
         <HVACMode.HEAT: 'heat'>,
@@ -37481,7 +37481,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'current_temperature': 27,
-      'friendly_name': 'Sanne Leaving Water Temperature',
+      'friendly_name': 'Altherma Leaving Water Temperature',
       'hvac_modes': list([
         <HVACMode.OFF: 'off'>,
         <HVACMode.HEAT: 'heat'>,
@@ -37562,7 +37562,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'current_temperature': 21,
-      'friendly_name': 'Sanne Room Temperature',
+      'friendly_name': 'Altherma Room Temperature',
       'hvac_modes': list([
         <HVACMode.OFF: 'off'>,
         <HVACMode.HEAT: 'heat'>,
@@ -37675,7 +37675,7 @@
         '4',
         '5',
       ]),
-      'friendly_name': 'Sanne Room Temperature',
+      'friendly_name': 'Johnny&Maaike Room Temperature',
       'hvac_modes': list([
         <HVACMode.OFF: 'off'>,
         <HVACMode.FAN_ONLY: 'fan_only'>,
@@ -37803,7 +37803,7 @@
         '4',
         '5',
       ]),
-      'friendly_name': 'Sanne Room Temperature',
+      'friendly_name': 'Linde Room Temperature',
       'hvac_modes': list([
         <HVACMode.OFF: 'off'>,
         <HVACMode.FAN_ONLY: 'fan_only'>,
@@ -38059,7 +38059,7 @@
         '4',
         '5',
       ]),
-      'friendly_name': 'Sanne Room Temperature',
+      'friendly_name': 'Werkkamer Room Temperature',
       'hvac_modes': list([
         <HVACMode.OFF: 'off'>,
         <HVACMode.FAN_ONLY: 'fan_only'>,
@@ -77367,7 +77367,7 @@
 # name: test_water_heater[binary_sensor.altherma_domestichotwatertank_is_holiday_mode_active-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Is holiday mode active',
+      'friendly_name': 'Altherma Is holiday mode active',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -77419,7 +77419,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'problem',
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in emergency state',
+      'friendly_name': 'Altherma Is in emergency state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -77471,7 +77471,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'problem',
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in error state',
+      'friendly_name': 'Altherma Is in error state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -77522,7 +77522,7 @@
 # name: test_water_heater[binary_sensor.altherma_domestichotwatertank_is_in_installer_state-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in installer state',
+      'friendly_name': 'Altherma Is in installer state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -77574,7 +77574,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'problem',
-      'friendly_name': 'Altherma DomesticHotWaterTank Is in warning state',
+      'friendly_name': 'Altherma Is in warning state',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -77625,7 +77625,7 @@
 # name: test_water_heater[binary_sensor.altherma_domestichotwatertank_is_powerful_mode_active-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Is powerful mode active',
+      'friendly_name': 'Altherma Is powerful mode active',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -78884,7 +78884,7 @@
 # name: test_water_heater[sensor.altherma_domestichotwatertank_error_code-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Error code',
+      'friendly_name': 'Altherma Error code',
       'icon': 'mdi:information-outline',
     }),
     'context': <ANY>,
@@ -78935,7 +78935,7 @@
 # name: test_water_heater[sensor.altherma_domestichotwatertank_heat_up_mode-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Heat up mode',
+      'friendly_name': 'Altherma Heat up mode',
       'icon': 'mdi:alphabetical',
     }),
     'context': <ANY>,
@@ -78992,7 +78992,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating daily electrical consumption',
+      'friendly_name': 'Altherma Heating daily electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -79051,7 +79051,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating monthly electrical consumption',
+      'friendly_name': 'Altherma Heating monthly electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -79110,7 +79110,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating weekly electrical consumption',
+      'friendly_name': 'Altherma Heating weekly electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -79169,7 +79169,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'energy',
-      'friendly_name': 'Altherma DomesticHotWaterTank Heating yearly electrical consumption',
+      'friendly_name': 'Altherma Heating yearly electrical consumption',
       'icon': 'mdi:fire',
       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
       'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
@@ -79222,7 +79222,7 @@
 # name: test_water_heater[sensor.altherma_domestichotwatertank_setpoint_mode-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      'friendly_name': 'Altherma DomesticHotWaterTank Setpoint mode',
+      'friendly_name': 'Altherma Setpoint mode',
       'icon': 'mdi:alphabetical',
     }),
     'context': <ANY>,
@@ -79279,7 +79279,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'device_class': 'temperature',
-      'friendly_name': 'Altherma DomesticHotWaterTank Tank temperature',
+      'friendly_name': 'Altherma Tank temperature',
       'icon': 'mdi:bathtub-outline',
       'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
       'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
@@ -79446,7 +79446,7 @@
   StateSnapshot({
     'attributes': ReadOnlyDict({
       'current_temperature': 46.0,
-      'friendly_name': 'Altherma DomesticHotWaterTank Altherma',
+      'friendly_name': 'Altherma',
       'max_temp': 53.0,
       'min_temp': 30.0,
       'operation_list': list([
