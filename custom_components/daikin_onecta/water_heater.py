@@ -59,7 +59,6 @@ class DaikinWaterTank(CoordinatorEntity, WaterHeaterEntity):
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_unique_id = f"{self._device.id}"
         self._management_point_type = management_point_type
-        mpt = management_point_type[0].upper() + management_point_type[1:]
         self._attr_device_info = {
             "identifiers": {(DOMAIN, self._device.id + self._management_point_type)},
             "name": self._device.name,
