@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.13"]
+        python-version: ["3.13", "3.14"]
     steps:
       - name: Check out code from GitHub
         uses: "actions/checkout@v6"
@@ -37,7 +37,7 @@ jobs:
             --cov-report=xml \
             tests
       - name: Upload coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
