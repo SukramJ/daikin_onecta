@@ -123,7 +123,11 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
         self._setpoint = setpoint
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_unique_id = f"{self._device.id}_{self._setpoint}"
-        self._attr_device_info = {"identifiers": {(DOMAIN, self._device.id)}}
+        self._attr_device_info = {
+            "identifiers": {(DOMAIN, self._device.id)},
+            "name": self._device.name
+        }
+        self._attr_has_entity_name = True
         self._device.fill_device_info(self._attr_device_info, "gateway")
         sensor_settings = VALUE_SENSOR_MAPPING.get(setpoint)
         self._attr_translation_key = sensor_settings[TRANSLATION_KEY]
@@ -251,10 +255,9 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
 
     @property
     def name(self):
-        device_name = self._device.name
         myname = self._setpoint[0].upper() + self._setpoint[1:]
         readable = re.findall("[A-Z][^A-Z]*", myname)
-        return f"{device_name} {' '.join(readable)}"
+        return f"{' '.join(readable)}"
 
     def get_current_temperature(self):
         current_temp = None
