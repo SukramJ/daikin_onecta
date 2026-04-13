@@ -59,19 +59,18 @@ class DaikinWaterTank(CoordinatorEntity, WaterHeaterEntity):
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_unique_id = f"{self._device.id}"
         self._management_point_type = management_point_type
-        mpt = management_point_type[0].upper() + management_point_type[1:]
         self._attr_device_info = {
             "identifiers": {(DOMAIN, self._device.id + self._management_point_type)},
-            "name": self._device.name + " " + mpt,
+            "name": self._device.name,
             "via_device": (DOMAIN, self._device.id),
         }
+        self._attr_has_entity_name = True
         self._device.fill_device_info(self._attr_device_info, management_point_type)
         self.update_state()
         if self.supported_features & WaterHeaterEntityFeature.TARGET_TEMPERATURE:
             _LOGGER.debug("Device '%s' tank temperature is settable", device.name)
 
     def update_state(self) -> None:
-        self._attr_name = self._device.name
         self._attr_supported_features = self.get_supported_features()
         self._attr_current_temperature = self.get_current_temperature()
         self._attr_target_temperature = self.get_target_temperature()
