@@ -1,4 +1,5 @@
 """Platform for the Daikin AC."""
+
 import logging
 
 import jwt
@@ -48,7 +49,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     try:
         await config_entry.runtime_data.coordinator.async_config_entry_first_refresh()
     except Exception as ex:
-        raise ConfigEntryNotReady(f"Config Not Ready: {ex}")
+        raise ConfigEntryNotReady(f"Config Not Ready: {ex}") from ex
 
     config_entry.async_on_unload(config_entry.add_update_listener(update_listener))
 

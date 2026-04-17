@@ -99,7 +99,7 @@ class DaikinOnectaDevice:
         for key in b:
             if key in a:
                 if isinstance(a[key], dict) and isinstance(b[key], dict):
-                    self.merge_json(a[key], b[key], path + [str(key)])
+                    self.merge_json(a[key], b[key], [*path, str(key)])
                 else:
                     a[key] = b[key]
             else:
@@ -122,7 +122,7 @@ class DaikinOnectaDevice:
 
         res = await self.api.doBearerRequest("PATCH", setPath, setOptions)
 
-        _LOGGER.info("Result: {}".format(res))
+        _LOGGER.info(f"Result: {res}")
 
         return res
 
@@ -134,7 +134,7 @@ class DaikinOnectaDevice:
 
         res = await self.api.doBearerRequest("POST", setPath, setOptions)
 
-        _LOGGER.info("Result: {}".format(res))
+        _LOGGER.info(f"Result: {res}")
 
         return res
 
@@ -146,6 +146,6 @@ class DaikinOnectaDevice:
 
         res = await self.api.doBearerRequest("PUT", setPath, setOptions)
 
-        _LOGGER.info("Result: {}".format(res))
+        _LOGGER.info(f"Result: {res}")
 
         return res

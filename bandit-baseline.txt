@@ -1,0 +1,27 @@
+Baseline bandit report (Phase 0.4)
+Generated: 2026-04-17
+Tool: venv/bin/bandit 1.9.4
+
+Command: bandit -r custom_components/daikin_onecta -q
+
+Total lines of code: 3068
+Issues by severity: Low=2, Medium=0, High=0
+Issues by confidence: High=1, Medium=1
+
+Findings:
+1. [B105:hardcoded_password_string] Severity=Low Confidence=Medium
+   custom_components/daikin_onecta/const.py:21
+   "OAUTH2_TOKEN = 'https://idp.onecta.daikineurope.com/v1/oidc/token'"
+   → False positive: Endpoint-URL, kein Secret. In Phase 9 mit
+     "# nosec B105" + Begründung markieren oder per [tool.bandit]
+     skips ausschließen.
+
+2. [B311:blacklist] Severity=Low Confidence=High
+   custom_components/daikin_onecta/coordinator.py:104
+   "scan_interval = random.randint(60, int(scan_interval))"
+   → False positive: nicht-kryptografischer Jitter zur Lastverteilung.
+     In Phase 9 mit "# nosec B311" + Begründung markieren.
+
+Plan:
+- Phase 1.6: [tool.bandit] mit Skips/Confidence-Level konfigurieren
+- Phase 9.4: beide Findings final entscheiden (suppress vs. fix)

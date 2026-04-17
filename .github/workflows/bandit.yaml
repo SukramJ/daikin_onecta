@@ -1,0 +1,46 @@
+name: Security scan (bandit)
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 1 * * SUN"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  bandit:
+    runs-on: ubuntu-latest
+    name: bandit
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install bandit
+        run: |
+          pip install --constraint=.github/workflows/constraints.txt pip
+          pip install "bandit[toml,sarif]>=1.7.9"
+      - name: Run bandit (sarif)
+        run: |
+          bandit -c pyproject.toml -r custom_components/daikin_onecta \
+            --severity-level low --confidence-level medium \
+            -f sarif -o bandit-results.sarif || true
+      - name: Upload SARIF to GitHub Security
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: bandit-results.sarif
+          category: bandit
+      - name: Run bandit (gating)
+        run: |
+          bandit -c pyproject.toml -r custom_components/daikin_onecta \
+            --severity-level medium --confidence-level medium

@@ -1,4 +1,5 @@
 """Test daikin_onecta sensor."""
+
 from datetime import date
 from datetime import timedelta
 from unittest.mock import AsyncMock

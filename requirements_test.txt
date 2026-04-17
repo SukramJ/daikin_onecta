@@ -1,5 +1,8 @@
 -r requirements_dev.txt
 pytest-homeassistant-custom-component
+pytest-asyncio
+pytest-cov
+pytest-xdist
 anyio
 aiohttp_cors
-pytest-asyncio
+syrupy

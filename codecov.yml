@@ -1,0 +1,72 @@
+codecov:
+  require_ci_to_pass: true
+  notify:
+    wait_for_ci: true
+
+coverage:
+  precision: 2
+  round: down
+  range: "75...100"
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 1%
+        base: auto
+    patch:
+      default:
+        target: 85%
+        threshold: 1%
+        base: auto
+
+component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+  individual_components:
+    - component_id: api
+      name: API client
+      paths:
+        - custom_components/daikin_onecta/daikin_api.py
+        - custom_components/daikin_onecta/application_credentials.py
+        - custom_components/daikin_onecta/config_flow.py
+    - component_id: coordinator
+      name: Coordinator
+      paths:
+        - custom_components/daikin_onecta/coordinator.py
+        - custom_components/daikin_onecta/__init__.py
+    - component_id: device
+      name: Device model
+      paths:
+        - custom_components/daikin_onecta/device.py
+        - custom_components/daikin_onecta/const.py
+    - component_id: climate
+      name: Climate + water_heater
+      paths:
+        - custom_components/daikin_onecta/climate.py
+        - custom_components/daikin_onecta/water_heater.py
+    - component_id: sensors
+      name: Sensor platforms
+      paths:
+        - custom_components/daikin_onecta/sensor.py
+        - custom_components/daikin_onecta/binary_sensor.py
+        - custom_components/daikin_onecta/switch.py
+        - custom_components/daikin_onecta/select.py
+        - custom_components/daikin_onecta/button.py
+    - component_id: diagnostics
+      name: Diagnostics + health
+      paths:
+        - custom_components/daikin_onecta/diagnostics.py
+        - custom_components/daikin_onecta/system_health.py
+
+ignore:
+  - "tests/**"
+  - "scripts/**"
+  - "blueprints/**"
+
+comment:
+  layout: "reach,diff,flags,components,files,footer"
+  behavior: default
+  require_changes: false

@@ -1,0 +1,21 @@
+---
+extends: default
+
+ignore: |
+  blueprints/
+  venv/
+  .venv/
+  build/
+
+rules:
+  line-length:
+    max: 200
+    level: warning
+  comments:
+    min-spaces-from-content: 1
+  truthy:
+    check-keys: false
+  document-start: disable
+  indentation:
+    spaces: 2
+    indent-sequences: true

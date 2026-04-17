@@ -7,24 +7,31 @@ on:
     - cron: "0 1 * * SUN"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   precommit:
-    runs-on: "ubuntu-slim"
+    runs-on: ubuntu-latest
     name: Pre-commit
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6
       - name: Setup Python
-        uses: "actions/setup-python@v6"
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - name: Upgrade pip
-        run: |
-          pip install --constraint=.github/workflows/constraints.txt pip
-          pip --version
+          cache: pip
       - name: Install Python modules
         run: |
-          pip install --constraint=.github/workflows/constraints.txt pre-commit black flake8 reorder-python-imports
+          pip install --constraint=.github/workflows/constraints.txt pip
+          pip install -r requirements_test_pre_commit.txt
+      - name: Cache pre-commit hooks
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Run pre-commit on all files
         run: |
           pre-commit run --all-files --show-diff-on-failure --color=always

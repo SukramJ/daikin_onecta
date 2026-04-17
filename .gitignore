@@ -26,3 +26,12 @@ custom_components/yandex_station/**
 deps/**
 custom_components/daikin_onecta/.vscode/**
 custom_components/daikin_onecta/__pycache__/**
+/.idea
+/tests/__pycache__
+.claude/settings.local.json
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/

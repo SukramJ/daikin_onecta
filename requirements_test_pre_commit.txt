@@ -1,4 +1,4 @@
-pip>=25.0
+-c .github/workflows/constraints.txt
 pre-commit>=3.7.0
 ruff>=0.6.0
 mypy>=1.10.0
