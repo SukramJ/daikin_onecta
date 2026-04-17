@@ -4,18 +4,28 @@ from __future__ import annotations
 
 import logging
 import random
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import datetime
+from datetime import time
 from datetime import timedelta
 from typing import Any
+from typing import Final
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import UpdateFailed
 
 from .const import DOMAIN
 from .daikin_api import DaikinApi
 from .device import DaikinOnectaDevice
+from .exceptions import DaikinApiError
+from .exceptions import DaikinAuthError
+from .exceptions import DaikinError
+
+__all__: Final = ("OnectaDataUpdateCoordinator", "OnectaRuntimeData")
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,16 +35,16 @@ class OnectaRuntimeData:
     """Runtime Data for Onecta integration."""
 
     coordinator: OnectaDataUpdateCoordinator
-    devices: dict[str, Any]
+    devices: dict[str, DaikinOnectaDevice]
     daikin_api: DaikinApi
 
 
-class OnectaDataUpdateCoordinator(DataUpdateCoordinator):
+class OnectaDataUpdateCoordinator(DataUpdateCoordinator[None]):
     """Class to manage fetching data from the API."""
 
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
         """Initialize."""
-        self.options = config_entry.options
+        self.options: Mapping[str, Any] = config_entry.options
         self._config_entry = config_entry
 
         super().__init__(
@@ -49,10 +59,11 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator):
             self.update_interval,
         )
 
-    def scan_ignore(self):
-        return self.options.get("scan_ignore", 30)
+    def scan_ignore(self) -> int:
+        """Sekunden, die wir GETs nach einem PATCH überspringen."""
+        return int(self.options.get("scan_ignore", 30))
 
-    async def _async_update_data(self):
+    async def _async_update_data(self) -> None:
         _LOGGER.debug("Daikin coordinator start _async_update_data.")
 
         onecta_data: OnectaRuntimeData = self._config_entry.runtime_data
@@ -66,7 +77,15 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator):
                 "API UPDATE skipped (just updated from UI)",
             )
         else:
-            daikin_api.json_data = await daikin_api.getCloudDeviceDetails()
+            try:
+                daikin_api.json_data = await daikin_api.getCloudDeviceDetails()
+            except DaikinAuthError as err:
+                raise ConfigEntryAuthFailed(str(err)) from err
+            except DaikinApiError as err:
+                raise UpdateFailed(f"Daikin cloud unreachable: {err}") from err
+            except DaikinError as err:
+                raise UpdateFailed(f"Daikin integration error: {err}") from err
+
             for dev_data in daikin_api.json_data or []:
                 if dev_data["id"] in devices:
                     devices[dev_data["id"]].setJsonData(dev_data)
@@ -81,16 +100,16 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator):
             self.update_interval,
         )
 
-    def update_settings(self, config_entry: ConfigEntry):
+    def update_settings(self, config_entry: ConfigEntry) -> None:
         _LOGGER.debug("Daikin coordinator updating settings.")
         self.options = config_entry.options
         self.update_interval = self.determine_update_interval(self.hass)
         _LOGGER.info("Daikin coordinator changed interval to '%s'", self.update_interval)
 
-    def determine_update_interval(self, hass: HomeAssistant):
+    def determine_update_interval(self, hass: HomeAssistant) -> timedelta:
         # Default of low scan minutes interval
-        scan_interval = self.options.get("low_scan_interval", 30) * 60
-        high_scan_interval = self.options.get("high_scan_interval", 10) * 60
+        scan_interval = int(self.options.get("low_scan_interval", 30)) * 60
+        high_scan_interval = int(self.options.get("high_scan_interval", 10)) * 60
         hs = datetime.strptime(self.options.get("high_scan_start", "07:00:00"), "%H:%M:%S").time()
         ls_datetime = datetime.strptime(self.options.get("low_scan_start", "22:00:00"), "%H:%M:%S")
         ls = ls_datetime.time()
@@ -102,7 +121,7 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator):
             # 22:00 and a high scan interval of 9 minutes we randomize the next poll when it is
             # between 22:00 and 22:09
             if self.in_between(datetime.now().time(), ls, (ls_datetime + timedelta(seconds=high_scan_interval)).time()):
-                scan_interval = random.randint(60, int(scan_interval))
+                scan_interval = random.randint(60, scan_interval)  # noqa: S311 # nosec B311 — non-cryptographic jitter for load spreading
 
         # When we hit our daily rate limit we check the retry_after which is the amount of seconds
         # we have to wait before we can make a call again
@@ -112,8 +131,7 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator):
 
         return timedelta(seconds=scan_interval)
 
-    def in_between(self, now, start, end):
+    def in_between(self, now: time, start: time, end: time) -> bool:
         if start <= end:
             return start <= now < end
-        else:
-            return start <= now or now < end
+        return start <= now or now < end

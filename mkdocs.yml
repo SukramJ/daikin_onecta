@@ -1,0 +1,53 @@
+site_name: daikin_onecta
+site_url: https://jwillemsen.github.io/daikin_onecta/
+repo_url: https://github.com/jwillemsen/daikin_onecta
+repo_name: jwillemsen/daikin_onecta
+edit_uri: edit/master/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Security: security.md
+  - Versioning: versioning.md
+  - Release process: release.md
+  - ADRs:
+      - 0001 — Record architecture decisions: adr/0001-record-architecture-decisions.md
+      - 0002 — Resilience patterns: adr/0002-resilience-patterns.md
+      - 0003 — Domain-model package layout: adr/0003-domain-model-package-layout.md
+      - 0004 — Cloud lock and scan_ignore: adr/0004-cloud-lock-and-scan-ignore.md
+      - 0005 — Polling strategy: adr/0005-polling-strategy.md

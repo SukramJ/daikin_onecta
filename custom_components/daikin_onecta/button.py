@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from typing import Final
 
 from homeassistant.components.button import ButtonEntity
 from homeassistant.config_entries import ConfigEntry
@@ -12,8 +13,11 @@ from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .coordinator import OnectaDataUpdateCoordinator
 from .coordinator import OnectaRuntimeData
+from .device import DaikinOnectaDevice
 
+__all__: Final = ("DaikinRefreshButton", "async_setup_entry")
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,7 +27,7 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    entities = []
+    entities: list[DaikinRefreshButton] = []
 
     onecta_data: OnectaRuntimeData = config_entry.runtime_data
     coordinator = onecta_data.coordinator
@@ -35,10 +39,10 @@ async def async_setup_entry(
         async_add_entities(entities)
 
 
-class DaikinRefreshButton(CoordinatorEntity, ButtonEntity):
+class DaikinRefreshButton(CoordinatorEntity[OnectaDataUpdateCoordinator], ButtonEntity):
     """Button to request an immediate device data update."""
 
-    def __init__(self, device, config_entry, coordinator):
+    def __init__(self, device: DaikinOnectaDevice, config_entry: ConfigEntry, coordinator: OnectaDataUpdateCoordinator) -> None:
         super().__init__(coordinator)
         self._device = device
         self._attr_unique_id = f"{self._device.id}_refresh"

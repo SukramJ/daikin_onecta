@@ -1,6 +1,10 @@
 """Support for Daikin AirBase zones."""
 
+from __future__ import annotations
+
 import logging
+from typing import Any
+from typing import Final
 
 from homeassistant.components.sensor import (
     CONF_STATE_CLASS,
@@ -20,8 +24,11 @@ from .const import ENABLED_DEFAULT
 from .const import ENTITY_CATEGORY
 from .const import TRANSLATION_KEY
 from .const import VALUE_SENSOR_MAPPING
+from .coordinator import OnectaDataUpdateCoordinator
 from .coordinator import OnectaRuntimeData
 from .device import DaikinOnectaDevice
+
+__all__: Final = ("DaikinSwitch", "async_setup_entry")
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -34,7 +41,7 @@ async def async_setup_entry(
     """Set up Daikin switches based on config_entry."""
     onecta_data: OnectaRuntimeData = config_entry.runtime_data
     coordinator = onecta_data.coordinator
-    sensors = []
+    sensors: list[DaikinSwitch] = []
     supported_management_point_types = {
         "domesticHotWaterTank",
         "domesticHotWaterFlowThrough",
@@ -82,8 +89,15 @@ async def async_setup_entry(
     async_add_entities(sensors)
 
 
-class DaikinSwitch(CoordinatorEntity, ToggleEntity):
-    def __init__(self, device: DaikinOnectaDevice, coordinator, embedded_id, management_point_type, value) -> None:
+class DaikinSwitch(CoordinatorEntity[OnectaDataUpdateCoordinator], ToggleEntity):
+    def __init__(
+        self,
+        device: DaikinOnectaDevice,
+        coordinator: OnectaDataUpdateCoordinator,
+        embedded_id: str,
+        management_point_type: str,
+        value: str,
+    ) -> None:
         _LOGGER.info("DaikinSwitch '%s' '%s'", management_point_type, value)
         super().__init__(coordinator)
         self._device = device
@@ -132,10 +146,10 @@ class DaikinSwitch(CoordinatorEntity, ToggleEntity):
         self.async_write_ha_state()
 
     @property
-    def is_on(self):
+    def is_on(self) -> bool:
         return self._switch_state == "on"
 
-    def sensor_value(self):
+    def sensor_value(self) -> str:
         """Return the state of the switch."""
         result = ""
         managementPoints = self._device.daikin_data.get("managementPoints", [])
@@ -149,11 +163,10 @@ class DaikinSwitch(CoordinatorEntity, ToggleEntity):
         _LOGGER.debug("Device '%s' switch '%s' value '%s'", self._device.name, self._value, result)
         return result
 
-    async def async_turn_on(self, **kwargs):
+    async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the zone on."""
-        result = True
         if not self.is_on:
-            result &= await self._device.patch(self._device.id, self._embedded_id, self._value, "", "on")
+            result = bool(await self._device.patch(self._device.id, self._embedded_id, self._value, "", "on"))
             if result is False:
                 _LOGGER.warning("Device '%s' problem setting '%s' to on", self._device.name, self._value)
             else:
@@ -162,13 +175,10 @@ class DaikinSwitch(CoordinatorEntity, ToggleEntity):
         else:
             _LOGGER.debug("Device '%s' switch '%s' request to turn on ignored because is already on", self._device.name, self._value)
 
-        return result
-
-    async def async_turn_off(self, **kwargs):
+    async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the zone off."""
-        result = True
         if self.is_on:
-            result &= await self._device.patch(self._device.id, self._embedded_id, self._value, "", "off")
+            result = bool(await self._device.patch(self._device.id, self._embedded_id, self._value, "", "off"))
             if result is False:
                 _LOGGER.warning(
                     "Device '%s' problem setting '%s' to off",
@@ -180,5 +190,3 @@ class DaikinSwitch(CoordinatorEntity, ToggleEntity):
                 self.async_write_ha_state()
         else:
             _LOGGER.debug("Device '%s' switch '%s' request to turn off ignored because is already off", self._device.name, self._value)
-
-        return result

@@ -1,4 +1,10 @@
+"""Daikin Onecta select platform."""
+
+from __future__ import annotations
+
 import logging
+from typing import Any
+from typing import Final
 
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
@@ -13,8 +19,11 @@ from .const import ENABLED_DEFAULT
 from .const import SCHEDULE_OFF
 from .const import TRANSLATION_KEY
 from .const import VALUE_SENSOR_MAPPING
+from .coordinator import OnectaDataUpdateCoordinator
 from .coordinator import OnectaRuntimeData
 from .device import DaikinOnectaDevice
+
+__all__: Final = ("DaikinScheduleSelect", "async_setup_entry")
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,7 +36,7 @@ async def async_setup_entry(
     """Set up Daikin climate based on config_entry."""
     onecta_data: OnectaRuntimeData = config_entry.runtime_data
     coordinator = onecta_data.coordinator
-    sensors = []
+    sensors: list[DaikinScheduleSelect] = []
     for dev_id, device in onecta_data.devices.items():
         managementPoints = device.daikin_data.get("managementPoints", [])
         for management_point in managementPoints:
@@ -42,10 +51,17 @@ async def async_setup_entry(
     async_add_entities(sensors)
 
 
-class DaikinScheduleSelect(CoordinatorEntity, SelectEntity):
+class DaikinScheduleSelect(CoordinatorEntity[OnectaDataUpdateCoordinator], SelectEntity):
     """Daikin Schedule Select class."""
 
-    def __init__(self, device: DaikinOnectaDevice, coordinator, embedded_id, management_point_type, value) -> None:
+    def __init__(
+        self,
+        device: DaikinOnectaDevice,
+        coordinator: OnectaDataUpdateCoordinator,
+        embedded_id: str,
+        management_point_type: str,
+        value: str,
+    ) -> None:
         _LOGGER.info("DaikinScheduleSelect '%s' '%s'", management_point_type, value)
         super().__init__(coordinator)
         self._device = device
@@ -87,9 +103,9 @@ class DaikinScheduleSelect(CoordinatorEntity, SelectEntity):
         self.update_state()
         self.async_write_ha_state()
 
-    def get_current_option(self):
+    def get_current_option(self) -> str | None:
         """Return the state of the sensor."""
-        res = None
+        res: str | None = None
         management_points = self._device.daikin_data.get("managementPoints", [])
         for management_point in management_points:
             if self._embedded_id == management_point["embeddedId"]:
@@ -108,7 +124,7 @@ class DaikinScheduleSelect(CoordinatorEntity, SelectEntity):
                                 res = currentSchedule
         return res
 
-    async def async_select_option(self, option: str) -> None:
+    async def async_select_option(self, option: str) -> Any:
         _LOGGER.debug("Device '%s' selecting schedule %s", self._device.name, option)
         currentMode = ""
         scheduleid = option
@@ -149,8 +165,8 @@ class DaikinScheduleSelect(CoordinatorEntity, SelectEntity):
 
         return result
 
-    def get_options(self):
-        opt = []
+    def get_options(self) -> list[str]:
+        opt: list[str] = []
         management_points = self._device.daikin_data.get("managementPoints", [])
         for management_point in management_points:
             if self._embedded_id == management_point["embeddedId"]:

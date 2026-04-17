@@ -8,30 +8,29 @@ Accepted
 
 ## Context
 
-Wir starten ein mehrstufiges Refactoring (siehe [`ROADMAP.md`](../../ROADMAP.md))
-mit dem Ziel, daikin_onecta auf das Engineering-Niveau von
-[`aiohomematic`](https://github.com/SukramJ/aiohomematic) zu heben. Die
-geplanten Schritte umfassen Tooling, Test-Ausbau, Domain-Model-Extraktion und
-Robustheits-Patterns. Solche Entscheidungen müssen nachvollziehbar bleiben,
-damit künftige Beitragende — auch Monate später — verstehen, warum eine
-bestimmte Struktur gewählt wurde.
+We are starting a multi-phase refactor (see [`ROADMAP.md`](../../ROADMAP.md))
+with the goal of bringing daikin_onecta up to the engineering level of
+[`aiohomematic`](https://github.com/SukramJ/aiohomematic). The planned steps
+cover tooling, test expansion, domain-model extraction, and resilience
+patterns. Such decisions must remain traceable so that future contributors —
+even months later — understand why a particular structure was chosen.
 
 ## Decision
 
-Wir führen Architecture Decision Records (ADRs) im Format von Michael Nygard
-unter `docs/adr/` ein. Jede ADR ist eine eigene Markdown-Datei mit dem Schema
-`NNNN-titel-mit-bindestrichen.md` und enthält die Sektionen **Status**,
-**Context**, **Decision** und **Consequences**.
+We adopt Architecture Decision Records (ADRs) in the format proposed by
+Michael Nygard under `docs/adr/`. Each ADR is its own Markdown file using the
+naming scheme `NNNN-title-with-hyphens.md` and contains the sections
+**Status**, **Context**, **Decision**, and **Consequences**.
 
-Erfasst werden nur Entscheidungen, die strukturelle Auswirkungen haben:
-neue Pakete, Schichtgrenzen, Wahl von Bibliotheken/Mustern, Breaking Changes
-am internen API.
+We only record decisions with structural impact: new packages, layer
+boundaries, choice of libraries/patterns, breaking changes to the internal
+API.
 
 ## Consequences
 
-- Jede strukturelle Änderung muss von einer neuen ADR begleitet werden.
-- Status alter ADRs wird auf `Superseded by ADR NNNN` aktualisiert, statt sie
-  zu löschen.
-- ADRs sind Teil der Code-Review: ohne ADR keine strukturelle Änderung.
-- Die ROADMAP-Phasen 5, 6, 7 und 10 produzieren ADRs (Exception-Hierarchie,
-  Retry/Circuit-Breaker-Strategie, Domain-Model, Doku-Format).
+- Every structural change must be accompanied by a new ADR.
+- The status of older ADRs is updated to `Superseded by ADR NNNN` rather than
+  being deleted.
+- ADRs are part of code review: no structural change without an ADR.
+- ROADMAP phases 5, 6, 7, and 10 will produce ADRs (exception hierarchy,
+  retry/circuit-breaker strategy, domain model, documentation format).

@@ -4,6 +4,7 @@ import logging
 import re
 from datetime import date
 from datetime import timedelta
+from typing import Any
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -127,7 +128,7 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
         self._attr_device_info = {"identifiers": {(DOMAIN, self._device.id)}, "name": self._device.name}
         self._attr_has_entity_name = True
         self._device.fill_device_info(self._attr_device_info, "gateway")
-        sensor_settings = VALUE_SENSOR_MAPPING.get(setpoint)
+        sensor_settings = VALUE_SENSOR_MAPPING[setpoint]
         self._attr_translation_key = sensor_settings[TRANSLATION_KEY]
         self.update_state()
 
@@ -156,7 +157,7 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
 
     @property
     def available(self) -> bool:
-        return self._device.available
+        return bool(self._device.available)
 
     def climate_control(self):
         cc = None
@@ -544,7 +545,7 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
         cc = self.climate_control()
         operationmode = cc["operationMode"]["value"]
         if fan_mode.isnumeric():
-            if not self._attr_fan_mode.isnumeric():
+            if self._attr_fan_mode is None or not self._attr_fan_mode.isnumeric():
                 # Only set the currentMode to fixed when we currently don't have set
                 # a numeric mode
                 res = await self._device.patch(
@@ -625,7 +626,7 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
         return self.__get_swing_mode("horizontal")
 
     def __get_swing_modes(self, direction):
-        swingModes = []
+        swingModes: list[str] = []
         cc = self.climate_control()
         fanControl = cc.get("fanControl")
         if fanControl is not None:
@@ -724,7 +725,7 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
     def get_preset_mode(self):
         cc = self.climate_control()
         current_preset_mode = PRESET_NONE
-        for mode in self.preset_modes:
+        for mode in self.preset_modes or []:
             daikin_mode = HA_PRESET_TO_DAIKIN[mode]
             preset = cc.get(daikin_mode)
             if preset is not None:
@@ -744,10 +745,10 @@ class DaikinClimate(CoordinatorEntity, ClimateEntity):
         result = True
         new_daikin_mode = HA_PRESET_TO_DAIKIN[preset_mode]
 
-        if self.preset_mode != PRESET_NONE:
+        if self.preset_mode is not None and self.preset_mode != PRESET_NONE:
             current_mode = HA_PRESET_TO_DAIKIN[self.preset_mode]
             if self.preset_mode == PRESET_AWAY:
-                value = {"enabled": False}
+                value: dict[str, Any] = {"enabled": False}
                 result &= await self._device.post(self._device.id, self._embedded_id, "holiday-mode", value)
                 if result is False:
                     _LOGGER.warning(
