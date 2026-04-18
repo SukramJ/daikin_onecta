@@ -8,7 +8,7 @@ Home Assistant custom integration (`domain: daikin_onecta`) for Daikin devices v
 
 ## Common commands
 
-Tests (Python 3.13 or 3.14 — CI matrix covers both; requires `pip install -r requirements_test.txt`):
+Tests (Python 3.14; requires `pip install -r requirements_test.txt`):
 
 ```bash
 pytest tests                               # full suite (coverage via pyproject.toml)

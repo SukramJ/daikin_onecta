@@ -7,7 +7,7 @@ name = "daikin_onecta"
 version = "4.4.10"
 description = "Home Assistant custom integration for Daikin devices using the Daikin Onecta cloud API."
 readme = "readme.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 license = { file = "LICENSE.TXT" }
 authors = [{ name = "jwillemsen" }]
 keywords = ["home-assistant", "daikin", "onecta", "hacs"]
@@ -16,7 +16,7 @@ classifiers = [
     "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Home Automation",
 ]
 
@@ -33,7 +33,7 @@ include = ["custom_components*"]
 # ----------------------------------------------------------------------------
 [tool.ruff]
 line-length = 150
-target-version = "py313"
+target-version = "py314"
 extend-exclude = [
     "venv",
     ".venv",
@@ -104,7 +104,7 @@ line-ending = "lf"
 # Mypy — strict mode (phase 4.10 completed)
 # ----------------------------------------------------------------------------
 [tool.mypy]
-python_version = "3.13"
+python_version = "3.14"
 strict = true
 ignore_missing_imports = true
 warn_unused_ignores = true
@@ -127,7 +127,7 @@ ignore_errors = true
 # Pylint — light gating, ruff covers most rules
 # ----------------------------------------------------------------------------
 [tool.pylint.main]
-py-version = "3.13"
+py-version = "3.14"
 ignore = ["venv", ".venv", "build", "blueprints"]
 jobs = 0
 

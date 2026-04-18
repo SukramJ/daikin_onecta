@@ -1,8 +1,8 @@
 -c .github/workflows/constraints.txt
-prek>=0.3.0
-ruff>=0.6.0
-mypy>=1.10.0
-pylint>=3.2.0
-bandit>=1.7.9
-codespell>=2.3.0
-yamllint>=1.35.0
+prek>=0.3.9
+ruff>=0.15.11
+mypy>=1.20.1
+pylint>=4.0.5
+bandit>=1.9.4
+codespell>=2.4.2
+yamllint>=1.38.0
