@@ -1,4 +1,11 @@
 """Constants for Daikin Onecta."""
+
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any
+from typing import Final
+
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import CONF_STATE_CLASS
 from homeassistant.components.sensor import SensorDeviceClass
@@ -10,43 +17,50 @@ from homeassistant.const import CONF_UNIT_OF_MEASUREMENT
 from homeassistant.const import PERCENTAGE
 from homeassistant.const import REVOLUTIONS_PER_MINUTE
 from homeassistant.const import SIGNAL_STRENGTH_DECIBELS_MILLIWATT
+from homeassistant.const import EntityCategory
 from homeassistant.const import UnitOfEnergy
 from homeassistant.const import UnitOfTemperature
-from homeassistant.helpers.entity import EntityCategory
 
 
-DOMAIN = "daikin_onecta"
+DOMAIN: Final = "daikin_onecta"
 
-OAUTH2_AUTHORIZE = "https://idp.onecta.daikineurope.com/v1/oidc/authorize"
-OAUTH2_TOKEN = "https://idp.onecta.daikineurope.com/v1/oidc/token"
+OAUTH2_AUTHORIZE: Final = "https://idp.onecta.daikineurope.com/v1/oidc/authorize"
+# Public OIDC endpoint URL, not a secret — bandit B105 false positive.
+OAUTH2_TOKEN: Final = "https://idp.onecta.daikineurope.com/v1/oidc/token"  # nosec B105
 
-DAIKIN_API_URL = "https://api.onecta.daikineurope.com"
+DAIKIN_API_URL: Final = "https://api.onecta.daikineurope.com"
 
-SCHEDULE_OFF = "off"
+SCHEDULE_OFF: Final = "off"
 
-FANMODE_FIXED = "fixed"
+FANMODE_FIXED: Final = "fixed"
 
-SENSOR_PERIOD_DAILY = "d"
-SENSOR_PERIOD_WEEKLY = "w"
-SENSOR_PERIOD_YEARLY = "m"
-SENSOR_PERIOD_MONTHLY = "monthly"
-SENSOR_PERIODS = {
+SENSOR_PERIOD_DAILY: Final = "d"
+SENSOR_PERIOD_WEEKLY: Final = "w"
+SENSOR_PERIOD_YEARLY: Final = "m"
+SENSOR_PERIOD_MONTHLY: Final = "monthly"
+SENSOR_PERIODS: Final[Mapping[str, str]] = {
     SENSOR_PERIOD_DAILY: "Daily",
     SENSOR_PERIOD_WEEKLY: "Weekly",
     SENSOR_PERIOD_MONTHLY: "Monthly",
     SENSOR_PERIOD_YEARLY: "Yearly",
 }
-SENSOR_PERIODS_ARRAY = {
+SENSOR_PERIODS_ARRAY: Final[Mapping[str, str]] = {
     SENSOR_PERIOD_DAILY: "d",
     SENSOR_PERIOD_WEEKLY: "w",
     SENSOR_PERIOD_YEARLY: "m",
     SENSOR_PERIOD_MONTHLY: "m",
 }
 
-ENABLED_DEFAULT = "Enabled"
-STATE_CLASS = "STATE"
-ENTITY_CATEGORY = "ENTITY_CATEGORY"
-TRANSLATION_KEY = "TranslationKey"
+ENABLED_DEFAULT: Final = "Enabled"
+STATE_CLASS: Final = "STATE"
+ENTITY_CATEGORY: Final = "ENTITY_CATEGORY"
+TRANSLATION_KEY: Final = "TranslationKey"
+
+# Schema description per sensor-mapping entry.
+# We use the functional TypedDict form because some keys
+# (e.g. "Enabled", "TranslationKey") are CamelCase and therefore
+# cannot be written directly as class attributes.
+SensorMapping = Mapping[str, Any]
 
 # This maps the NAME as listed in the Daikin JSON data to:
 # - DEVICE_CLASS: home assistant device class, see
@@ -55,7 +69,7 @@ TRANSLATION_KEY = "TranslationKey"
 # - ICON: Icon to be used
 # - ENABLED_DEFAULT: Is the sensor enabled by default or not
 # - TRANSLATION_KEY: Translation key
-VALUE_SENSOR_MAPPING = {
+VALUE_SENSOR_MAPPING: Final[Mapping[str, SensorMapping]] = {
     "schedule": {
         CONF_DEVICE_CLASS: None,
         CONF_STATE_CLASS: None,

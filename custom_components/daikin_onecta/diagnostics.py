@@ -1,7 +1,9 @@
 """Diagnostics support for Daikin Diagnostics."""
+
 from __future__ import annotations
 
 from typing import Any
+from typing import Final
 
 from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.config_entries import ConfigEntry
@@ -11,10 +13,17 @@ from homeassistant.helpers.device_registry import DeviceEntry
 
 from .coordinator import OnectaRuntimeData
 
-REDACT_KEYS = {"serialNumber", "macAddress"}
+__all__: Final = (
+    "REDACT_KEYS",
+    "async_get_config_entry_diagnostics",
+    "async_get_device_diagnostics",
+    "get_entities",
+)
+
+REDACT_KEYS: Final[set[str]] = {"serialNumber", "macAddress"}
 
 
-def get_entities(hass: HomeAssistant, config_entry: ConfigEntry):
+def get_entities(hass: HomeAssistant, config_entry: ConfigEntry) -> dict[str, dict[str, Any]]:
     entity_registry = er.async_get(hass)
     entities_data: dict[str, dict[str, Any]] = {}
 
@@ -49,13 +58,14 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, config_entry: 
         "rate_limits": daikin_api.rate_limits,
         "options": config_entry.options,
         "oauth2_token_valid": daikin_api.session.valid_token,
+        "schema_validation_issues": onecta_data.coordinator.last_validation_issue_count,
         "entities": get_entities(hass, config_entry),
     }
 
 
 async def async_get_device_diagnostics(hass: HomeAssistant, config_entry: ConfigEntry, device: DeviceEntry) -> dict[str, Any]:
     """Return diagnostics for a device entry."""
-    data = {}
+    data: dict[str, Any] = {}
     dev_id = next(iter(device.identifiers))[1]
     onecta_data: OnectaRuntimeData = config_entry.runtime_data
     daikin_api = onecta_data.daikin_api

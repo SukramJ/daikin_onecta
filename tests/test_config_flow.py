@@ -1,4 +1,5 @@
 """Test the daikin_onecta config flow."""
+
 from unittest.mock import patch
 
 import pytest
@@ -12,7 +13,7 @@ from homeassistant.helpers import config_entry_oauth2_flow
 from homeassistant.setup import async_setup_component
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from .conftest import FAKE_ACCESS_TOKEN
+from ._support import FAKE_ACCESS_TOKEN
 from custom_components.daikin_onecta.const import DOMAIN
 from custom_components.daikin_onecta.const import OAUTH2_AUTHORIZE
 from custom_components.daikin_onecta.const import OAUTH2_TOKEN
@@ -22,7 +23,7 @@ CLIENT_SECRET = "TNL1ePwnOkf6o2gKiI8InS8nVwTz2G__VYkv6WznzJGUnwLHLTmKYp-7RZc6FA3
 
 
 @pytest.fixture(autouse=True)
-async def setup_credentials(hass: HomeAssistant) -> None:
+async def _setup_credentials(hass: HomeAssistant) -> None:
     """Fixture to setup credentials."""
     assert await async_setup_component(hass, "application_credentials", {})
     await async_import_client_credential(
@@ -38,7 +39,6 @@ async def test_full_flow(
     hass_client_no_auth,
     aioclient_mock,
     current_request_with_host,
-    setup_credentials,
 ) -> None:
     """Check full flow."""
     assert await async_setup_component(hass, "daikin_onecta", {})

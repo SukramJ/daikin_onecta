@@ -1,4 +1,7 @@
 """Config flow for the Daikin platform."""
+
+from __future__ import annotations
+
 import logging
 from collections.abc import Mapping
 from typing import Any
@@ -10,7 +13,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.config_entries import ConfigFlowResult
 from homeassistant.config_entries import SOURCE_REAUTH
 from homeassistant.core import callback
-from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import config_entry_oauth2_flow
 from homeassistant.helpers.selector import NumberSelector
 from homeassistant.helpers.selector import NumberSelectorConfig
@@ -24,13 +26,13 @@ _LOGGER = logging.getLogger(__name__)
 class OptionsFlowHandler(config_entries.OptionsFlow):
     """Config flow options handler for Daikin Onecta ."""
 
-    def __init__(self, config_entry):
+    def __init__(self, config_entry: ConfigEntry) -> None:
         """Initialize Daikin Onecta options flow."""
-        self.options = dict(config_entry.options)
+        self.options: dict[str, Any] = dict(config_entry.options)
 
-    async def async_step_init(self, user_input: dict[str, str] | None = None) -> FlowResult:
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Handle a flow initialized by the user."""
-        errors = {}
+        errors: dict[str, str] = {}
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
 
@@ -69,7 +71,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
             errors=errors,
         )
 
-    async def _update_options(self):
+    async def _update_options(self) -> ConfigFlowResult:
         """Update config entry options."""
         return self.async_create_entry(title="", data=self.options)
 
@@ -78,10 +80,12 @@ class FlowHandler(
     config_entry_oauth2_flow.AbstractOAuth2FlowHandler,
     domain=DOMAIN,
 ):
-    """Handle a config flow."""
+    """Handle a config flow.
 
-    """See https://developers.home-assistant.io/docs/core/platform/application_credentials/ """
-    """ https://developer.cloud.daikineurope.com/docs/b0dffcaa-7b51-428a-bdff-a7c8a64195c0/getting_started """
+    See https://developers.home-assistant.io/docs/core/platform/application_credentials/
+    and https://developer.cloud.daikineurope.com/docs/b0dffcaa-7b51-428a-bdff-a7c8a64195c0/getting_started.
+    """
+
     VERSION = 1
     MINOR_VERSION = 2
     DOMAIN = DOMAIN
@@ -92,7 +96,7 @@ class FlowHandler(
         """Extra data that needs to be appended to the authorize url."""
         return {"scope": "openid onecta:basic.integration offline_access"}
 
-    async def async_oauth_create_entry(self, data: dict) -> FlowResult:
+    async def async_oauth_create_entry(self, data: dict[str, Any]) -> ConfigFlowResult:
         """Create an oauth config entry or update existing entry for reauth."""
         try:
             unique_id = jwt.decode(data["token"]["access_token"], options={"verify_signature": False})["sub"]

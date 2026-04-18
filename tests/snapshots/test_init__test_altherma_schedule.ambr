@@ -1,0 +1,2416 @@
+# serializer version: 1
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_holiday_mode_active-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_holiday_mode_active',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is holiday mode active',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is holiday mode active',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isholidaymodeactive',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_isHolidayModeActive',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_holiday_mode_active-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_holiday_mode_active',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_emergency_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_emergency_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in emergency state',
+    'options': dict({
+    }),
+    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in emergency state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isinemergencystate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_isInEmergencyState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_emergency_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_emergency_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_error_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_error_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in error state',
+    'options': dict({
+    }),
+    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in error state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isinerrorstate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_isInErrorState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_error_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_error_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_installer_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_installer_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in installer state',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in installer state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isininstallerstate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_isInInstallerState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_installer_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_installer_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_warning_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_warning_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in warning state',
+    'options': dict({
+    }),
+    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in warning state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isinwarningstate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_isInWarningState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_climatecontrol_is_in_warning_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_climatecontrol_is_in_warning_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_holiday_mode_active-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_holiday_mode_active',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is holiday mode active',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is holiday mode active',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isholidaymodeactive',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_isHolidayModeActive',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_holiday_mode_active-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_holiday_mode_active',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_emergency_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_emergency_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in emergency state',
+    'options': dict({
+    }),
+    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in emergency state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isinemergencystate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_isInEmergencyState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_emergency_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_emergency_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_error_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_error_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in error state',
+    'options': dict({
+    }),
+    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in error state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isinerrorstate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_isInErrorState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_error_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_error_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_installer_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_installer_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in installer state',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in installer state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isininstallerstate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_isInInstallerState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_installer_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_installer_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_warning_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_warning_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in warning state',
+    'options': dict({
+    }),
+    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in warning state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isinwarningstate',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_isInWarningState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_in_warning_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_in_warning_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_powerful_mode_active-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_powerful_mode_active',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is powerful mode active',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is powerful mode active',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ispowerfulmodeactive',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_isPowerfulModeActive',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_domestichotwatertank_is_powerful_mode_active-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_domestichotwatertank_is_powerful_mode_active',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_gateway_is_firmware_update_supported-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.altherma_gateway_is_firmware_update_supported',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is firmware update supported',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is firmware update supported',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isfirmwareupdatesupported',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_gateway_None_isFirmwareUpdateSupported',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[binary_sensor.altherma_gateway_is_firmware_update_supported-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.altherma_gateway_is_firmware_update_supported',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_altherma_schedule[button.altherma_refresh-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'button',
+    'entity_category': <EntityCategory.CONFIG: 'config'>,
+    'entity_id': 'button.altherma_refresh',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Refresh',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:refresh',
+    'original_name': 'Refresh',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': None,
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_refresh',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[button.altherma_refresh-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:refresh',
+    }),
+    'context': <ANY>,
+    'entity_id': 'button.altherma_refresh',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_altherma_schedule[climate.altherma_leaving_water_offset-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+      ]),
+      'max_temp': 10,
+      'min_temp': -10,
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+      'target_temp_step': 1,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'climate',
+    'entity_category': None,
+    'entity_id': 'climate.altherma_leaving_water_offset',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Leaving Water Offset',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': None,
+    'original_name': 'Leaving Water Offset',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': <ClimateEntityFeature: 401>,
+    'translation_key': 'leavingwateroffset',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_leavingWaterOffset',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[climate.altherma_leaving_water_offset-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'current_temperature': 36,
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+      ]),
+      'max_temp': 10,
+      'min_temp': -10,
+      'preset_mode': 'none',
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+      'supported_features': <ClimateEntityFeature: 401>,
+      'target_temp_step': 1,
+      'temperature': 0,
+    }),
+    'context': <ANY>,
+    'entity_id': 'climate.altherma_leaving_water_offset',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[climate.altherma_leaving_water_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+      ]),
+      'max_temp': 35,
+      'min_temp': 7,
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'climate',
+    'entity_category': None,
+    'entity_id': 'climate.altherma_leaving_water_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Leaving Water Temperature',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': None,
+    'original_name': 'Leaving Water Temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': <ClimateEntityFeature: 400>,
+    'translation_key': 'leavingwatertemperature',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_leavingWaterTemperature',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[climate.altherma_leaving_water_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'current_temperature': 36,
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+      ]),
+      'max_temp': 35,
+      'min_temp': 7,
+      'preset_mode': 'none',
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+      'supported_features': <ClimateEntityFeature: 400>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'climate.altherma_leaving_water_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[climate.altherma_room_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+      ]),
+      'max_temp': 23,
+      'min_temp': 18,
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+      'target_temp_step': 0.5,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'climate',
+    'entity_category': None,
+    'entity_id': 'climate.altherma_room_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Room Temperature',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': None,
+    'original_name': 'Room Temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': <ClimateEntityFeature: 401>,
+    'translation_key': 'roomtemperature',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_roomTemperature',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[climate.altherma_room_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'current_temperature': 19,
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+      ]),
+      'max_temp': 23,
+      'min_temp': 18,
+      'preset_mode': 'none',
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+      'supported_features': <ClimateEntityFeature: 401>,
+      'target_temp_step': 0.5,
+      'temperature': 20,
+    }),
+    'context': <ANY>,
+    'entity_id': 'climate.altherma_room_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[select.altherma_climatecontrol_schedule-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'options': list([
+        'User defined 1',
+        'User defined 2',
+        'User defined 3',
+        'off',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'select',
+    'entity_category': None,
+    'entity_id': 'select.altherma_climatecontrol_schedule',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Schedule',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:calendar-clock',
+    'original_name': 'Schedule',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'schedule',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_schedule',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[select.altherma_climatecontrol_schedule-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:calendar-clock',
+      'options': list([
+        'User defined 1',
+        'User defined 2',
+        'User defined 3',
+        'off',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'select.altherma_climatecontrol_schedule',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_altherma_schedule[select.altherma_domestichotwatertank_schedule-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'options': list([
+        'User defined',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'select',
+    'entity_category': None,
+    'entity_id': 'select.altherma_domestichotwatertank_schedule',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Schedule',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:calendar-clock',
+    'original_name': 'Schedule',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'schedule',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_schedule',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[select.altherma_domestichotwatertank_schedule-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:calendar-clock',
+      'options': list([
+        'User defined',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'select.altherma_domestichotwatertank_schedule',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'User defined',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_control_mode-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_control_mode',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Control mode',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:alphabetical',
+    'original_name': 'Control mode',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'controlmode',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_controlMode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_control_mode-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:alphabetical',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_control_mode',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'roomTemperature',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_daily_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_daily_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Cooling daily electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:snowflake',
+    'original_name': 'Cooling daily electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'coolingdailyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_cooling_d',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_daily_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:snowflake',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_daily_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_monthly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_monthly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Cooling monthly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:snowflake',
+    'original_name': 'Cooling monthly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'coolingmonthlyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_cooling_monthly',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_monthly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:snowflake',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_monthly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_weekly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_weekly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Cooling weekly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:snowflake',
+    'original_name': 'Cooling weekly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'coolingweeklyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_cooling_w',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_weekly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:snowflake',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_weekly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_yearly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_yearly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Cooling yearly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:snowflake',
+    'original_name': 'Cooling yearly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'coolingyearlyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_cooling_m',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_cooling_yearly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:snowflake',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_cooling_yearly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_error_code-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'sensor.altherma_climatecontrol_error_code',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Error code',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Error code',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'errorcode',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_errorCode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_error_code-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_error_code',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_daily_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_daily_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating daily electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating daily electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingdailyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_heating_d',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_daily_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_daily_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_monthly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_monthly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating monthly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating monthly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingmonthlyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_heating_monthly',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_monthly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_monthly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '19',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_weekly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_weekly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating weekly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating weekly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingweeklyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_heating_w',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_weekly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_weekly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_yearly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_yearly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating yearly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating yearly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingyearlyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_electrical_heating_m',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_heating_yearly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_heating_yearly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '1410',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_leaving_water_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_leaving_water_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Leaving water temperature',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 1,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.TEMPERATURE: 'temperature'>,
+    'original_icon': '',
+    'original_name': 'Leaving water temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'leavingwatertemperature',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_sensoryData_leavingWaterTemperature',
+    'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_leaving_water_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'temperature',
+      'icon': '',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_leaving_water_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '36',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_outdoor_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_outdoor_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Outdoor temperature',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 1,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.TEMPERATURE: 'temperature'>,
+    'original_icon': '',
+    'original_name': 'Outdoor temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'outdoortemperature',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_sensoryData_outdoorTemperature',
+    'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_outdoor_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'temperature',
+      'icon': '',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_outdoor_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '12',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_room_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_room_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Room temperature',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 1,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.TEMPERATURE: 'temperature'>,
+    'original_icon': '',
+    'original_name': 'Room temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'roomtemperature',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_sensoryData_roomTemperature',
+    'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_room_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'temperature',
+      'icon': '',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_room_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '19',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_setpoint_mode-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_climatecontrol_setpoint_mode',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Setpoint mode',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:alphabetical',
+    'original_name': 'Setpoint mode',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'setpointmode',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_climateControl_None_setpointMode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_climatecontrol_setpoint_mode-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:alphabetical',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_climatecontrol_setpoint_mode',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'weatherDependentHeatingFixedCooling',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_error_code-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_error_code',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Error code',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Error code',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'errorcode',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_errorCode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_error_code-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_error_code',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heat_up_mode-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heat_up_mode',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heat up mode',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:alphabetical',
+    'original_name': 'Heat up mode',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatupmode',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_heatupMode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heat_up_mode-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:alphabetical',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heat_up_mode',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'reheatSchedule',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_daily_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_daily_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating daily electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating daily electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingdailyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_electrical_heating_d',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_daily_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_daily_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '2',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_monthly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_monthly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating monthly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating monthly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingmonthlyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_electrical_heating_monthly',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_monthly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_monthly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '46',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_weekly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_weekly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating weekly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating weekly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingweeklyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_electrical_heating_w',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_weekly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_weekly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '2',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_yearly_electrical_consumption-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_yearly_electrical_consumption',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Heating yearly electrical consumption',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.ENERGY: 'energy'>,
+    'original_icon': 'mdi:fire',
+    'original_name': 'Heating yearly electrical consumption',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'heatingyearlyelectricalconsumption',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_electrical_heating_m',
+    'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_heating_yearly_electrical_consumption-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'energy',
+      'icon': 'mdi:fire',
+      'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+      'unit_of_measurement': <UnitOfEnergy.KILO_WATT_HOUR: 'kWh'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_heating_yearly_electrical_consumption',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '424',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_setpoint_mode-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_domestichotwatertank_setpoint_mode',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Setpoint mode',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:alphabetical',
+    'original_name': 'Setpoint mode',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'setpointmode',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_None_setpointMode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_setpoint_mode-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:alphabetical',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_setpoint_mode',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'fixed',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_tank_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.altherma_domestichotwatertank_tank_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Tank temperature',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 1,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.TEMPERATURE: 'temperature'>,
+    'original_icon': 'mdi:bathtub-outline',
+    'original_name': 'Tank temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'tanktemperature',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_domesticHotWaterTank_sensoryData_tankTemperature',
+    'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_domestichotwatertank_tank_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'temperature',
+      'icon': 'mdi:bathtub-outline',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_domestichotwatertank_tank_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '51',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_gateway_ip_address-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'sensor.altherma_gateway_ip_address',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'IP address',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:ip-network',
+    'original_name': 'IP address',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ipaddress',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_gateway_None_ipAddress',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_gateway_ip_address-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:ip-network',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_gateway_ip_address',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '192.168.1.207',
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_gateway_ratelimit_remaining_day-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'sensor.altherma_gateway_ratelimit_remaining_day',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Ratelimit remaining day',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Ratelimit remaining day',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ratelimitremainingday',
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa_limitsensor_remaining_day',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[sensor.altherma_gateway_ratelimit_remaining_day-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.altherma_gateway_ratelimit_remaining_day',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---
+# name: test_altherma_schedule[water_heater.altherma-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'max_temp': 60.0,
+      'min_temp': 30.0,
+      'operation_list': list([
+        'off',
+        'heat_pump',
+        'performance',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'water_heater',
+    'entity_category': None,
+    'entity_id': 'water_heater.altherma',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': None,
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': None,
+    'original_name': None,
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': <WaterHeaterEntityFeature: 10>,
+    'translation_key': None,
+    'unique_id': '1ece521b-5401-4a42-acce-6f76fba246aa',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_altherma_schedule[water_heater.altherma-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'current_temperature': 51.0,
+      'max_temp': 60.0,
+      'min_temp': 30.0,
+      'operation_list': list([
+        'off',
+        'heat_pump',
+        'performance',
+      ]),
+      'operation_mode': 'heat_pump',
+      'supported_features': <WaterHeaterEntityFeature: 10>,
+      'target_temp_high': None,
+      'target_temp_low': None,
+      'target_temp_step': 1.0,
+      'temperature': 45.0,
+    }),
+    'context': <ANY>,
+    'entity_id': 'water_heater.altherma',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'heat_pump',
+  })
+# ---

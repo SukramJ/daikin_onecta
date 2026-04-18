@@ -1,0 +1,703 @@
+# serializer version: 1
+# name: test_ururu[binary_sensor.daikinap95800_climatecontrol_is_holiday_mode_active-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.daikinap95800_climatecontrol_is_holiday_mode_active',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is holiday mode active',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is holiday mode active',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isholidaymodeactive',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_climateControl_None_isHolidayModeActive',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[binary_sensor.daikinap95800_climatecontrol_is_holiday_mode_active-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.daikinap95800_climatecontrol_is_holiday_mode_active',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_ururu[binary_sensor.daikinap95800_climatecontrol_is_in_error_state-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.daikinap95800_climatecontrol_is_in_error_state',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is in error state',
+    'options': dict({
+    }),
+    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is in error state',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isinerrorstate',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_climateControl_None_isInErrorState',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[binary_sensor.daikinap95800_climatecontrol_is_in_error_state-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.daikinap95800_climatecontrol_is_in_error_state',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_ururu[binary_sensor.daikinap95800_climatecontrol_is_powerful_mode_active-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.daikinap95800_climatecontrol_is_powerful_mode_active',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is powerful mode active',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is powerful mode active',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ispowerfulmodeactive',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_climateControl_None_isPowerfulModeActive',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[binary_sensor.daikinap95800_climatecontrol_is_powerful_mode_active-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.daikinap95800_climatecontrol_is_powerful_mode_active',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_ururu[binary_sensor.daikinap95800_gateway_is_firmware_update_supported-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'binary_sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'binary_sensor.daikinap95800_gateway_is_firmware_update_supported',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Is firmware update supported',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Is firmware update supported',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'isfirmwareupdatesupported',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_gateway_None_isFirmwareUpdateSupported',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[binary_sensor.daikinap95800_gateway_is_firmware_update_supported-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.daikinap95800_gateway_is_firmware_update_supported',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_ururu[button.daikinap95800_refresh-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'button',
+    'entity_category': <EntityCategory.CONFIG: 'config'>,
+    'entity_id': 'button.daikinap95800_refresh',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Refresh',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:refresh',
+    'original_name': 'Refresh',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': None,
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_refresh',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[button.daikinap95800_refresh-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:refresh',
+    }),
+    'context': <ANY>,
+    'entity_id': 'button.daikinap95800_refresh',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_ururu[climate.daikinap95800_room_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'fan_modes': list([
+        'auto',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+      ]),
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+        <HVACMode.DRY: 'dry'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.FAN_ONLY: 'fan_only'>,
+      ]),
+      'max_temp': 30,
+      'min_temp': 10,
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+      'swing_horizontal_modes': list([
+        'stop',
+        'swing',
+      ]),
+      'swing_modes': list([
+        'stop',
+        'swing',
+      ]),
+      'target_temp_step': 0.5,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'climate',
+    'entity_category': None,
+    'entity_id': 'climate.daikinap95800_room_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Room Temperature',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': None,
+    'original_name': 'Room Temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': <ClimateEntityFeature: 953>,
+    'translation_key': 'roomtemperature',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_roomTemperature',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[climate.daikinap95800_room_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'current_temperature': 23,
+      'fan_mode': 'auto',
+      'fan_modes': list([
+        'auto',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+      ]),
+      'hvac_modes': list([
+        <HVACMode.OFF: 'off'>,
+        <HVACMode.HEAT_COOL: 'heat_cool'>,
+        <HVACMode.DRY: 'dry'>,
+        <HVACMode.COOL: 'cool'>,
+        <HVACMode.HEAT: 'heat'>,
+        <HVACMode.FAN_ONLY: 'fan_only'>,
+      ]),
+      'max_temp': 30,
+      'min_temp': 10,
+      'preset_mode': 'none',
+      'preset_modes': list([
+        'away',
+        'none',
+      ]),
+      'supported_features': <ClimateEntityFeature: 953>,
+      'swing_horizontal_mode': 'stop',
+      'swing_horizontal_modes': list([
+        'stop',
+        'swing',
+      ]),
+      'swing_mode': 'stop',
+      'swing_modes': list([
+        'stop',
+        'swing',
+      ]),
+      'target_temp_step': 0.5,
+      'temperature': 20,
+    }),
+    'context': <ANY>,
+    'entity_id': 'climate.daikinap95800_room_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'heat',
+  })
+# ---
+# name: test_ururu[select.daikinap95800_climatecontrol_schedule-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'options': list([
+        '0',
+        '1',
+        '2',
+        'off',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'select',
+    'entity_category': None,
+    'entity_id': 'select.daikinap95800_climatecontrol_schedule',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Schedule',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:calendar-clock',
+    'original_name': 'Schedule',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'schedule',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_climateControl_schedule',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[select.daikinap95800_climatecontrol_schedule-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:calendar-clock',
+      'options': list([
+        '0',
+        '1',
+        '2',
+        'off',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'select.daikinap95800_climatecontrol_schedule',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_climatecontrol_error_code-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'sensor.daikinap95800_climatecontrol_error_code',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Error code',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Error code',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'errorcode',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_climateControl_None_errorCode',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_climatecontrol_error_code-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.daikinap95800_climatecontrol_error_code',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '00',
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_climatecontrol_outdoor_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.daikinap95800_climatecontrol_outdoor_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Outdoor temperature',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 1,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.TEMPERATURE: 'temperature'>,
+    'original_icon': '',
+    'original_name': 'Outdoor temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'outdoortemperature',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_climateControl_sensoryData_outdoorTemperature',
+    'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_climatecontrol_outdoor_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'temperature',
+      'icon': '',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.daikinap95800_climatecontrol_outdoor_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '4',
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_climatecontrol_room_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.daikinap95800_climatecontrol_room_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Room temperature',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 1,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.TEMPERATURE: 'temperature'>,
+    'original_icon': '',
+    'original_name': 'Room temperature',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'roomtemperature',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_climateControl_sensoryData_roomTemperature',
+    'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_climatecontrol_room_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'temperature',
+      'icon': '',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.daikinap95800_climatecontrol_room_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '23',
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_gateway_ip_address-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'sensor.daikinap95800_gateway_ip_address',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'IP address',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:ip-network',
+    'original_name': 'IP address',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ipaddress',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_gateway_None_ipAddress',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_gateway_ip_address-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:ip-network',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.daikinap95800_gateway_ip_address',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '192.168.2.42',
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_gateway_ratelimit_remaining_day-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': list([
+      None,
+    ]),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
+    'entity_id': 'sensor.daikinap95800_gateway_ratelimit_remaining_day',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Ratelimit remaining day',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:information-outline',
+    'original_name': 'Ratelimit remaining day',
+    'platform': 'daikin_onecta',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ratelimitremainingday',
+    'unique_id': '95c2f177-dd7a-4bdc-ad48-1a7f47f34a01_limitsensor_remaining_day',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_ururu[sensor.daikinap95800_gateway_ratelimit_remaining_day-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'icon': 'mdi:information-outline',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.daikinap95800_gateway_ratelimit_remaining_day',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': '0',
+  })
+# ---

@@ -1,0 +1,25 @@
+title = "daikin_onecta gitleaks config"
+
+# Use the upstream default ruleset; only add allowlists for known false positives.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Project-specific false positives"
+paths = [
+  '''venv/.*''',
+  '''\.git/.*''',
+  '''tests/fixtures/.*\.json''',     # captured cloud responses, scrubbed of tokens
+  '''tests/snapshots/.*\.ambr''',    # syrupy snapshots
+  '''coverage-baseline\.txt''',
+  '''mypy-baseline\.txt''',
+  '''ruff-baseline\.txt''',
+  '''bandit-baseline\.txt''',
+]
+
+regexes = [
+  # Public OIDC endpoint URLs are not secrets.
+  '''https://idp\.onecta\.daikineurope\.com/v1/oidc/(authorize|token)''',
+  # FAKE_ACCESS_TOKEN in conftest is a documented test JWT (sub=1234567890).
+  '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJzdWIiOiIxMjM0NTY3ODkwIi.*''',
+]

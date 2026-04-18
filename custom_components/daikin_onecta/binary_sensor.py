@@ -1,5 +1,10 @@
 """Support for Daikin binary sensor sensors."""
+
+from __future__ import annotations
+
 import logging
+from typing import Any
+from typing import Final
 
 from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
@@ -18,13 +23,16 @@ from .const import ENABLED_DEFAULT
 from .const import ENTITY_CATEGORY
 from .const import TRANSLATION_KEY
 from .const import VALUE_SENSOR_MAPPING
+from .coordinator import OnectaDataUpdateCoordinator
 from .coordinator import OnectaRuntimeData
 from .device import DaikinOnectaDevice
+
+__all__: Final = ("DaikinBinarySensor", "async_setup", "async_setup_entry")
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(hass, async_add_entities):
+async def async_setup(hass: HomeAssistant, async_add_entities: AddConfigEntryEntitiesCallback) -> None:
     """Old way of setting up the Daikin sensors.
 
     Can only be called when a user accidentally mentions the platform in their
@@ -40,7 +48,7 @@ async def async_setup_entry(
     """Set up Daikin climate based on config_entry."""
     onecta_data: OnectaRuntimeData = config_entry.runtime_data
     coordinator = onecta_data.coordinator
-    sensors = []
+    sensors: list[DaikinBinarySensor] = []
     for dev_id, device in onecta_data.devices.items():
         management_points = device.daikin_data.get("managementPoints", [])
         for management_point in management_points:
@@ -68,14 +76,14 @@ async def async_setup_entry(
     async_add_entities(sensors)
 
 
-class DaikinBinarySensor(CoordinatorEntity, BinarySensorEntity):
+class DaikinBinarySensor(CoordinatorEntity[OnectaDataUpdateCoordinator], BinarySensorEntity):
     def __init__(
         self,
         device: DaikinOnectaDevice,
-        coordinator,
-        embedded_id,
-        management_point_type,
-        value,
+        coordinator: OnectaDataUpdateCoordinator,
+        embedded_id: str,
+        management_point_type: str,
+        value: str,
     ) -> None:
         _LOGGER.info("DaikinBinarySensor '%s' '%s'", management_point_type, value)
         super().__init__(coordinator)
@@ -117,18 +125,27 @@ class DaikinBinarySensor(CoordinatorEntity, BinarySensorEntity):
     def available(self) -> bool:
         return self._device.available
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to model-level updates instead of the coordinator broadcast."""
+        await super().async_added_to_hass()
+        self.async_on_remove(self._device.add_data_point_listener(self._embedded_id, self._value, self._handle_model_update))
+        self.async_on_remove(self._device.add_listener(self._handle_availability_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
         self.async_write_ha_state()
 
-    def sensor_value(self):
-        res = None
-        managementPoints = self._device.daikin_data.get("managementPoints", [])
-        for management_point in managementPoints:
-            if self._embedded_id == management_point["embeddedId"]:
-                cd = management_point.get(self._value)
-                if cd is not None:
-                    res = cd.get("value")
+    @callback
+    def _handle_availability_update(self) -> None:
+        self.async_write_ha_state()
+
+    def sensor_value(self) -> Any:
+        mp = self._device.find_management_point(self._embedded_id)
+        res: Any = None
+        if mp is not None:
+            cd = mp.raw.get(self._value)
+            if cd is not None:
+                res = cd.get("value")
         _LOGGER.debug("Device '%s' binary sensor '%s' value '%s'", self._device.name, self._value, res)
         return res

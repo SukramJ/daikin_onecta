@@ -1,4 +1,4 @@
-name: Validate with pre-commit
+name: Validate with prek
 
 on:
   push:
@@ -7,24 +7,32 @@ on:
     - cron: "0 1 * * SUN"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  precommit:
-    runs-on: "ubuntu-slim"
-    name: Pre-commit
+  prek:
+    runs-on: ubuntu-latest
+    name: prek
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6
       - name: Setup Python
-        uses: "actions/setup-python@v6"
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
-      - name: Upgrade pip
-        run: |
-          pip install --constraint=.github/workflows/constraints.txt pip
-          pip --version
+          python-version: "3.14"
+          cache: pip
       - name: Install Python modules
         run: |
-          pip install --constraint=.github/workflows/constraints.txt pre-commit black flake8 reorder-python-imports
-      - name: Run pre-commit on all files
-        run: |
-          pre-commit run --all-files --show-diff-on-failure --color=always
+          pip install --constraint=.github/workflows/constraints.txt pip
+          pip install -r requirements_test_pre_commit.txt
+      - name: Cache prek hooks
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/prek
+          key: prek-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: Run prek on all files
+        uses: j178/prek-action@v2
+        with:
+          extra-args: --all-files
