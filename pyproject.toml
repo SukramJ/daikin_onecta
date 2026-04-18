@@ -1,2 +1,219 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "daikin_onecta"
+version = "4.4.10"
+description = "Home Assistant custom integration for Daikin devices using the Daikin Onecta cloud API."
+readme = "readme.md"
+requires-python = ">=3.14"
+license = { file = "LICENSE.TXT" }
+authors = [{ name = "jwillemsen" }]
+keywords = ["home-assistant", "daikin", "onecta", "hacs"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Home Automation",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jwillemsen/daikin_onecta"
+"Bug Tracker" = "https://github.com/jwillemsen/daikin_onecta/issues"
+"Source" = "https://github.com/jwillemsen/daikin_onecta"
+
+[tool.setuptools.packages.find]
+include = ["custom_components*"]
+
+# ----------------------------------------------------------------------------
+# Ruff — Linter + Formatter
+# ----------------------------------------------------------------------------
 [tool.ruff]
 line-length = 150
+target-version = "py314"
+extend-exclude = [
+    "venv",
+    ".venv",
+    "blueprints",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    # "I",  # isort — re-enabled in Phase 2 when reorder-python-imports is removed
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+    # "SIM",# flake8-simplify — re-enabled in Phase 4 after refactor
+    "PIE",  # flake8-pie
+    "RUF",  # ruff-specific
+    "N",    # pep8-naming
+    "ASYNC",# flake8-async
+    "S",    # flake8-bandit (subset)
+    "T20",  # flake8-print
+    "PT",   # flake8-pytest-style
+]
+extend-select = [
+    # Docstring rules enforced per docs/docstring_standards.md
+    "D200",  # one-line docstring should fit on one line
+    "D201",  # no blank lines allowed before docstring
+    "D202",  # no blank lines allowed after docstring
+    "D205",  # blank line required between summary and description
+    "D209",  # closing quotes on separate line for multiline
+    "D210",  # no whitespace surrounding docstring text
+    "D300",  # use triple double quotes
+    "D400",  # first line should end with a period
+    "D401",  # first line should be in imperative mood
+    "D419",  # docstring is empty
+]
+ignore = [
+    "E501",   # line too long — handled by formatter
+    "S101",   # assert in tests is fine
+    "S105",   # hardcoded password — false positive on OAuth URLs
+    "S311",   # random for non-crypto jitter is fine
+    "N802",   # function names lowerCamelCase — legacy from Daikin JSON API
+    "N803",   # argument names lowerCamelCase — legacy from Daikin JSON API
+    "N806",   # variable names lowerCamelCase — legacy from Daikin JSON API
+    "B007",   # unused loop variable — legacy, to be fixed in phase 4
+    "B008",   # function calls in defaults — HA service decorators
+    "SIM105", # contextlib.suppress is overkill for simple try/except
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S", "T20", "PT011"]
+"scripts/**/*.py" = ["T20"]
+"custom_components/daikin_onecta/const.py" = ["E501"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+combine-as-imports = true
+known-first-party = ["custom_components.daikin_onecta", "tests"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+# ----------------------------------------------------------------------------
+# Mypy — strict mode (phase 4.10 completed)
+# ----------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.14"
+strict = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_return_any = true
+no_implicit_optional = true
+exclude = [
+    "venv/",
+    ".venv/",
+    "tests/",
+    "build/",
+]
+
+[[tool.mypy.overrides]]
+module = "homeassistant.*"
+ignore_errors = true
+
+# ----------------------------------------------------------------------------
+# Pylint — light gating, ruff covers most rules
+# ----------------------------------------------------------------------------
+[tool.pylint.main]
+py-version = "3.14"
+ignore = ["venv", ".venv", "build", "blueprints"]
+jobs = 0
+
+[tool.pylint."messages control"]
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-few-public-methods",
+    "too-many-arguments",
+    "too-many-locals",
+    "too-many-branches",
+    "too-many-statements",
+    "too-many-instance-attributes",
+    "too-many-public-methods",
+    "too-many-return-statements",
+    "too-many-positional-arguments",
+    "too-many-nested-blocks",  # phase 7 refactor flattens deeply-nested platform loops
+    "line-too-long",
+    "invalid-name",  # mirrored ruff N-rules
+    "fixme",
+    "duplicate-code",
+    "broad-exception-caught",
+    "logging-fstring-interpolation",
+    # HA integration conventions:
+    "unused-argument",  # hass/config/async_add_entities signatures are fixed by HA
+    "abstract-method",  # HA entity base classes expose optional abstracts by design
+    "attribute-defined-outside-init",  # HA pattern: _attr_* set in coordinator callbacks
+    "unused-variable",  # `for dev_id, device in …` — id retained for readability
+    "redefined-builtin",  # `id` matches Daikin JSON field names in public signatures
+]
+
+[tool.pylint.format]
+max-line-length = 150
+
+# ----------------------------------------------------------------------------
+# Bandit — security linter
+# ----------------------------------------------------------------------------
+[tool.bandit]
+exclude_dirs = ["tests", "venv", ".venv", "build"]
+skips = [
+    "B105",  # OAuth endpoint URLs misclassified as passwords
+    "B311",  # random for non-crypto jitter
+]
+
+# ----------------------------------------------------------------------------
+# Coverage
+# ----------------------------------------------------------------------------
+[tool.coverage.run]
+branch = true
+source = ["custom_components/daikin_onecta"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = false
+exclude_also = [
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+# ----------------------------------------------------------------------------
+# Pytest
+# ----------------------------------------------------------------------------
+[tool.pytest.ini_options]
+addopts = "-qq --cov=custom_components.daikin_onecta --cov-report=term-missing"
+console_output_style = "count"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+filterwarnings = [
+    "default",
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+    "ignore::ResourceWarning",
+]
+
+# ----------------------------------------------------------------------------
+# Codespell
+# ----------------------------------------------------------------------------
+[tool.codespell]
+skip = "*.json,*.ambr,venv,.venv,build,htmlcov,*.lock,changelog.md,docs/**"
+ignore-words-list = "hass,homeassistant,nd,unter,ist,sie,fpr,nin,oder"

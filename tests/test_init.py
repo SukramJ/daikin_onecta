@@ -1,4 +1,5 @@
 """Test daikin_onecta sensor."""
+
 from datetime import date
 from datetime import timedelta
 from unittest.mock import AsyncMock
@@ -50,8 +51,8 @@ from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClien
 from pytest_homeassistant_custom_component.test_util.aiohttp import URL
 from syrupy import SnapshotAssertion
 
-from .conftest import load_fixture_json
-from .conftest import snapshot_platform_entities
+from ._support import load_fixture_json
+from ._support import snapshot_platform_entities
 from custom_components.daikin_onecta.const import DAIKIN_API_URL
 from custom_components.daikin_onecta.const import SCHEDULE_OFF
 from custom_components.daikin_onecta.coordinator import OnectaRuntimeData

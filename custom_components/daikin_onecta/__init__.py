@@ -1,5 +1,10 @@
 """Platform for the Daikin AC."""
+
+from __future__ import annotations
+
 import logging
+from typing import Any
+from typing import Final
 
 import jwt
 from aiohttp import ClientError
@@ -13,9 +18,18 @@ from .coordinator import OnectaDataUpdateCoordinator
 from .coordinator import OnectaRuntimeData
 from .daikin_api import DaikinApi
 
+__all__: Final = (
+    "PLATFORMS",
+    "async_migrate_entry",
+    "async_setup",
+    "async_setup_entry",
+    "async_unload_entry",
+    "update_listener",
+)
+
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = [
+PLATFORMS: Final[list[Platform]] = [
     Platform.CLIMATE,
     Platform.SENSOR,
     Platform.WATER_HEATER,
@@ -26,8 +40,8 @@ PLATFORMS = [
 ]
 
 
-async def async_setup(hass, config):
-    """Setup the Daikin Onecta component."""
+async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
+    """Set up the Daikin Onecta component."""
     return True
 
 
@@ -42,13 +56,13 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     except ClientError as err:
         raise ConfigEntryNotReady from err
 
-    config_entry.runtime_data = OnectaRuntimeData(coordinator=None, daikin_api=daikin_api, devices={})
+    config_entry.runtime_data = OnectaRuntimeData(coordinator=None, daikin_api=daikin_api, devices={})  # type: ignore[arg-type]
     config_entry.runtime_data.coordinator = OnectaDataUpdateCoordinator(hass, config_entry)
 
     try:
         await config_entry.runtime_data.coordinator.async_config_entry_first_refresh()
     except Exception as ex:
-        raise ConfigEntryNotReady(f"Config Not Ready: {ex}")
+        raise ConfigEntryNotReady(f"Config Not Ready: {ex}") from ex
 
     config_entry.async_on_unload(config_entry.add_update_listener(update_listener))
 
@@ -57,13 +71,13 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     return True
 
 
-async def async_unload_entry(hass, config_entry):
+async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     _LOGGER.debug("Unloading integration...")
     return await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
 
-async def update_listener(hass, config_entry):
+async def update_listener(hass: HomeAssistant, config_entry: ConfigEntry) -> None:
     """Handle options update."""
     onecta_data: OnectaRuntimeData = config_entry.runtime_data
     coordinator = onecta_data.coordinator

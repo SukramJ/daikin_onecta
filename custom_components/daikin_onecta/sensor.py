@@ -1,6 +1,11 @@
 """Support for Daikin AC sensors."""
+
+from __future__ import annotations
+
 import logging
 from datetime import date
+from typing import Any
+from typing import Final
 
 from homeassistant.components.sensor import CONF_STATE_CLASS
 from homeassistant.components.sensor import SensorEntity
@@ -23,14 +28,24 @@ from .const import SENSOR_PERIODS
 from .const import SENSOR_PERIODS_ARRAY
 from .const import TRANSLATION_KEY
 from .const import VALUE_SENSOR_MAPPING
+from .coordinator import OnectaDataUpdateCoordinator
 from .coordinator import OnectaRuntimeData
 from .device import DaikinOnectaDevice
 
 
+__all__: Final = (
+    "DaikinEnergySensor",
+    "DaikinLimitSensor",
+    "DaikinValueSensor",
+    "async_setup",
+    "async_setup_entry",
+    "handle_energy_sensors",
+)
+
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(hass, async_add_entities):
+async def async_setup(hass: HomeAssistant, async_add_entities: AddConfigEntryEntitiesCallback) -> None:
     """Old way of setting up the Daikin sensors.
 
     Can only be called when a user accidentally mentions the platform in their
@@ -38,7 +53,15 @@ async def async_setup(hass, async_add_entities):
     """
 
 
-def handle_energy_sensors(coordinator, device, embedded_id, management_point_type, sensor_type, cdve, sensors):
+def handle_energy_sensors(
+    coordinator: OnectaDataUpdateCoordinator,
+    device: DaikinOnectaDevice,
+    embedded_id: str,
+    management_point_type: str,
+    sensor_type: str,
+    cdve: dict[str, Any],
+    sensors: list[Any],
+) -> None:
     _LOGGER.info("Device '%s' provides '%s'", device.name, sensor_type)
     for mode in cdve:
         _LOGGER.info(
@@ -85,7 +108,7 @@ async def async_setup_entry(
     """Set up Daikin climate based on config_entry."""
     onecta_data: OnectaRuntimeData = config_entry.runtime_data
     coordinator = onecta_data.coordinator
-    sensors = []
+    sensors: list[Any] = []
     supported_management_point_types = {
         "domesticHotWaterTank",
         "domesticHotWaterFlowThrough",
@@ -95,8 +118,8 @@ async def async_setup_entry(
     for dev_id, device in onecta_data.devices.items():
         # For each device we provide a remaining day sensor
         sensors.append(DaikinLimitSensor(hass, config_entry, device, coordinator, "remaining_day"))
-        management_points = device.daikin_data.get("managementPoints", [])
-        for management_point in management_points:
+        for mp in device.iter_management_points():
+            management_point = mp.raw
             management_point_type = management_point["managementPointType"]
             embedded_id = management_point["embeddedId"]
 
@@ -114,7 +137,7 @@ async def async_setup_entry(
                             # Don't create when it is settable and values on/off, that is a switch
                             pass
                         elif len(values) == 0 and value_value is not None and isinstance(value_value, bool):
-                            # We don't have mutiple values and the value is a bool, this is a binary sensor
+                            # We don't have multiple values and the value is a bool, this is a binary sensor
                             pass
                         elif value == "operationMode" and management_point_type in supported_management_point_types:
                             # operationMode is handled by the HWT and ClimateControl directly, so don't create a separate sensor for that
@@ -155,26 +178,26 @@ async def async_setup_entry(
             if cd is not None:
                 cdv = cd.get("value")
                 if cdv is not None:
-                    for type in ["electrical", "gas"]:
-                        cdve = cdv.get(type)
+                    for consumption_type in ["electrical", "gas"]:
+                        cdve = cdv.get(consumption_type)
                         if cdve is not None:
-                            handle_energy_sensors(coordinator, device, embedded_id, management_point_type, type, cdve, sensors)
+                            handle_energy_sensors(coordinator, device, embedded_id, management_point_type, consumption_type, cdve, sensors)
 
     async_add_entities(sensors)
 
 
-class DaikinEnergySensor(CoordinatorEntity, SensorEntity):
+class DaikinEnergySensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorEntity):
     """Representation of a power/energy consumption sensor."""
 
     def __init__(
         self,
         device: DaikinOnectaDevice,
-        coordinator,
-        embedded_id,
-        management_point_type,
-        sensor_type,
-        operation_mode,
-        period,
+        coordinator: OnectaDataUpdateCoordinator,
+        embedded_id: str,
+        management_point_type: str,
+        sensor_type: str,
+        operation_mode: str,
+        period: str,
     ) -> None:
         super().__init__(coordinator)
         self._device = device
@@ -192,7 +215,7 @@ class DaikinEnergySensor(CoordinatorEntity, SensorEntity):
         self._period = period
         periodName = SENSOR_PERIODS[period]
         buildname = f"{operation_mode.capitalize()}{periodName}{sensor_type.capitalize()}Consumption"
-        sensor_settings = VALUE_SENSOR_MAPPING.get(buildname)
+        sensor_settings = VALUE_SENSOR_MAPPING[buildname]
         self._attr_icon = sensor_settings[CONF_ICON]
         self._attr_device_class = sensor_settings[CONF_DEVICE_CLASS]
         self._attr_entity_registry_enabled_default = sensor_settings[ENABLED_DEFAULT]
@@ -217,62 +240,73 @@ class DaikinEnergySensor(CoordinatorEntity, SensorEntity):
     def available(self) -> bool:
         return self._device.available
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to the ``consumptionData`` DataPoint and availability."""
+        await super().async_added_to_hass()
+        self.async_on_remove(self._device.add_data_point_listener(self._embedded_id, "consumptionData", self._handle_model_update))
+        self.async_on_remove(self._device.add_listener(self._handle_availability_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
         self.async_write_ha_state()
 
-    def sensor_value(self):
-        energy_value = None
-        for management_point in self._device.daikin_data["managementPoints"]:
-            if self._embedded_id == management_point["embeddedId"]:
-                management_point_type = management_point["managementPointType"]
-                cd = management_point.get("consumptionData")
-                if cd is not None:
-                    # Retrieve the available operationModes, we can only provide consumption data for
-                    # supported operation modes
-                    cdv = cd.get("value")
-                    if cdv is not None:
-                        cdve = cdv.get(self._sensor_type)
-                        if cdve is not None:
-                            for mode in cdve:
-                                # Only handle consumptionData for the operation mode supported by this sensor
-                                if mode == self._operation_mode:
-                                    period_data = cdve[mode].get(SENSOR_PERIODS_ARRAY[self._period])
-                                    if period_data is not None:
-                                        energy_values = [0 if v is None else v for v in period_data]
-                                        if self._period == SENSOR_PERIOD_WEEKLY:
-                                            start_index = 7
-                                            end_index = len(energy_values)
-                                        elif self._period == SENSOR_PERIOD_MONTHLY:
-                                            start_index = 11 + date.today().month
-                                            end_index = start_index + 1
-                                        else:
-                                            start_index = 12
-                                            end_index = len(energy_values)
-                                        energy_value = round(sum(energy_values[start_index:end_index]), 3)
-                                        _LOGGER.info(
-                                            "Device '%s' has energy value '%s' for '%s' mode %s %s period %s",
-                                            self._device.name,
-                                            energy_value,
-                                            self._sensor_type,
-                                            management_point_type,
-                                            mode,
-                                            self._period,
-                                        )
+    @callback
+    def _handle_availability_update(self) -> None:
+        self.async_write_ha_state()
+
+    def sensor_value(self) -> float | None:
+        energy_value: float | None = None
+        mp = self._device.find_management_point(self._embedded_id)
+        if mp is not None:
+            management_point = mp.raw
+            management_point_type = management_point["managementPointType"]
+            cd = management_point.get("consumptionData")
+            if cd is not None:
+                # Retrieve the available operationModes, we can only provide consumption data for
+                # supported operation modes
+                cdv = cd.get("value")
+                if cdv is not None:
+                    cdve = cdv.get(self._sensor_type)
+                    if cdve is not None:
+                        for mode in cdve:
+                            # Only handle consumptionData for the operation mode supported by this sensor
+                            if mode == self._operation_mode:
+                                period_data = cdve[mode].get(SENSOR_PERIODS_ARRAY[self._period])
+                                if period_data is not None:
+                                    energy_values = [0 if v is None else v for v in period_data]
+                                    if self._period == SENSOR_PERIOD_WEEKLY:
+                                        start_index = 7
+                                        end_index = len(energy_values)
+                                    elif self._period == SENSOR_PERIOD_MONTHLY:
+                                        start_index = 11 + date.today().month
+                                        end_index = start_index + 1
+                                    else:
+                                        start_index = 12
+                                        end_index = len(energy_values)
+                                    energy_value = round(sum(energy_values[start_index:end_index]), 3)
+                                    _LOGGER.info(
+                                        "Device '%s' has energy value '%s' for '%s' mode %s %s period %s",
+                                        self._device.name,
+                                        energy_value,
+                                        self._sensor_type,
+                                        management_point_type,
+                                        mode,
+                                        self._period,
+                                    )
 
         return energy_value
 
 
-class DaikinValueSensor(CoordinatorEntity, SensorEntity):
+class DaikinValueSensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorEntity):
     def __init__(
         self,
         device: DaikinOnectaDevice,
-        coordinator,
-        embedded_id,
-        management_point_type,
-        sub_type,
-        value,
+        coordinator: OnectaDataUpdateCoordinator,
+        embedded_id: str,
+        management_point_type: str,
+        sub_type: str | None,
+        value: str,
     ) -> None:
         _LOGGER.info("DaikinValueSensor '%s' '%s' '%s'", management_point_type, sub_type, value)
         super().__init__(coordinator)
@@ -291,7 +325,7 @@ class DaikinValueSensor(CoordinatorEntity, SensorEntity):
         self._attr_device_class = None
         self._attr_state_class = None
         self._attr_has_entity_name = True
-        sensor_settings = VALUE_SENSOR_MAPPING.get(value)
+        sensor_settings = VALUE_SENSOR_MAPPING[value]
         self._attr_icon = sensor_settings[CONF_ICON]
         self._attr_device_class = sensor_settings[CONF_DEVICE_CLASS]
         self._attr_entity_registry_enabled_default = sensor_settings[ENABLED_DEFAULT]
@@ -315,37 +349,51 @@ class DaikinValueSensor(CoordinatorEntity, SensorEntity):
     def available(self) -> bool:
         return self._device.available
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to the DataPoint this sensor reflects and to availability."""
+        await super().async_added_to_hass()
+        # When a sub_type is set the sensor reads through the sub_type's
+        # value wrapper, so the top-level DataPoint key is the sub_type
+        # itself — that's what the diff tracks.
+        top_level_key = self._sub_type if self._sub_type is not None else self._value
+        self.async_on_remove(self._device.add_data_point_listener(self._embedded_id, top_level_key, self._handle_model_update))
+        self.async_on_remove(self._device.add_listener(self._handle_availability_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
         self.async_write_ha_state()
 
-    def sensor_value(self):
-        res = None
-        managementPoints = self._device.daikin_data.get("managementPoints", [])
-        for management_point in managementPoints:
-            if self._embedded_id == management_point["embeddedId"]:
-                if self._sub_type is not None:
-                    sub_type_data = management_point.get(self._sub_type)
-                    if sub_type_data is not None:
-                        management_point_v = sub_type_data.get("value")
-                        if management_point_v is not None:
-                            management_point = management_point_v
-                cd = management_point.get(self._value)
-                if cd is not None:
-                    res = cd.get("value")
+    @callback
+    def _handle_availability_update(self) -> None:
+        self.async_write_ha_state()
+
+    def sensor_value(self) -> Any:
+        res: Any = None
+        mp = self._device.find_management_point(self._embedded_id)
+        if mp is not None:
+            management_point: Any = mp.raw
+            if self._sub_type is not None:
+                sub_type_data = management_point.get(self._sub_type)
+                if sub_type_data is not None:
+                    management_point_v = sub_type_data.get("value")
+                    if management_point_v is not None:
+                        management_point = management_point_v
+            cd = management_point.get(self._value)
+            if cd is not None:
+                res = cd.get("value")
         _LOGGER.debug("Device '%s' sensor '%s' value '%s'", self._device.name, self._value, res)
         return res
 
 
-class DaikinLimitSensor(CoordinatorEntity, SensorEntity):
+class DaikinLimitSensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorEntity):
     def __init__(
         self,
         hass: HomeAssistant,
         config_entry: ConfigEntry,
         device: DaikinOnectaDevice,
-        coordinator,
-        limit_key,
+        coordinator: OnectaDataUpdateCoordinator,
+        limit_key: str,
     ) -> None:
         _LOGGER.info("Device '%s' LimitSensor '%s'", device.name, limit_key)
         super().__init__(coordinator)
@@ -355,7 +403,7 @@ class DaikinLimitSensor(CoordinatorEntity, SensorEntity):
         self._limit_key = limit_key
         self._attr_has_entity_name = True
         self._attr_unique_id = f"{self._device.id}_limitsensor_{self._limit_key}"
-        sensor_settings = VALUE_SENSOR_MAPPING.get("RatelimitRemainingDay")
+        sensor_settings = VALUE_SENSOR_MAPPING["RatelimitRemainingDay"]
         self._attr_icon = sensor_settings[CONF_ICON]
         self._attr_device_class = sensor_settings[CONF_DEVICE_CLASS]
         self._attr_entity_registry_enabled_default = sensor_settings[ENABLED_DEFAULT]
@@ -379,11 +427,22 @@ class DaikinLimitSensor(CoordinatorEntity, SensorEntity):
     def update_state(self) -> None:
         self._attr_native_value = self.sensor_value()
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to device events.
+
+        Rate limits change on every cloud request, but this sensor is
+        refreshed through the device listener rather than the coordinator
+        — acceptable because the cloud response that populated the rate
+        limits also carried DataPoint changes.
+        """
+        await super().async_added_to_hass()
+        self.async_on_remove(self._device.add_listener(self._handle_model_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
         self.async_write_ha_state()
 
-    def sensor_value(self):
+    def sensor_value(self) -> int:
         daikin_api = self._config_entry.runtime_data.daikin_api
-        return daikin_api.rate_limits[self._limit_key]
+        return int(daikin_api.rate_limits[self._limit_key])

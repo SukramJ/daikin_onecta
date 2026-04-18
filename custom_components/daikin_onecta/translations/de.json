@@ -100,9 +100,6 @@
       "heatingweeklygasconsumption": {
         "name": "Wöchentlicher Gasverbrauch Heizung"
       },
-      "heatingmonthlyconsumption": {
-        "name": "Monatlicher Gasverbrauch Heizung"
-      },
       "heatingyearlygasconsumption": {
         "name": "Jährlicher Gasverbrauch Heizung"
       },
@@ -195,6 +192,9 @@
       },
       "timezone": {
         "name": "Zeitzone"
+      },
+      "heatingmonthlygasconsumption": {
+        "name": "Monatlicher Gasverbrauch Heizung"
       }
     },
     "binary_sensor": {

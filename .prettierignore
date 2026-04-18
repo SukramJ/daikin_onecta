@@ -1,0 +1,10 @@
+tests/snapshots/
+tests/fixtures/
+custom_components/daikin_onecta/translations/
+blueprints/
+venv/
+.venv/
+build/
+htmlcov/
+*.lock
+changelog.md
