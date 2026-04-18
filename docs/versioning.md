@@ -25,7 +25,7 @@
   - correction of a translation string;
   - dependency or CI change with no runtime impact.
 
-## What is *not* a public surface
+## What is _not_ a public surface
 
 The following are **internal** and may change without a major bump:
 
@@ -42,7 +42,7 @@ making it stable.
 
 The minimum supported HA Core version lives in
 `custom_components/daikin_onecta/manifest.json::homeassistant`. Bumping
-it is a **MINOR** change if the new minimum is a *previous* HA Core
+it is a **MINOR** change if the new minimum is a _previous_ HA Core
 release, and a **MAJOR** change if it forces users still on the old
 release to stay on an old `daikin_onecta` version.
 

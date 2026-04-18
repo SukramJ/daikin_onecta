@@ -24,6 +24,7 @@ from .device import DaikinOnectaDevice
 from .exceptions import DaikinApiError
 from .exceptions import DaikinAuthError
 from .exceptions import DaikinError
+from .schema import validate_cloud_response
 
 __all__: Final = ("OnectaDataUpdateCoordinator", "OnectaRuntimeData")
 
@@ -47,6 +48,10 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator[None]):
         self.options: Mapping[str, Any] = config_entry.options
         self._config_entry = config_entry
 
+        # Populated by _async_update_data after every successful poll; read by
+        # diagnostics to surface contract drift from the Daikin cloud.
+        self.last_validation_issue_count: int = 0
+
         super().__init__(
             hass,
             _LOGGER,
@@ -60,7 +65,7 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator[None]):
         )
 
     def scan_ignore(self) -> int:
-        """Sekunden, die wir GETs nach einem PATCH überspringen."""
+        """Return the number of seconds to skip GETs for after a PATCH."""
         return int(self.options.get("scan_ignore", 30))
 
     async def _async_update_data(self) -> None:
@@ -71,6 +76,7 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator[None]):
         daikin_api = onecta_data.daikin_api
         scan_ignore_value = self.scan_ignore()
 
+        # pylint: disable=protected-access  # _last_patch_call is package-private coordinator↔api state
         if (datetime.now() - daikin_api._last_patch_call).total_seconds() < scan_ignore_value:
             self.update_interval = timedelta(seconds=scan_ignore_value)
             _LOGGER.debug(
@@ -85,6 +91,20 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator[None]):
                 raise UpdateFailed(f"Daikin cloud unreachable: {err}") from err
             except DaikinError as err:
                 raise UpdateFailed(f"Daikin integration error: {err}") from err
+
+            # Soft schema validation. The contract is intentionally lenient
+            # (unknown keys allowed), so we only log on breaking drift — the
+            # integration keeps running even if the cloud adds or removes a
+            # cosmetic field.
+            issues = validate_cloud_response(daikin_api.json_data)
+            self.last_validation_issue_count = len(issues)
+            if issues:
+                _LOGGER.warning(
+                    "Daikin cloud response failed %d contract check(s); first: %s %s",
+                    len(issues),
+                    issues[0]["path"],
+                    issues[0]["reason"],
+                )
 
             for dev_data in daikin_api.json_data or []:
                 if dev_data["id"] in devices:
@@ -121,7 +141,8 @@ class OnectaDataUpdateCoordinator(DataUpdateCoordinator[None]):
             # 22:00 and a high scan interval of 9 minutes we randomize the next poll when it is
             # between 22:00 and 22:09
             if self.in_between(datetime.now().time(), ls, (ls_datetime + timedelta(seconds=high_scan_interval)).time()):
-                scan_interval = random.randint(60, scan_interval)  # noqa: S311 # nosec B311 — non-cryptographic jitter for load spreading
+                # Non-cryptographic jitter for load spreading — bandit B311 false positive.
+                scan_interval = random.randint(60, scan_interval)  # nosec B311
 
         # When we hit our daily rate limit we check the retry_after which is the amount of seconds
         # we have to wait before we can make a call again

@@ -25,7 +25,7 @@ authoritative record.
   `DaikinDeviceError`, `DaikinValidationError`. The coordinator
   translates them into `ConfigEntryAuthFailed` / `UpdateFailed`.
 - **Tooling baseline**: central `pyproject.toml` (ruff, mypy, pylint,
-  bandit, coverage, pytest, codespell), pre-commit suite, CI jobs for
+  bandit, coverage, pytest, codespell), prek hook suite, CI jobs for
   mypy / bandit / pylint / CodeQL / dependency review, `codecov.yml`
   with component tracking. See ROADMAP phases 0–3.
 - **Test suite**: `test_support.py`, `test_daikin_api.py`,
@@ -41,6 +41,10 @@ authoritative record.
   from `INFO` to `DEBUG` to keep cloud identifiers out of default logs.
 - **Type safety**: 17 modules typed (`mypy --python-version 3.14` 0
   errors, baseline was 49). `__all__` declared on every public module.
+- **Hook runner**: migrated from `pre-commit` to
+  [`prek`](https://github.com/j178/prek), a drop-in Rust rewrite. The
+  `.pre-commit-config.yaml` is unchanged; CI uses `j178/prek-action@v2`.
+  `pre-commit` itself still works locally — both share the same config.
 
 ### Security
 

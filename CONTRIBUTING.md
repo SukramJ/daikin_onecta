@@ -17,8 +17,13 @@ source venv/bin/activate
 
 pip install -r requirements_test.txt
 pip install -r requirements_test_pre_commit.txt
-pre-commit install
+prek install
 ```
+
+> `prek` (https://github.com/j178/prek) is a drop-in Rust rewrite of
+> `pre-commit` and reads the same `.pre-commit-config.yaml`. If you
+> prefer the original `pre-commit`, it works too — the config format is
+> identical.
 
 Run the test suite the same way CI does:
 
@@ -41,7 +46,7 @@ pytest --snapshot-update
 Run all linters and formatters:
 
 ```bash
-pre-commit run --all-files
+prek run --all-files
 ```
 
 ## Coding conventions
@@ -51,11 +56,11 @@ pre-commit run --all-files
 - **Type annotations:** required on every new public function and class.
   `mypy --python-version 3.14` must stay at 0 errors.
 - **`__all__`:** every public module declares its exports; the
-  `lint-all-exports` pre-commit hook enforces this.
+  `lint-all-exports` prek hook enforces this.
 - **Translations:** every translated string key must exist in the
   English fallback (`translations/en.json`); the `check-i18n`
-  pre-commit hook enforces this.
-- **Comments:** explain the *why*, never the *what*. Multi-paragraph
+  prek hook enforces this.
+- **Comments:** explain the _why_, never the _what_. Multi-paragraph
   docstrings are not used; keep doc lines short.
 
 ## Tests

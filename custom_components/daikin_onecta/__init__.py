@@ -41,7 +41,7 @@ PLATFORMS: Final[list[Platform]] = [
 
 
 async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
-    """Setup the Daikin Onecta component."""
+    """Set up the Daikin Onecta component."""
     return True
 
 

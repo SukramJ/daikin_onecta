@@ -1,4 +1,4 @@
-"""Retry-Decorator mit exponentiellem Backoff und Jitter."""
+"""Retry decorator with exponential backoff and jitter."""
 
 from __future__ import annotations
 
@@ -31,12 +31,13 @@ def retry_with_backoff(
     jitter: float = 0.25,
     retry_on: tuple[type[BaseException], ...] = (DaikinApiError,),
 ) -> Callable[[Callable[..., Awaitable[T]]], Callable[..., Awaitable[T]]]:
-    """Async-Decorator: führt die Funktion bis ``tries``-mal aus, mit exponentiellem Backoff.
+    """Async decorator: run the function up to ``tries`` times with exponential backoff.
 
-    - ``base_delay`` wird mit ``2 ** attempt`` multipliziert, geclampt auf ``max_delay``.
-    - ``jitter`` (relativ, 0–1) verteilt parallele Aufrufer.
-    - ``DaikinAuthError`` und ``DaikinRateLimitError`` werden nie automatisch wiederholt:
-      Auth-Fehler brauchen einen Reauth-Flow, RateLimit kennt sein eigenes ``retry_after``.
+    - ``base_delay`` is multiplied by ``2 ** attempt`` and clamped to ``max_delay``.
+    - ``jitter`` (relative, 0-1) spreads parallel callers apart.
+    - ``DaikinAuthError`` and ``DaikinRateLimitError`` are never retried
+      automatically: auth errors need a reauth flow, rate limit has its own
+      ``retry_after``.
     """
     if tries < 1:
         raise ValueError("tries must be >= 1")
@@ -68,7 +69,8 @@ def retry_with_backoff(
                         exc,
                     )
                     await asyncio.sleep(delay)
-            assert last_exc is not None
+            # Invariant: the loop body always assigns ``last_exc`` before reaching this line.
+            assert last_exc is not None  # nosec B101
             raise last_exc
 
         return wrapper

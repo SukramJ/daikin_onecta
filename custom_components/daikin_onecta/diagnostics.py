@@ -58,6 +58,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, config_entry: 
         "rate_limits": daikin_api.rate_limits,
         "options": config_entry.options,
         "oauth2_token_valid": daikin_api.session.valid_token,
+        "schema_validation_issues": onecta_data.coordinator.last_validation_issue_count,
         "entities": get_entities(hass, config_entry),
     }
 

@@ -1,8 +1,8 @@
-"""Proaktives Rate-Limit-Pacing.
+"""Proactive rate-limit pacing.
 
-Ergänzt die reaktive Logik in ``DaikinApi`` (die nur bei
-``remaining_day == 0`` reagiert), indem die nächste Wartezeit aus den
-verbleibenden Minuten/Tag-Kontingenten abgeleitet wird.
+Complements the reactive logic in ``DaikinApi`` (which only reacts when
+``remaining_day == 0``) by deriving the next wait time from the remaining
+per-minute and daily quotas.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class RateLimitThrottle:
-    """Berechnet eine empfohlene Wartezeit (Sekunden) bis zum nächsten Call."""
+    """Computes a recommended wait time (in seconds) until the next call."""
 
     def __init__(self, *, safety_margin: int = 2, min_remaining_pct: float = 0.1) -> None:
         if safety_margin < 0:
@@ -29,11 +29,12 @@ class RateLimitThrottle:
         self._min_remaining_pct = min_remaining_pct
 
     def recommended_delay(self, limits: RateLimits) -> float:
-        """Empfohlene Wartezeit in Sekunden bis zum nächsten Call.
+        """Recommended wait time in seconds until the next call.
 
-        Wenn das Tageskontingent erschöpft ist, wird ``retry_after`` plus Safety-Margin
-        zurückgegeben. Andernfalls wird die nächste Aufruf-Frequenz so gewählt, dass
-        ``remaining_minutes`` nicht unter ``min_remaining_pct * minute`` fällt.
+        If the daily quota is exhausted, ``retry_after`` plus the safety
+        margin is returned. Otherwise the next call frequency is chosen such
+        that ``remaining_minutes`` does not drop below
+        ``min_remaining_pct * minute``.
         """
         if limits.get("remaining_day", 1) <= 0:
             return float(limits.get("retry_after", 0)) + self._safety_margin

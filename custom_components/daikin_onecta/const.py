@@ -17,15 +17,16 @@ from homeassistant.const import CONF_UNIT_OF_MEASUREMENT
 from homeassistant.const import PERCENTAGE
 from homeassistant.const import REVOLUTIONS_PER_MINUTE
 from homeassistant.const import SIGNAL_STRENGTH_DECIBELS_MILLIWATT
+from homeassistant.const import EntityCategory
 from homeassistant.const import UnitOfEnergy
 from homeassistant.const import UnitOfTemperature
-from homeassistant.helpers.entity import EntityCategory
 
 
 DOMAIN: Final = "daikin_onecta"
 
 OAUTH2_AUTHORIZE: Final = "https://idp.onecta.daikineurope.com/v1/oidc/authorize"
-OAUTH2_TOKEN: Final = "https://idp.onecta.daikineurope.com/v1/oidc/token"  # noqa: S105 # nosec B105 — public OIDC endpoint URL, not a secret
+# Public OIDC endpoint URL, not a secret — bandit B105 false positive.
+OAUTH2_TOKEN: Final = "https://idp.onecta.daikineurope.com/v1/oidc/token"  # nosec B105
 
 DAIKIN_API_URL: Final = "https://api.onecta.daikineurope.com"
 
@@ -55,10 +56,10 @@ STATE_CLASS: Final = "STATE"
 ENTITY_CATEGORY: Final = "ENTITY_CATEGORY"
 TRANSLATION_KEY: Final = "TranslationKey"
 
-# Schema-Beschreibung pro Sensor-Mapping-Eintrag.
-# Wir verwenden die funktionale TypedDict-Form, weil die Schlüssel
-# (z. B. "Enabled", "TranslationKey") teils CamelCase sind und somit
-# nicht direkt als Klassen-Attribute geschrieben werden können.
+# Schema description per sensor-mapping entry.
+# We use the functional TypedDict form because some keys
+# (e.g. "Enabled", "TranslationKey") are CamelCase and therefore
+# cannot be written directly as class attributes.
 SensorMapping = Mapping[str, Any]
 
 # This maps the NAME as listed in the Daikin JSON data to:

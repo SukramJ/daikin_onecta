@@ -21,6 +21,8 @@ User-facing documentation lives in the project [README] and the
 - [Release process](release.md) — pre-release checklist.
 - [Versioning policy](versioning.md) — what counts as a breaking
   change.
+- [Docstring standards](docstring_standards.md) — when to write
+  docstrings and what style to use.
 - [Architecture decision records](adr/0001-record-architecture-decisions.md) —
   why the code looks the way it does.
 

@@ -23,7 +23,7 @@ CLIENT_SECRET = "TNL1ePwnOkf6o2gKiI8InS8nVwTz2G__VYkv6WznzJGUnwLHLTmKYp-7RZc6FA3
 
 
 @pytest.fixture(autouse=True)
-async def setup_credentials(hass: HomeAssistant) -> None:
+async def _setup_credentials(hass: HomeAssistant) -> None:
     """Fixture to setup credentials."""
     assert await async_setup_component(hass, "application_credentials", {})
     await async_import_client_credential(
@@ -39,7 +39,6 @@ async def test_full_flow(
     hass_client_no_auth,
     aioclient_mock,
     current_request_with_host,
-    setup_credentials,
 ) -> None:
     """Check full flow."""
     assert await async_setup_component(hass, "daikin_onecta", {})

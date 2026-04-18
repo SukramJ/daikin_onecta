@@ -1,4 +1,4 @@
-"""Phase 8.8 — Tests für ``async_migrate_entry`` (Versionsmigrationen)."""
+"""Phase 8.8 — tests for ``async_migrate_entry`` (version migrations)."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry
 from custom_components.daikin_onecta import async_migrate_entry
 from custom_components.daikin_onecta.const import DOMAIN
 
-# JWT mit ``sub = 1234567890`` (siehe conftest.FAKE_ACCESS_TOKEN)
+# JWT with ``sub = 1234567890`` (see conftest.FAKE_ACCESS_TOKEN)
 _VALID_JWT = (
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     ".eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ"
@@ -47,11 +47,7 @@ async def test_migrate_v1_1_with_invalid_jwt_returns_false(hass: HomeAssistant):
 
 async def test_migrate_v1_1_missing_sub_returns_false(hass: HomeAssistant):
     # JWT ohne ``sub``-Claim (selbst-konstruiert: Header.Payload.Signature)
-    no_sub = (
-        "eyJhbGciOiJIUzI1NiJ9"
-        ".eyJuYW1lIjoiSm9obiBEb2UifQ"
-        ".dummy"
-    )
+    no_sub = "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.dummy"
     entry = _entry(version=1, minor=1, token={"access_token": no_sub})
     entry.add_to_hass(hass)
     assert await async_migrate_entry(hass, entry) is False

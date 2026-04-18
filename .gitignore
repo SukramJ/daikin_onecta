@@ -1,37 +1,63 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+
+# Virtualenvs / package managers
+venv/
+.venv/
+node_modules/
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+coverage.xml
+htmlcov/
+
+# IDE / editor
+/.idea
+.vscode/
+custom_components/daikin_onecta/.vscode/**
+
+# OS
+.DS_Store
+
+# Claude Code local overrides
+.claude/settings.local.json
+
+# Local Home Assistant dev instance (not part of the integration)
 .HA_VERSION
+.storage/**
 automations.yaml
 configuration.yaml
-daikin_data_DACARLO.json
-daikin_data.json
-daikin_puredata.json
 groups.yaml
-home-assistant_v2.db
-home-assistant.log
-home-assistant_v2.db-shm
-home-assistant_v2.db-wal
-home-assistant.log.1
-home-assistant.log.fault
-reset.cmd
 scenes.yaml
 scripts.yaml
 secrets.yaml
+home-assistant.log
+home-assistant.log.1
+home-assistant.log.fault
+home-assistant_v2.db
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal
 tokenset.json
-.storage/**
+reset.cmd
+daikin_data.json
+daikin_data_DACARLO.json
+daikin_puredata.json
+deps/**
+
+# Foreign custom components that may live alongside this repo in a dev HA
 custom_components/dhcp/**
 custom_components/hacs/**
 custom_components/sonoff/**
 custom_components/start_time/**
 custom_components/xiaomi_gateway3/**
 custom_components/yandex_station/**
-deps/**
-custom_components/daikin_onecta/.vscode/**
-custom_components/daikin_onecta/__pycache__/**
-/.idea
-/tests/__pycache__
-.claude/settings.local.json
-.coverage
-coverage.xml
-htmlcov/
-.mypy_cache/
-.ruff_cache/
-.pytest_cache/

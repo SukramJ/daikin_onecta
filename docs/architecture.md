@@ -119,19 +119,19 @@ state). See ADR 0002.
 
 ## Module map
 
-| Module | Responsibility |
-|--------|----------------|
-| `__init__.py` | HA setup, unload, config-entry migration |
-| `application_credentials.py` | OAuth2 client registration |
-| `config_flow.py` | OAuth2 flow + reauth + JWT-`sub` unique-id |
-| `coordinator.py` | Polling cadence, exception translation |
-| `daikin_api.py` | HTTP transport, OAuth, rate-limit telemetry, cloud lock |
-| `device.py` | Per-device JSON wrapper, get/set helpers |
-| `exceptions.py` | `DaikinError` hierarchy |
-| `const.py` | Constants and the central `VALUE_SENSOR_MAPPING` |
-| `support/` | Retry, circuit breaker, throttle (no HA deps) |
-| `climate.py` etc. | HA platform glue |
-| `diagnostics.py`, `system_health.py` | HA diagnostic surfaces |
+| Module                               | Responsibility                                          |
+| ------------------------------------ | ------------------------------------------------------- |
+| `__init__.py`                        | HA setup, unload, config-entry migration                |
+| `application_credentials.py`         | OAuth2 client registration                              |
+| `config_flow.py`                     | OAuth2 flow + reauth + JWT-`sub` unique-id              |
+| `coordinator.py`                     | Polling cadence, exception translation                  |
+| `daikin_api.py`                      | HTTP transport, OAuth, rate-limit telemetry, cloud lock |
+| `device.py`                          | Per-device JSON wrapper, get/set helpers                |
+| `exceptions.py`                      | `DaikinError` hierarchy                                 |
+| `const.py`                           | Constants and the central `VALUE_SENSOR_MAPPING`        |
+| `support/`                           | Retry, circuit breaker, throttle (no HA deps)           |
+| `climate.py` etc.                    | HA platform glue                                        |
+| `diagnostics.py`, `system_health.py` | HA diagnostic surfaces                                  |
 
 ## See also
 

@@ -1,4 +1,4 @@
-"""Hilfs- und Resilienz-Bausteine (Retry, Backoff, Circuit-Breaker, Throttle)."""
+"""Helper and resilience building blocks (retry, backoff, circuit breaker, throttle)."""
 
 from __future__ import annotations
 

@@ -52,7 +52,7 @@ resets, instead of generating a wave of `429`s.
   hours.
 - **Positive:** randomized first poll keeps the cloud (and other
   users) from being hammered at exactly 07:00:00.
-- **Negative:** automations that need sub-minute reaction to *external*
+- **Negative:** automations that need sub-minute reaction to _external_
   device state changes are not viable on this integration —
   `cloud_polling` plus the rate limit makes that a non-goal.
 - **Future:** the `RateLimitThrottle` (see ADR 0002) is wired in

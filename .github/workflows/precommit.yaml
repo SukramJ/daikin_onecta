@@ -1,4 +1,4 @@
-name: Validate with pre-commit
+name: Validate with prek
 
 on:
   push:
@@ -12,9 +12,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  precommit:
+  prek:
     runs-on: ubuntu-latest
-    name: Pre-commit
+    name: prek
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6
@@ -27,11 +27,12 @@ jobs:
         run: |
           pip install --constraint=.github/workflows/constraints.txt pip
           pip install -r requirements_test_pre_commit.txt
-      - name: Cache pre-commit hooks
+      - name: Cache prek hooks
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
-      - name: Run pre-commit on all files
-        run: |
-          pre-commit run --all-files --show-diff-on-failure --color=always
+          path: ~/.cache/prek
+          key: prek-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: Run prek on all files
+        uses: j178/prek-action@v2
+        with:
+          extra_args: --all-files --show-diff-on-failure --color=always

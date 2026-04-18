@@ -160,3 +160,53 @@ class TestExceptionTranslation:
         mock_config_entry.runtime_data.daikin_api.getCloudDeviceDetails = AsyncMock(side_effect=DaikinError("unexpected"))
         with pytest.raises(UpdateFailed, match="integration error"):
             await configured_coordinator._async_update_data()
+
+
+class TestSchemaValidation:
+    """Phase 5.5 — soft schema validation in the coordinator update path."""
+
+    @pytest.fixture
+    def configured_coordinator(self, mock_hass, mock_config_entry):
+        config_entry = mock_config_entry
+        config_entry.add_to_hass(mock_hass)
+        config_entry.runtime_data.daikin_api._last_patch_call = datetime(1970, 1, 1)
+        config_entry.runtime_data.daikin_api.rate_limits = {"remaining_day": 1000, "retry_after": 0}
+        return OnectaDataUpdateCoordinator(mock_hass, config_entry)
+
+    async def test_valid_payload_records_zero_issues(self, configured_coordinator, mock_config_entry):
+        """A payload that satisfies the contract leaves the issue counter at 0."""
+        payload = [
+            {
+                "id": "dev-1",
+                "deviceModel": "Altherma",
+                "managementPoints": [
+                    {"embeddedId": "climateControl", "managementPointType": "climateControl"},
+                ],
+            },
+        ]
+        mock_config_entry.runtime_data.daikin_api.getCloudDeviceDetails = AsyncMock(return_value=payload)
+        with patch("custom_components.daikin_onecta.coordinator.DaikinOnectaDevice"):
+            await configured_coordinator._async_update_data()
+        assert configured_coordinator.last_validation_issue_count == 0
+
+    async def test_invalid_payload_logs_warning_and_still_updates(self, configured_coordinator, mock_config_entry, caplog):
+        """Contract violations warn but never break the update."""
+        import logging
+
+        # Device keys intact (so device construction downstream still works),
+        # but the management point is missing its required type.
+        payload = [
+            {
+                "id": "dev-1",
+                "deviceModel": "Altherma",
+                "managementPoints": [{"embeddedId": "x"}],
+            },
+        ]
+        mock_config_entry.runtime_data.daikin_api.getCloudDeviceDetails = AsyncMock(return_value=payload)
+        with (
+            caplog.at_level(logging.WARNING, logger="custom_components.daikin_onecta.coordinator"),
+            patch("custom_components.daikin_onecta.coordinator.DaikinOnectaDevice"),
+        ):
+            await configured_coordinator._async_update_data()
+        assert configured_coordinator.last_validation_issue_count == 1
+        assert any("contract check" in rec.message for rec in caplog.records)

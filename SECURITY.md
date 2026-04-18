@@ -6,10 +6,10 @@ Only the most recent minor release receives security fixes. Older releases
 are end-of-life as soon as the next minor is published.
 
 | Version | Supported |
-|---------|-----------|
-| 4.4.x   | ✅ |
-| 4.3.x   | ❌ |
-| < 4.3   | ❌ |
+| ------- | --------- |
+| 4.4.x   | ✅        |
+| 4.3.x   | ❌        |
+| < 4.3   | ❌        |
 
 The current release version is tracked in
 [`custom_components/daikin_onecta/manifest.json`](custom_components/daikin_onecta/manifest.json).

@@ -7,12 +7,12 @@ from typing import Any
 from typing import Final
 
 from homeassistant.components.water_heater import STATE_HEAT_PUMP
-from homeassistant.components.water_heater import STATE_OFF
 from homeassistant.components.water_heater import STATE_PERFORMANCE
 from homeassistant.components.water_heater import WaterHeaterEntity
 from homeassistant.components.water_heater import WaterHeaterEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE
+from homeassistant.const import STATE_OFF
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import callback
 from homeassistant.core import HomeAssistant
@@ -42,7 +42,6 @@ async def async_setup_entry(
             "domesticHotWaterTank",
             "domesticHotWaterFlowThrough",
         }
-        """ When the device has a domesticHotWaterTank we add a water heater """
         management_points = device.daikin_data.get("managementPoints", [])
         for management_point in management_points:
             management_point_type = management_point["managementPointType"]
@@ -110,9 +109,9 @@ class DaikinWaterTank(CoordinatorEntity[OnectaDataUpdateCoordinator], WaterHeate
     @property
     def hotwatertank_data(self) -> Any:
         # Find the management point for the hot water tank.
-        # Runtime-Invariante: das Water-Heater-Entity wird nur für Geräte
-        # mit einem passenden ManagementPoint angelegt; die Suche kann hier
-        # also nicht ``None`` zurückgeben.
+        # Runtime invariant: the water-heater entity is only created for
+        # devices with a matching management point, so the search here cannot
+        # return ``None``.
         hwd: dict[str, Any] | None = None
         management_points = self._device.daikin_data.get("managementPoints", [])
         for management_point in management_points:
@@ -141,7 +140,6 @@ class DaikinWaterTank(CoordinatorEntity[OnectaDataUpdateCoordinator], WaterHeate
         if dht:
             if dht["settable"] is True:
                 sf |= WaterHeaterEntityFeature.TARGET_TEMPERATURE
-        """Return the list of supported features."""
         return sf
 
     def get_current_temperature(self) -> float | None:
@@ -173,10 +171,10 @@ class DaikinWaterTank(CoordinatorEntity[OnectaDataUpdateCoordinator], WaterHeate
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
+        """Return the optional device state attributes."""
         data: dict[str, Any] = {}
         dht = self.domestic_hotwater_temperature
         if dht is not None:
-            """Return the optional device state attributes."""
             data = {"target_temp_step": float(dht["stepValue"])}
         return data
 

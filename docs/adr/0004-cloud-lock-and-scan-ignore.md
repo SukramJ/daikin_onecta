@@ -57,7 +57,7 @@ write.
   bottleneck — only one call to the Daikin cloud is in flight at any
   moment per HA instance. For a cloud-polling integration with a
   default cadence of minutes, this is acceptable.
-- **Negative:** `scan_ignore` delays observability of *external*
+- **Negative:** `scan_ignore` delays observability of _external_
   changes (someone using the Onecta phone app while HA is also
   managing the device). Default of 30 s is the empirical sweet spot —
   shorter values reintroduce the stale-read bug.

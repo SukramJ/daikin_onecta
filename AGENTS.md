@@ -34,7 +34,7 @@ The ADR template is the same Michael-Nygard format used by
 - **Coverage gate:** `fail_under = 80` in `pyproject.toml::[tool.coverage.report]`.
   Currently at 94.68 %.
 - **Type gate:** `mypy --python-version 3.14` 0 errors in 21 files.
-- **Lint gate:** `pre-commit run --all-files` clean.
+- **Lint gate:** `prek run --all-files` clean (`pre-commit` also works — same config).
 - **Snapshot gate:** `pytest tests` — failures usually mean the
   snapshot needs `--snapshot-update`, but verify the diff first.
 
@@ -55,6 +55,6 @@ The ADR template is the same Michael-Nygard format used by
   `docs/adr/0002-resilience-patterns.md`.
 - Domain-model question (where should this code live?): check
   `docs/adr/0003-domain-model-package-layout.md` — the layout there is
-  Proposed, not Accepted, so call it out if your change pre-empts that
+  Proposed, not Accepted, so call it out if your change preempts that
   decision.
 - Anything else: ask the human reviewer.

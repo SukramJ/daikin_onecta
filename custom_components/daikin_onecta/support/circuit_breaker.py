@@ -1,4 +1,4 @@
-"""Circuit-Breaker (CLOSED → OPEN → HALF_OPEN → CLOSED)."""
+"""Circuit breaker (CLOSED → OPEN → HALF_OPEN → CLOSED)."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class CircuitState(enum.Enum):
-    """Zustände des Circuit-Breakers."""
+    """Circuit breaker states."""
 
     CLOSED = "closed"
     OPEN = "open"
@@ -24,18 +24,18 @@ class CircuitState(enum.Enum):
 
 
 class CircuitBreakerOpenError(DaikinError):
-    """Wird geworfen, wenn der Circuit-Breaker offen ist und Calls blockiert."""
+    """Raised when the circuit breaker is open and blocks outgoing calls."""
 
 
 class CircuitBreaker:
-    """Einfacher Circuit-Breaker.
+    """Simple circuit breaker.
 
-    - Nach ``failure_threshold`` aufeinanderfolgenden Fehlern wechselt der Zustand
-      auf ``OPEN``; Calls werfen ``CircuitBreakerOpenError`` ohne den geschützten
-      Endpunkt anzusprechen.
-    - Nach ``recovery_timeout`` Sekunden geht der Breaker in ``HALF_OPEN``: der
-      nächste Call darf passieren. Erfolgt dieser ohne Fehler, schließt der
-      Breaker; ansonsten geht er sofort wieder auf ``OPEN``.
+    - After ``failure_threshold`` consecutive failures, the state transitions
+      to ``OPEN``; calls raise ``CircuitBreakerOpenError`` without contacting
+      the protected endpoint.
+    - After ``recovery_timeout`` seconds the breaker moves to ``HALF_OPEN``:
+      the next call is allowed through. If it succeeds the breaker closes;
+      otherwise it trips back to ``OPEN`` immediately.
     """
 
     def __init__(self, *, failure_threshold: int = 5, recovery_timeout: float = 60.0) -> None:
@@ -55,7 +55,7 @@ class CircuitBreaker:
         return self._state
 
     async def before_call(self) -> None:
-        """Prüft den State vor einem Call. Hebt ``CircuitBreakerOpenError`` wenn blockiert."""
+        """Check the state before a call. Raises ``CircuitBreakerOpenError`` when blocked."""
         async with self._lock:
             if self._state is CircuitState.OPEN:
                 if time.monotonic() - self._opened_at >= self._recovery_timeout:

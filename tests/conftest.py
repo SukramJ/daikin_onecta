@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import time
 from typing import Any
-from unittest.mock import AsyncMock
 from unittest.mock import patch
 
 import pytest
@@ -41,7 +40,7 @@ def snapshot(snapshot: SnapshotAssertion) -> SnapshotAssertion:
 
 
 @pytest.fixture(name="auto_enable_custom_integrations", autouse=True)
-def auto_enable_custom_integrations(hass: Any, enable_custom_integrations: Any) -> None:
+def _auto_enable_custom_integrations(hass: Any, enable_custom_integrations: Any) -> None:
     """Enable custom integrations defined in the test dir."""
 
 
@@ -68,15 +67,14 @@ def mock_config_entry_fixture(hass: HomeAssistant) -> MockConfigEntry:
 
 
 @pytest.fixture(name="onecta_auth")
-def onecta_auth() -> AsyncMock:
+def _onecta_auth() -> None:
     """Restrict loaded platforms to list given."""
     return
 
 
 @pytest.fixture(name="access_token")
-def async_get_access_token() -> AsyncMock:
+def _async_get_access_token() -> Any:
     """Restrict loaded platforms to list given."""
-
     with patch(
         "custom_components.daikin_onecta.DaikinApi.async_get_access_token",
         return_value=FAKE_ACCESS_TOKEN,

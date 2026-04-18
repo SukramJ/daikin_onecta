@@ -58,6 +58,19 @@ select = [
     "T20",  # flake8-print
     "PT",   # flake8-pytest-style
 ]
+extend-select = [
+    # Docstring rules enforced per docs/docstring_standards.md
+    "D200",  # one-line docstring should fit on one line
+    "D201",  # no blank lines allowed before docstring
+    "D202",  # no blank lines allowed after docstring
+    "D205",  # blank line required between summary and description
+    "D209",  # closing quotes on separate line for multiline
+    "D210",  # no whitespace surrounding docstring text
+    "D300",  # use triple double quotes
+    "D400",  # first line should end with a period
+    "D401",  # first line should be in imperative mood
+    "D419",  # docstring is empty
+]
 ignore = [
     "E501",   # line too long — handled by formatter
     "S101",   # assert in tests is fine
@@ -66,7 +79,7 @@ ignore = [
     "N802",   # function names lowerCamelCase — legacy from Daikin JSON API
     "N803",   # argument names lowerCamelCase — legacy from Daikin JSON API
     "N806",   # variable names lowerCamelCase — legacy from Daikin JSON API
-    "B007",   # unused loop variable — Bestand, in Phase 4 fixen
+    "B007",   # unused loop variable — legacy, to be fixed in phase 4
     "B008",   # function calls in defaults — HA service decorators
     "SIM105", # contextlib.suppress is overkill for simple try/except
 ]
@@ -88,19 +101,17 @@ indent-style = "space"
 line-ending = "lf"
 
 # ----------------------------------------------------------------------------
-# Mypy — moderate baseline (strict pro Modul in Phase 4 nachziehen)
+# Mypy — strict mode (phase 4.10 completed)
 # ----------------------------------------------------------------------------
 [tool.mypy]
 python_version = "3.13"
+strict = true
 ignore_missing_imports = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unused_configs = true
 warn_return_any = true
 no_implicit_optional = true
-check_untyped_defs = true
-disallow_incomplete_defs = false
-disallow_untyped_defs = false
 exclude = [
     "venv/",
     ".venv/",
@@ -134,12 +145,19 @@ disable = [
     "too-many-public-methods",
     "too-many-return-statements",
     "too-many-positional-arguments",
+    "too-many-nested-blocks",  # phase 7 refactor flattens deeply-nested platform loops
     "line-too-long",
     "invalid-name",  # mirrored ruff N-rules
     "fixme",
     "duplicate-code",
     "broad-exception-caught",
     "logging-fstring-interpolation",
+    # HA integration conventions:
+    "unused-argument",  # hass/config/async_add_entities signatures are fixed by HA
+    "abstract-method",  # HA entity base classes expose optional abstracts by design
+    "attribute-defined-outside-init",  # HA pattern: _attr_* set in coordinator callbacks
+    "unused-variable",  # `for dev_id, device in …` — id retained for readability
+    "redefined-builtin",  # `id` matches Daikin JSON field names in public signatures
 ]
 
 [tool.pylint.format]

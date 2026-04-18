@@ -7,9 +7,9 @@ from typing import Final
 
 from homeassistant.components.button import ButtonEntity
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import EntityCategory
 from homeassistant.core import callback
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
@@ -65,5 +65,6 @@ class DaikinRefreshButton(CoordinatorEntity[OnectaDataUpdateCoordinator], Button
         self.async_write_ha_state()
 
     async def async_press(self) -> None:
+        # pylint: disable=protected-access  # refresh button intentionally bypasses scan_ignore
         await self.coordinator._async_update_data()
         self.coordinator.async_update_listeners()

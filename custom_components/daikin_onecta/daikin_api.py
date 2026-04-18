@@ -24,12 +24,11 @@ from .const import DAIKIN_API_URL
 from .const import DOMAIN
 from .exceptions import DaikinApiError
 from .exceptions import DaikinAuthError
-from .exceptions import DaikinRateLimitError
 
 __all__: Final = ("DaikinApi", "RateLimits")
 
-# Defaults für die optionalen Resilienz-Bausteine. Werte konservativ gewählt,
-# damit der bisherige Polling-Rhythmus nicht gestört wird.
+# Defaults for the optional resilience building blocks. Values picked
+# conservatively so the existing polling rhythm is not disturbed.
 _RETRY_TRIES: Final = 3
 _RETRY_BASE_DELAY: Final = 1.0
 _RETRY_MAX_DELAY: Final = 5.0
@@ -38,19 +37,19 @@ _BREAKER_RECOVERY_TIMEOUT: Final = 60.0
 
 _LOGGER = logging.getLogger(__name__)
 
-# JSON-Antworttypen, die wir aus der Cloud zurückbekommen.
+# JSON response shapes the Daikin cloud returns to us.
 JsonResponse = dict[str, Any] | list[Any]
 
-# Was ``doBearerRequest`` an die Aufrufer zurückgibt:
-# - ``JsonResponse`` für GET (200)
-# - ``True`` für PATCH/POST/PUT (204)
-# - ``False`` wenn Cloud die Schreiboperation ablehnt (Rate-Limit auf Write-Pfad)
-# - ``[]`` wenn ein GET keine Daten liefern konnte
+# What ``doBearerRequest`` returns to callers:
+# - ``JsonResponse`` for GET (200)
+# - ``True`` for PATCH/POST/PUT (204)
+# - ``False`` when the cloud rejects a write (rate limit on the write path)
+# - ``[]`` when a GET could not deliver data
 RequestResult = JsonResponse | bool
 
 
 class RateLimits(TypedDict):
-    """HTTP-Header-basierte Rate-Limit-Telemetrie der Daikin-Cloud."""
+    """HTTP-header-based rate-limit telemetry from the Daikin cloud."""
 
     minute: int
     day: int
@@ -92,16 +91,17 @@ class DaikinApi:
             "ratelimit_reset": 0,
         }
 
-        # Letzte erfolgreiche Cloud-Antwort — wird vom Coordinator gefüllt und
-        # vom Diagnostics-Modul gelesen.
+        # Last successful cloud response — populated by the coordinator and
+        # read by the diagnostics module.
         self.json_data: list[dict[str, Any]] | None = None
 
         # The following lock is used to serialize http requests to Daikin cloud
         # to prevent receiving old settings while a PATCH is ongoing.
         self._cloud_lock: asyncio.Lock = asyncio.Lock()
 
-        # Resilienz-Bausteine: lokale Imports vermeiden Zirkel mit support.throttle.
-        from .support.circuit_breaker import CircuitBreaker
+        # Resilience building blocks: the local import avoids a circular
+        # import with ``support.throttle``.
+        from .support.circuit_breaker import CircuitBreaker  # pylint: disable=import-outside-toplevel
 
         self._breaker = CircuitBreaker(
             failure_threshold=_BREAKER_FAILURE_THRESHOLD,
@@ -124,7 +124,7 @@ class DaikinApi:
         return str(self.session.token["access_token"])
 
     def _update_rate_limits(self, headers: Any) -> None:
-        """Header-Werte in den ``rate_limits``-State übernehmen."""
+        """Copy header values into the ``rate_limits`` state."""
         self.rate_limits["minute"] = int(headers.get("X-RateLimit-Limit-minute", 0))
         self.rate_limits["day"] = int(headers.get("X-RateLimit-Limit-day", 0))
         self.rate_limits["remaining_minutes"] = int(headers.get("X-RateLimit-Remaining-minute", 0))
@@ -139,7 +139,7 @@ class DaikinApi:
             ir.async_delete_issue(self.hass, DOMAIN, "day_rate_limit")
 
     def _raise_rate_limit_issues(self) -> None:
-        """Fehlende Rate-Limit-Headerwerte als persistente HA-Issues anlegen."""
+        """Surface exhausted rate-limit counters as persistent HA issues."""
         if self.rate_limits["remaining_minutes"] == 0:
             ir.async_create_issue(
                 self.hass,
@@ -164,29 +164,33 @@ class DaikinApi:
                 translation_key="day_rate_limit",
             )
 
-    async def doBearerRequest(  # noqa: N802 - öffentlicher Name historisch
+    async def doBearerRequest(
         self,
         method: str,
         resource_url: str,
         options: str | None = None,
     ) -> RequestResult:
-        """HTTP-Request gegen die Daikin-Cloud (serialisiert über ``_cloud_lock``).
+        """HTTP request against the Daikin cloud (serialized via ``_cloud_lock``).
 
-        Rückgabewerte:
+        Return values:
         - GET 200      → ``JsonResponse``
         - PATCH/POST/PUT 204 → ``True``
-        - GET 429      → ``[]`` (Rate-Limit; Issue wird angelegt)
-        - Write 429    → ``False`` (Rate-Limit auf Write-Pfad)
+        - GET 429      → ``[]`` (rate limit; an issue is registered)
+        - Write 429    → ``False`` (rate limit on the write path)
 
-        Wirft:
-        - ``DaikinAuthError``       — Token-Refresh schlug fehl (HTTP 401).
-        - ``DaikinRateLimitError``  — wenn der Aufrufer Rate-Limits durchreichen will
-          (aktuell nur über die explizite Wrapper-API; ``doBearerRequest`` selbst
-          bleibt rückgabe-kompatibel, damit Plattform-Code unverändert bleibt).
-        - ``DaikinApiError``        — Transport-Fehler oder 5xx.
+        Raises:
+        - ``DaikinAuthError``       — the token refresh failed, or the cloud
+          answers the current request with HTTP 401.
+        - ``DaikinRateLimitError``  — only when the caller opts in via the
+          explicit wrapper API; ``doBearerRequest`` itself stays
+          return-compatible on 429 so platform code stays unchanged.
+        - ``DaikinApiError``        — transport error or HTTP 5xx (cloud
+          outage). 3xx and other unexpected 4xx responses (except 401 / 429)
+          are only logged and fall back to the default return value, to
+          preserve the previous behaviour.
         """
-        # Pre-Check: Circuit-Breaker. Im OPEN-State wird sofort geworfen,
-        # ohne die Cloud zu kontaktieren.
+        # Pre-check: circuit breaker. In the OPEN state we raise immediately
+        # without reaching out to the cloud.
         await self._breaker.before_call()
 
         async with self._cloud_lock:
@@ -220,7 +224,7 @@ class DaikinApi:
 
                     if resp.status == HTTPStatus.TOO_MANY_REQUESTS:
                         self._raise_rate_limit_issues()
-                        # Rate-Limit zählt nicht als Breaker-Failure (erwarteter Zustand).
+                        # Rate limit does not count as a breaker failure (expected state).
                         if method == "GET":
                             return []
                         return False
@@ -230,24 +234,53 @@ class DaikinApi:
                         self._last_patch_call = datetime.now()
                         return True
 
+                    # 401 mid-request: token was accepted, but the cloud still
+                    # rejects the call. Not a breaker failure (auth issue, not
+                    # a cloud outage).
+                    if resp.status == HTTPStatus.UNAUTHORIZED:
+                        raise DaikinAuthError(f"Daikin cloud rejected bearer token for {method} {resp.url}")
+
+                    # 5xx: cloud outage → breaker should trip.
+                    if resp.status >= HTTPStatus.INTERNAL_SERVER_ERROR:
+                        await self._breaker.record_failure()
+                        raise DaikinApiError(
+                            f"Daikin cloud returned server error {resp.status}",
+                            status=resp.status,
+                        )
+
+                    # All other status codes (3xx, unexpected 4xx): intentionally
+                    # return-compatible with the previous behavior (empty list /
+                    # False). No exception — otherwise the integration would hit
+                    # ``UpdateFailed`` on every network hiccup. Log a warning
+                    # instead.
+                    _LOGGER.warning(
+                        "Daikin cloud returned unexpected status %s for %s %s",
+                        resp.status,
+                        method,
+                        resource_url,
+                    )
+
             except ClientError as e:
                 _LOGGER.error("REQUEST TYPE %s FAILED: %s", method, e)
                 await self._breaker.record_failure()
                 raise DaikinApiError(f"Daikin cloud request failed: {e}") from e
 
+        # Unreachable: every status-code branch ends with either ``return`` or
+        # ``raise``. This path only exists so mypy sees a definitive return.
         if method == "GET":
             return []
         return False
 
-    async def getCloudDeviceDetails(self) -> list[dict[str, Any]]:  # noqa: N802 - öffentlicher Name historisch
+    async def getCloudDeviceDetails(self) -> list[dict[str, Any]]:
         """Get pure Device Data from the Daikin cloud devices.
 
-        GETs sind idempotent und werden bei ``DaikinApiError`` (Transport-Fehler,
-        Circuit-Breaker offen, etc.) bis zu ``_RETRY_TRIES``-mal mit exponentiellem
-        Backoff wiederholt. Auth- und Rate-Limit-Fehler werden nicht wiederholt.
+        GETs are idempotent and are retried up to ``_RETRY_TRIES`` times with
+        exponential backoff on ``DaikinApiError`` (transport errors, open
+        circuit breaker, etc.). Auth and rate-limit errors are not retried.
         """
-        # Lokaler Import vermeidet Zirkel mit support.throttle, das RateLimits importiert.
-        from .support.retry import retry_with_backoff
+        # Local import avoids a circular dependency with support.throttle,
+        # which imports RateLimits.
+        from .support.retry import retry_with_backoff  # pylint: disable=import-outside-toplevel
 
         @retry_with_backoff(
             tries=_RETRY_TRIES,
@@ -260,5 +293,5 @@ class DaikinApi:
         result = await _do_get()
         if isinstance(result, list):
             return result
-        # GET sollte niemals ``True``/``False`` liefern — sicherheitshalber leer.
+        # GET should never yield ``True``/``False`` — fall back to empty.
         return []

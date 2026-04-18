@@ -1,4 +1,4 @@
-"""Eine Daikin-Onecta-Geräteinstanz, gefüttert aus dem Cloud-JSON."""
+"""A Daikin Onecta device instance, populated from the cloud JSON."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from .const import DOMAIN
 from .daikin_api import DaikinApi
 from .daikin_api import RequestResult
+from .exceptions import DaikinApiError
 
 __all__: Final = ("DaikinOnectaDevice",)
 
@@ -22,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 class DaikinOnectaDevice:
     """Class to represent and control one Daikin Onecta Device."""
 
-    def __init__(self, jsonData: dict[str, Any], apiInstance: DaikinApi) -> None:  # noqa: N803
+    def __init__(self, jsonData: dict[str, Any], apiInstance: DaikinApi) -> None:
         """Initialize a new Daikin Onecta Device."""
         self.api = apiInstance
         # get name from climateControl
@@ -97,7 +98,7 @@ class DaikinOnectaDevice:
         return info
 
     def merge_json(self, a: dict[str, Any], b: dict[str, Any], path: list[str] | None = None) -> dict[str, Any]:
-        """Helper to merge the json, prevents invalid reads when other threads are reading the daikin_data."""
+        """Merge ``b`` into ``a`` in place; safe against readers of ``daikin_data``."""
         if path is None:
             path = []
         for key in b:
@@ -110,12 +111,12 @@ class DaikinOnectaDevice:
                 a[key] = b[key]
         return a
 
-    def setJsonData(self, desc: dict[str, Any]) -> None:  # noqa: N802 - öffentlicher Name historisch
+    def setJsonData(self, desc: dict[str, Any]) -> None:
         """Set a device description and parse/traverse data structure."""
         self.merge_json(self.daikin_data, desc)
         _LOGGER.info("Device '%s' received new data from the Daikin cloud, isCloudConnectionUp '%s'", self.name, self.available)
 
-    async def patch(self, id: str, embeddedId: str, dataPoint: str, dataPointPath: str, value: Any) -> RequestResult:  # noqa: A002,N803
+    async def patch(self, id: str, embeddedId: str, dataPoint: str, dataPointPath: str, value: Any) -> RequestResult:
         setPath = "/v1/gateway-devices/" + id + "/management-points/" + embeddedId + "/characteristics/" + dataPoint
         setBody: dict[str, Any] = {"value": value}
         if dataPointPath:
@@ -124,31 +125,46 @@ class DaikinOnectaDevice:
 
         _LOGGER.info("Path: %s , options: %s", setPath, setOptions)
 
-        res = await self.api.doBearerRequest("PATCH", setPath, setOptions)
+        # Write path: 5xx and unexpected 4xx surface here as DaikinApiError.
+        # For the platform these mean "write failed"; we catch, log, and return
+        # False so the entity keeps its current state.
+        try:
+            res = await self.api.doBearerRequest("PATCH", setPath, setOptions)
+        except DaikinApiError as err:
+            _LOGGER.warning("PATCH %s failed: %s", setPath, err)
+            return False
 
         _LOGGER.info("Result: %s", res)
 
         return res
 
-    async def post(self, id: str, embeddedId: str, dataPoint: str, value: Any) -> RequestResult:  # noqa: A002,N803
+    async def post(self, id: str, embeddedId: str, dataPoint: str, value: Any) -> RequestResult:
         setPath = "/v1/gateway-devices/" + id + "/management-points/" + embeddedId + "/" + dataPoint
         setOptions = json.dumps(value)
 
         _LOGGER.info("Path: %s , options: %s", setPath, setOptions)
 
-        res = await self.api.doBearerRequest("POST", setPath, setOptions)
+        try:
+            res = await self.api.doBearerRequest("POST", setPath, setOptions)
+        except DaikinApiError as err:
+            _LOGGER.warning("POST %s failed: %s", setPath, err)
+            return False
 
         _LOGGER.info("Result: %s", res)
 
         return res
 
-    async def put(self, id: str, embeddedId: str, dataPoint: str, value: Any) -> RequestResult:  # noqa: A002,N803
+    async def put(self, id: str, embeddedId: str, dataPoint: str, value: Any) -> RequestResult:
         setPath = "/v1/gateway-devices/" + id + "/management-points/" + embeddedId + "/" + dataPoint
         setOptions = json.dumps(value)
 
         _LOGGER.info("Path: %s , options: %s", setPath, setOptions)
 
-        res = await self.api.doBearerRequest("PUT", setPath, setOptions)
+        try:
+            res = await self.api.doBearerRequest("PUT", setPath, setOptions)
+        except DaikinApiError as err:
+            _LOGGER.warning("PUT %s failed: %s", setPath, err)
+            return False
 
         _LOGGER.info("Result: %s", res)
 

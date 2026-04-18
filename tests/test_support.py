@@ -1,4 +1,4 @@
-"""Tests für die Resilienz-Bausteine in ``support/``."""
+"""Tests for the resilience building blocks in ``support/``."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from custom_components.daikin_onecta.support import retry_with_backoff
 
 
 class TestRetryWithBackoff:
-    """Phase 6.6 — Retry-Verhalten."""
+    """Phase 6.6 — retry behavior."""
 
     async def test_success_first_try(self):
         calls = 0
@@ -96,12 +96,12 @@ class TestRetryWithBackoff:
 
 
 class TestCircuitBreaker:
-    """Phase 6.7 — Circuit-Breaker State-Transitions."""
+    """Phase 6.7 — circuit breaker state transitions."""
 
     async def test_starts_closed(self):
         cb = CircuitBreaker(failure_threshold=3, recovery_timeout=1)
         assert cb.state is CircuitState.CLOSED
-        await cb.before_call()  # darf nicht werfen
+        await cb.before_call()  # must not raise
 
     async def test_opens_after_threshold(self):
         cb = CircuitBreaker(failure_threshold=2, recovery_timeout=1)
@@ -120,7 +120,7 @@ class TestCircuitBreaker:
         cb = CircuitBreaker(failure_threshold=1, recovery_timeout=0.01)
         await cb.record_failure()
         assert cb.state is CircuitState.OPEN
-        # Zeit künstlich vorspulen
+        # Fast-forward time artificially
         import time as time_mod
 
         original = time_mod.monotonic
@@ -166,7 +166,7 @@ class TestCircuitBreaker:
         await cb.record_success()
         await cb.record_failure()
         await cb.record_failure()
-        # Counter wurde reseted, also noch CLOSED
+        # Counter was reset, so still CLOSED
         assert cb.state is CircuitState.CLOSED
 
     def test_invalid_threshold_raises(self):
@@ -179,7 +179,7 @@ class TestCircuitBreaker:
 
 
 class TestRateLimitThrottle:
-    """Throttle-Berechnungen anhand der Rate-Limit-Telemetrie."""
+    """Throttle calculations based on rate-limit telemetry."""
 
     def _limits(self, **overrides):
         base = {

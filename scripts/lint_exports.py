@@ -28,7 +28,7 @@ def _check(path: Path) -> list[str]:
         targets = [t for t in node.targets if isinstance(t, ast.Name) and t.id == "__all__"]
         if not targets:
             continue
-        if not isinstance(node.value, (ast.Tuple, ast.List)):
+        if not isinstance(node.value, ast.Tuple | ast.List):
             errors.append(f"{path}:{node.lineno}: __all__ must be a tuple or list literal")
             continue
         names: list[str] = []

@@ -33,13 +33,13 @@ classes of failure:
 Three building blocks live in the new package
 `custom_components/daikin_onecta/support/`:
 
-| Module | Responsibility | Wiring |
-|--------|----------------|--------|
-| `retry.py` | `@retry_with_backoff` decorator: tries/base_delay/max_delay/jitter, retries only the configured exception classes, **lets auth and rate-limit errors through unconditionally** | `getCloudDeviceDetails()` (idempotent, GET) |
-| `circuit_breaker.py` | `CircuitBreaker` with states `CLOSED → OPEN → HALF_OPEN`, asyncio-Lock guarded | `doBearerRequest()` pre-hook (`before_call`) and path hooks (`record_success`/`record_failure`) |
-| `throttle.py` | `RateLimitThrottle.recommended_delay(limits)` — returns recommended wait time from current telemetry | (prepared) coordinator can fold the wait time into the next `update_interval` |
+| Module               | Responsibility                                                                                                                                                                 | Wiring                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `retry.py`           | `@retry_with_backoff` decorator: tries/base_delay/max_delay/jitter, retries only the configured exception classes, **lets auth and rate-limit errors through unconditionally** | `getCloudDeviceDetails()` (idempotent, GET)                                                     |
+| `circuit_breaker.py` | `CircuitBreaker` with states `CLOSED → OPEN → HALF_OPEN`, asyncio-Lock guarded                                                                                                 | `doBearerRequest()` pre-hook (`before_call`) and path hooks (`record_success`/`record_failure`) |
+| `throttle.py`        | `RateLimitThrottle.recommended_delay(limits)` — returns recommended wait time from current telemetry                                                                           | (prepared) coordinator can fold the wait time into the next `update_interval`                   |
 
-**Important — what is *not* retried:**
+**Important — what is _not_ retried:**
 
 - `DaikinAuthError` → needs a reauth flow, not a retry.
 - `DaikinRateLimitError` → the cloud explicitly says "wait X seconds";

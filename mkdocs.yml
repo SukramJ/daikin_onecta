@@ -44,6 +44,7 @@ nav:
   - Architecture: architecture.md
   - Security: security.md
   - Versioning: versioning.md
+  - Docstring standards: docstring_standards.md
   - Release process: release.md
   - ADRs:
       - 0001 — Record architecture decisions: adr/0001-record-architecture-decisions.md

@@ -33,11 +33,11 @@ Open an issue using the bug-report template:
 Please include:
 
 - **Integration version** (`Settings → Devices & Services → Daikin
-  Onecta → ⋮ → System Information`, or `manifest.json::version`).
+Onecta → ⋮ → System Information`, or `manifest.json::version`).
 - **Home Assistant Core version**.
 - **Daikin device model**.
 - **Diagnostics download** (`Settings → Devices & Services → Daikin
-  Onecta → Download diagnostics`). The diagnostics output already
+Onecta → Download diagnostics`). The diagnostics output already
   redacts tokens.
 - **Debug log excerpt** for the time window where the problem occurs.
   Please scrub any access or refresh tokens — see the warning in

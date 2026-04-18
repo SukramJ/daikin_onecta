@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-yaml
@@ -15,20 +15,20 @@ repos:
       - id: debug-statements
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
+    rev: v0.15.11
     hooks:
       - id: ruff
         args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.2
     hooks:
       - id: codespell
         additional_dependencies: [tomli]
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.35.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         args: [-c=.yamllint]
@@ -41,7 +41,7 @@ repos:
         exclude: ^(tests/snapshots/|tests/fixtures/|blueprints/|custom_components/daikin_onecta/translations/)
 
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.10
+    rev: 1.9.4
     hooks:
       - id: bandit
         args: [-c, pyproject.toml]
@@ -49,7 +49,7 @@ repos:
         files: ^custom_components/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
+    rev: v1.20.1
     hooks:
       - id: mypy
         files: ^custom_components/daikin_onecta/
@@ -57,7 +57,18 @@ repos:
           - homeassistant>=2024.12.0b
           - pyjwt
           - aiohttp
-        args: [--config-file=pyproject.toml]
+        args: [--config-file=pyproject.toml, --python-version=3.14]
+
+  - repo: https://github.com/pylint-dev/pylint
+    rev: v4.0.5
+    hooks:
+      - id: pylint
+        files: ^custom_components/daikin_onecta/.*\.py$
+        args: [--rcfile=pyproject.toml]
+        additional_dependencies:
+          - homeassistant>=2024.12.0b
+          - pyjwt
+          - aiohttp
 
   - repo: local
     hooks:

@@ -80,10 +80,12 @@ class FlowHandler(
     config_entry_oauth2_flow.AbstractOAuth2FlowHandler,
     domain=DOMAIN,
 ):
-    """Handle a config flow."""
+    """Handle a config flow.
 
-    """See https://developers.home-assistant.io/docs/core/platform/application_credentials/ """
-    """ https://developer.cloud.daikineurope.com/docs/b0dffcaa-7b51-428a-bdff-a7c8a64195c0/getting_started """
+    See https://developers.home-assistant.io/docs/core/platform/application_credentials/
+    and https://developer.cloud.daikineurope.com/docs/b0dffcaa-7b51-428a-bdff-a7c8a64195c0/getting_started.
+    """
+
     VERSION = 1
     MINOR_VERSION = 2
     DOMAIN = DOMAIN

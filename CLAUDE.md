@@ -16,10 +16,10 @@ pytest tests/test_init.py::<test_name>     # single test
 pytest -n auto --timeout=9 tests           # how CI runs it (.github/workflows/tests.yaml)
 ```
 
-Linting / formatting is driven by pre-commit (ruff + ruff-format + `reorder-python-imports`):
+Linting / formatting is driven by prek (a drop-in Rust rewrite of pre-commit; reads the same `.pre-commit-config.yaml`). Hooks: ruff + ruff-format + `reorder-python-imports` + codespell + yamllint + prettier + bandit + mypy + pylint + custom `lint-all-exports` / `check-i18n`:
 
 ```bash
-pre-commit run --all-files
+prek run --all-files          # or: pre-commit run --all-files
 ```
 
 `pyproject.toml` is intentionally near-empty — tool config lives in `setup.cfg` (flake8, isort, pytest, coverage). Note `setup.cfg` declares `max-line-length = 88` and `force_single_line = true` for imports.
