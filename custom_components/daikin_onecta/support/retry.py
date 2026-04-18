@@ -51,7 +51,9 @@ def retry_with_backoff(
             for attempt in range(tries):
                 try:
                     return await func(*args, **kwargs)
-                except DaikinAuthError, DaikinRateLimitError:
+                except DaikinAuthError:
+                    raise
+                except DaikinRateLimitError:
                     raise
                 except retry_on as exc:
                     last_exc = exc
