@@ -65,8 +65,7 @@ breaking tests and HACS updates within a single release phase.
 - **Positive:** throttle and schema validation (phase 5.5) get a
   meaningful attachment point in the model.
 - **Risk (🔴):** the largest planned refactor in the repo. Therefore
-  start only after phase 8 (solid test coverage) — see the ROADMAP
-  ordering.
+  start only after solid test coverage is in place.
 - **Risk:** HA exposes various lifecycle hooks on the entity
   (`available`, `_handle_coordinator_update`) — these need clean hooks
   in the model, otherwise values will diverge.

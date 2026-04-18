@@ -140,9 +140,19 @@ class DaikinSwitch(CoordinatorEntity[OnectaDataUpdateCoordinator], ToggleEntity)
     def available(self) -> bool:
         return self._device.available
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to model-level updates for our DataPoint and availability."""
+        await super().async_added_to_hass()
+        self.async_on_remove(self._device.add_data_point_listener(self._embedded_id, self._value, self._handle_model_update))
+        self.async_on_remove(self._device.add_listener(self._handle_availability_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
+        self.async_write_ha_state()
+
+    @callback
+    def _handle_availability_update(self) -> None:
         self.async_write_ha_state()
 
     @property
@@ -152,14 +162,11 @@ class DaikinSwitch(CoordinatorEntity[OnectaDataUpdateCoordinator], ToggleEntity)
     def sensor_value(self) -> str:
         """Return the state of the switch."""
         result = ""
-        managementPoints = self._device.daikin_data.get("managementPoints", [])
-        for management_point in managementPoints:
-            if self._embedded_id == management_point["embeddedId"]:
-                management_point_type = management_point["managementPointType"]
-                if self._management_point_type == management_point_type:
-                    cd = management_point.get(self._value)
-                    if cd is not None:
-                        result = cd.get("value")
+        mp = self._device.find_management_point(self._embedded_id)
+        if mp is not None and mp.management_point_type == self._management_point_type:
+            cd = mp.raw.get(self._value)
+            if cd is not None:
+                result = cd.get("value")
         _LOGGER.debug("Device '%s' switch '%s' value '%s'", self._device.name, self._value, result)
         return result
 

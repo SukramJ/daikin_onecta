@@ -8,8 +8,8 @@ Accepted
 
 ## Context
 
-We are starting a multi-phase refactor (see [`ROADMAP.md`](../../ROADMAP.md))
-with the goal of bringing daikin_onecta up to the engineering level of
+We are starting a multi-phase refactor with the goal of bringing
+daikin_onecta up to the engineering level of
 [`aiohomematic`](https://github.com/SukramJ/aiohomematic). The planned steps
 cover tooling, test expansion, domain-model extraction, and resilience
 patterns. Such decisions must remain traceable so that future contributors —
@@ -32,5 +32,5 @@ API.
 - The status of older ADRs is updated to `Superseded by ADR NNNN` rather than
   being deleted.
 - ADRs are part of code review: no structural change without an ADR.
-- ROADMAP phases 5, 6, 7, and 10 will produce ADRs (exception hierarchy,
-  retry/circuit-breaker strategy, domain model, documentation format).
+- The upcoming refactors (exception hierarchy, retry/circuit-breaker
+  strategy, domain model, documentation format) will each produce an ADR.

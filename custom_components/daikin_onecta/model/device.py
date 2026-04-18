@@ -8,8 +8,10 @@ live here; they move to ``management_point.py`` in step 7.4.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import logging
+from collections.abc import Callable
 from collections.abc import Iterator
 from typing import Any
 from typing import Final
@@ -25,9 +27,17 @@ from .data_point import DataPoint
 from .management_point import ManagementPoint
 from .management_point import management_point_from_json
 
-__all__: Final = ("DaikinOnectaDevice",)
+__all__: Final = ("DaikinOnectaDevice", "DataPointKey", "Listener")
 
 _LOGGER = logging.getLogger(__name__)
+
+# Listener callable — invoked with no args; subscribers capture whatever
+# state they need via closure. Async/sync both acceptable at the call
+# site since we only call synchronously (HA entities use @callback).
+Listener = Callable[[], None]
+
+# Identifies a single DataPoint within a device: (embedded_id, field name).
+DataPointKey = tuple[str, str]
 
 
 class DaikinOnectaDevice:
@@ -47,6 +57,12 @@ class DaikinOnectaDevice:
                 name = management_point["name"]["value"]
                 if name:
                     self.name = name
+
+        # Listener registry — populated by platforms in async_added_to_hass.
+        # Cleared listeners are not an error, so removal uses contextlib.suppress.
+        self._device_listeners: list[Listener] = []
+        self._mp_listeners: dict[str, list[Listener]] = {}
+        self._dp_listeners: dict[DataPointKey, list[Listener]] = {}
 
         _LOGGER.info("Initialized Daikin Onecta Device '%s' (id %s)", self.name, self.id)
 
@@ -122,9 +138,107 @@ class DaikinOnectaDevice:
         return a
 
     def setJsonData(self, desc: dict[str, Any]) -> None:
-        """Set a device description and parse/traverse data structure."""
+        """Merge a device description and fire listeners for changed fields.
+
+        The method takes a value-level snapshot before and after the merge
+        and emits listeners only for DataPoints whose ``value`` actually
+        changed. Device-level listeners also fire when ``available``
+        toggles (``isCloudConnectionUp`` lives outside the management
+        points, so the value-snapshot alone would not catch it).
+        """
+        before_values = self._snapshot_data_point_values()
+        before_available = self.available
+
         self.merge_json(self.daikin_data, desc)
-        _LOGGER.info("Device '%s' received new data from the Daikin cloud, isCloudConnectionUp '%s'", self.name, self.available)
+
+        after_values = self._snapshot_data_point_values()
+        after_available = self.available
+
+        changed_keys: set[DataPointKey] = set()
+        for key in before_values.keys() | after_values.keys():
+            if before_values.get(key) != after_values.get(key):
+                changed_keys.add(key)
+
+        _LOGGER.info(
+            "Device '%s' received new data from the Daikin cloud, isCloudConnectionUp '%s', %d data point(s) changed",
+            self.name,
+            after_available,
+            len(changed_keys),
+        )
+
+        self._emit_changes(changed_keys, available_changed=before_available != after_available)
+
+    def _snapshot_data_point_values(self) -> dict[DataPointKey, Any]:
+        """Flatten current DataPoint values keyed by ``(embedded_id, name)``."""
+        snapshot: dict[DataPointKey, Any] = {}
+        for mp in self.iter_management_points():
+            if mp.embedded_id is None:
+                continue
+            for dp in mp.iter_data_points():
+                snapshot[(mp.embedded_id, dp.name)] = dp.value
+        return snapshot
+
+    def _emit_changes(self, changed_keys: set[DataPointKey], *, available_changed: bool) -> None:
+        """Dispatch listeners for the given changed DataPoints.
+
+        Called from ``setJsonData``. Listeners run synchronously in the
+        registration order; exceptions propagate so entity bugs surface
+        loudly rather than silently corrupting state.
+        """
+        changed_mps: set[str] = {eid for eid, _ in changed_keys}
+
+        for key in changed_keys:
+            for callback in list(self._dp_listeners.get(key, ())):
+                callback()
+
+        for embedded_id in changed_mps:
+            for callback in list(self._mp_listeners.get(embedded_id, ())):
+                callback()
+
+        if changed_keys or available_changed:
+            for callback in list(self._device_listeners):
+                callback()
+
+    def add_listener(self, callback: Listener) -> Callable[[], None]:
+        """Register a device-wide listener; returns an unsubscribe callable.
+
+        Fires once per ``setJsonData`` call whenever *any* DataPoint
+        changed or ``available`` toggled.
+        """
+        self._device_listeners.append(callback)
+
+        def _unsubscribe() -> None:
+            with contextlib.suppress(ValueError):
+                self._device_listeners.remove(callback)
+
+        return _unsubscribe
+
+    def add_management_point_listener(self, embedded_id: str, callback: Listener) -> Callable[[], None]:
+        """Register a listener scoped to one management point."""
+        self._mp_listeners.setdefault(embedded_id, []).append(callback)
+
+        def _unsubscribe() -> None:
+            listeners = self._mp_listeners.get(embedded_id)
+            if listeners is None:
+                return
+            with contextlib.suppress(ValueError):
+                listeners.remove(callback)
+
+        return _unsubscribe
+
+    def add_data_point_listener(self, embedded_id: str, name: str, callback: Listener) -> Callable[[], None]:
+        """Register a listener scoped to one DataPoint (embedded_id + field name)."""
+        key: DataPointKey = (embedded_id, name)
+        self._dp_listeners.setdefault(key, []).append(callback)
+
+        def _unsubscribe() -> None:
+            listeners = self._dp_listeners.get(key)
+            if listeners is None:
+                return
+            with contextlib.suppress(ValueError):
+                listeners.remove(callback)
+
+        return _unsubscribe
 
     def iter_management_points(self) -> Iterator[ManagementPoint]:
         """Yield each ``managementPoints[*]`` as a typed wrapper.

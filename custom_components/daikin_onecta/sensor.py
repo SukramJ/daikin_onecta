@@ -240,9 +240,19 @@ class DaikinEnergySensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorE
     def available(self) -> bool:
         return self._device.available
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to the ``consumptionData`` DataPoint and availability."""
+        await super().async_added_to_hass()
+        self.async_on_remove(self._device.add_data_point_listener(self._embedded_id, "consumptionData", self._handle_model_update))
+        self.async_on_remove(self._device.add_listener(self._handle_availability_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
+        self.async_write_ha_state()
+
+    @callback
+    def _handle_availability_update(self) -> None:
         self.async_write_ha_state()
 
     def sensor_value(self) -> float | None:
@@ -339,9 +349,23 @@ class DaikinValueSensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorEn
     def available(self) -> bool:
         return self._device.available
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to the DataPoint this sensor reflects and to availability."""
+        await super().async_added_to_hass()
+        # When a sub_type is set the sensor reads through the sub_type's
+        # value wrapper, so the top-level DataPoint key is the sub_type
+        # itself — that's what the diff tracks.
+        top_level_key = self._sub_type if self._sub_type is not None else self._value
+        self.async_on_remove(self._device.add_data_point_listener(self._embedded_id, top_level_key, self._handle_model_update))
+        self.async_on_remove(self._device.add_listener(self._handle_availability_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
+        self.async_write_ha_state()
+
+    @callback
+    def _handle_availability_update(self) -> None:
         self.async_write_ha_state()
 
     def sensor_value(self) -> Any:
@@ -403,8 +427,19 @@ class DaikinLimitSensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorEn
     def update_state(self) -> None:
         self._attr_native_value = self.sensor_value()
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to device events.
+
+        Rate limits change on every cloud request, but this sensor is
+        refreshed through the device listener rather than the coordinator
+        — acceptable because the cloud response that populated the rate
+        limits also carried DataPoint changes.
+        """
+        await super().async_added_to_hass()
+        self.async_on_remove(self._device.add_listener(self._handle_model_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.update_state()
         self.async_write_ha_state()
 

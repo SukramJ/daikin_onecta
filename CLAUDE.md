@@ -8,10 +8,10 @@ Home Assistant custom integration (`domain: daikin_onecta`) for Daikin devices v
 
 ## Common commands
 
-Tests (Python 3.13, requires `pip install -r requirements_test.txt`):
+Tests (Python 3.13 or 3.14 — CI matrix covers both; requires `pip install -r requirements_test.txt`):
 
 ```bash
-pytest tests                               # full suite (config in setup.cfg uses --cov)
+pytest tests                               # full suite (coverage via pyproject.toml)
 pytest tests/test_init.py::<test_name>     # single test
 pytest -n auto --timeout=9 tests           # how CI runs it (.github/workflows/tests.yaml)
 ```
@@ -22,11 +22,33 @@ Linting / formatting is driven by prek (a drop-in Rust rewrite of pre-commit; re
 prek run --all-files          # or: pre-commit run --all-files
 ```
 
-`pyproject.toml` is intentionally near-empty — tool config lives in `setup.cfg` (flake8, isort, pytest, coverage). Note `setup.cfg` declares `max-line-length = 88` and `force_single_line = true` for imports.
+All tool config lives in `pyproject.toml` (`[tool.ruff]`, `[tool.mypy]`, `[tool.pylint]`, `[tool.bandit]`, `[tool.coverage]`, `[tool.pytest.ini_options]`, `[tool.codespell]`). `setup.cfg` was removed in phase 1. `mypy --strict --python-version 3.14` is clean; `coverage fail_under = 80` (current: ~94 %).
 
 ## Architecture
 
-The integration is a thin Home Assistant wrapper around the Daikin Onecta REST API. The cloud returns one large JSON document per account containing all devices and their `managementPoints`; entities are derived by walking that structure.
+The integration is a thin Home Assistant wrapper around the Daikin Onecta REST API. The cloud returns one large JSON document per account containing all devices and their `managementPoints`; typed domain objects are derived from that structure.
+
+**Package layout (ADR 0003)**
+
+```
+custom_components/daikin_onecta/
+├── client/       # transport: HTTP, OAuth, retry, circuit breaker
+│   └── api.py    # DaikinApi
+├── model/        # domain: typed wrappers around cloud JSON
+│   ├── device.py             # DaikinOnectaDevice
+│   ├── management_point.py   # ManagementPoint + per-type subclasses
+│   └── data_point.py         # DataPoint (value/settable/min/max/step)
+├── support/      # resilience primitives
+│   ├── retry.py              # @retry_with_backoff
+│   ├── circuit_breaker.py    # CircuitBreaker (CLOSED/OPEN/HALF_OPEN)
+│   └── throttle.py           # RateLimitThrottle
+├── daikin_api.py  # re-export shim → client.api (internal imports keep working)
+├── device.py      # re-export shim → model.device
+└── climate.py, sensor.py, water_heater.py, switch.py, select.py,
+    binary_sensor.py, button.py   # HA platforms
+```
+
+`daikin_api.py` and `device.py` are thin re-export shims; new code should import directly from `client/` and `model/`.
 
 **Setup flow (`__init__.py`)**
 
@@ -34,21 +56,28 @@ The integration is a thin Home Assistant wrapper around the Daikin Onecta REST A
 2. `OnectaDataUpdateCoordinator.async_config_entry_first_refresh()` runs the first poll; only then are the seven platforms forwarded: climate, sensor, water_heater, switch, select, binary_sensor, button.
 3. `async_migrate_entry` handles config-entry schema migrations (e.g. v1.1→v1.2 decodes the JWT `sub` to set `unique_id`).
 
-**API layer (`daikin_api.py`)**
+**Transport layer (`client/api.py`)**
 
 - `DaikinApi` owns an `asyncio.Lock` (`_cloud_lock`) that serializes every HTTP call to Daikin. This exists because the cloud returns stale data when a GET races a recent PATCH.
 - `_last_patch_call` records the most recent write; the coordinator skips GETs for `scan_ignore` seconds (default 30) after a PATCH for the same reason.
 - `rate_limits` is updated from response headers and consumed by both the coordinator (back-off) and the diagnostics/system_health platforms.
+- A `CircuitBreaker` (5 failures → OPEN → 60 s → HALF_OPEN) wraps `doBearerRequest`; `getCloudDeviceDetails` is additionally retried with exponential backoff + jitter. Exceptions map to `DaikinAuthError` / `DaikinRateLimitError` / `DaikinApiError` from `exceptions.py`.
 
 **Coordinator (`coordinator.py`)**
 
-`determine_update_interval` picks between two configurable intervals based on time of day (`high_scan_start`/`low_scan_start`, in minutes). When transitioning high→low the first poll is randomized to spread load across users. When `rate_limits["remaining_day"] == 0`, the interval is forced to `retry_after + 60s`.
+`determine_update_interval` picks between two configurable intervals based on time of day (`high_scan_start`/`low_scan_start`, in minutes). When transitioning high→low the first poll is randomized to spread load across users. When `rate_limits["remaining_day"] == 0`, the interval is forced to `retry_after + 60s`. Daikin exceptions are translated into `ConfigEntryAuthFailed` / `UpdateFailed` for HA.
 
-**Devices and entities (`device.py` + platform files)**
+**Domain model (`model/`)**
 
-`DaikinOnectaDevice` wraps a single device's JSON. Each platform (e.g. `climate.py`, `sensor.py`) iterates `daikin_api.json_data` → `managementPoints` and creates entities for the data points it understands. `const.py::VALUE_SENSOR_MAPPING` is the central registry mapping Daikin JSON field names to HA `device_class`/`state_class`/`unit`/`icon`/translation key — most new sensors are added by extending that dict plus the matching key in `translations/`.
+`DaikinOnectaDevice` wraps a single device's JSON and exposes two helpers that the platforms use instead of walking `daikin_data` directly:
 
-`climate.py` is the largest module (~850 lines) and handles the variety of Daikin units (split AC, Altherma heat pumps, etc.); `water_heater.py` covers domestic-hot-water tanks. New device behaviors usually mean handling another `managementPointType` or operationMode value here rather than adding a new platform.
+- `device.iter_management_points()` → `Iterator[ManagementPoint]` — yields a typed wrapper per management-point, dispatched by `managementPointType` (`ClimateControlPoint`, `DomesticHotWaterTankPoint`, `GatewayPoint`, `IndoorUnitPoint`, `OutdoorUnitPoint`, `UserInterfacePoint`, …; unknown types fall back to the base class).
+- `device.find_management_point(embedded_id)` → `ManagementPoint | None` — lookup by embedded id.
+- `device.iter_data_points()` → `Iterator[DataPoint]` — flattens every `{value, settable, minValue, maxValue, stepValue}` field across all management points into frozen `DataPoint` records.
+
+Each `ManagementPoint` keeps its raw dict on `.raw` for partially migrated callers. `const.py::VALUE_SENSOR_MAPPING` remains the central registry mapping Daikin JSON field names to HA `device_class` / `state_class` / `unit` / `icon` / translation key — most new sensors are added by extending that dict plus the matching key in `translations/`.
+
+`climate.py` is the largest platform (~850 lines) and handles the variety of Daikin units (split AC, Altherma heat pumps, etc.); `water_heater.py` covers domestic-hot-water tanks. New device behaviors usually mean handling another `managementPointType` or operationMode value here rather than adding a new platform.
 
 ## Tests
 

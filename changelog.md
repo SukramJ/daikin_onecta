@@ -13,10 +13,33 @@ authoritative record.
 
 ## [Unreleased]
 
+## [4.5.0] — 2026-04-18
+
+Large engineering release — no breaking changes to HA entities or
+config, but the internal architecture was substantially reworked.
+
 ### Added
 
-- **Resilience layer (`support/`)** — `@retry_with_backoff` decorator,
-  `CircuitBreaker` (CLOSED/OPEN/HALF_OPEN), `RateLimitThrottle` for
+- **Domain-model package** (`model/`) — typed wrappers around the cloud
+  JSON: `DaikinOnectaDevice`, `ManagementPoint` with per-type subclasses
+  (`ClimateControlPoint`, `DomesticHotWaterTankPoint`, `GatewayPoint`, …),
+  and a frozen `DataPoint` view over every `{value, settable, minValue,
+  maxValue, stepValue}` field. Platforms now use
+  `device.iter_management_points()` / `device.find_management_point()`
+  instead of walking raw `daikin_data["managementPoints"]`. See ADR
+  [`docs/adr/0003-domain-model-package-layout.md`](docs/adr/0003-domain-model-package-layout.md).
+- **Transport-layer split** (`client/`) — `DaikinApi` moved to
+  `client/api.py`; top-level `daikin_api.py` / `device.py` are thin
+  re-export shims so external imports keep working.
+- **Model-level event listeners** — `DaikinOnectaDevice` exposes
+  `add_listener`, `add_management_point_listener`, and
+  `add_data_point_listener`. `setJsonData()` diffs the payload and only
+  fires listeners for fields whose value actually changed; all seven
+  platforms moved from `CoordinatorEntity._handle_coordinator_update`
+  to scoped model subscriptions. See ADR
+  [`docs/adr/0006-model-event-listeners.md`](docs/adr/0006-model-event-listeners.md).
+- **Resilience layer** (`support/`) — `@retry_with_backoff` decorator,
+  `CircuitBreaker` (CLOSED / OPEN / HALF_OPEN), `RateLimitThrottle` for
   proactive pacing. Wired into `daikin_api.doBearerRequest` and
   `getCloudDeviceDetails`. See ADR
   [`docs/adr/0002-resilience-patterns.md`](docs/adr/0002-resilience-patterns.md).
@@ -27,32 +50,46 @@ authoritative record.
 - **Tooling baseline**: central `pyproject.toml` (ruff, mypy, pylint,
   bandit, coverage, pytest, codespell), prek hook suite, CI jobs for
   mypy / bandit / pylint / CodeQL / dependency review, `codecov.yml`
-  with component tracking. See ROADMAP phases 0–3.
-- **Test suite**: `test_support.py`, `test_daikin_api.py`,
-  `test_migrate.py` — coverage from 28 → 75 tests, line coverage at
-  94.68 %, pytest-xdist verified.
+  with component tracking.
+- **Test suite**: new `test_support.py`, `test_daikin_api.py`,
+  `test_migrate.py`, `test_device_listeners.py`,
+  `test_management_point.py`, `test_data_point.py`,
+  `test_fixture_contract.py` — 28 → 151 tests, line coverage
+  ≈ 94 %, verified under `pytest-xdist`.
 - **Documentation**: `SECURITY.md`, `CONTRIBUTING.md`, `AGENTS.md`,
   `SUPPORT.md`, `docs/architecture.md`, `docs/security.md`,
-  `docs/versioning.md`, ADRs 0001–0003, `mkdocs.yml`.
+  `docs/versioning.md`, `docs/release.md`, `mkdocs.yml`. ADRs 0001–0006
+  cover recording architecture decisions, resilience patterns, the
+  domain-model layout, cloud-lock / scan-ignore, the polling strategy,
+  and the new event-listener system.
 
 ### Changed
 
-- **Logging hygiene**: request/response bodies in `daikin_api.py` moved
-  from `INFO` to `DEBUG` to keep cloud identifiers out of default logs.
-- **Type safety**: 17 modules typed (`mypy --python-version 3.14` 0
-  errors, baseline was 49). `__all__` declared on every public module.
+- **Entity refresh model**: entities no longer rely on the coordinator
+  broadcast (`_handle_coordinator_update`). Each entity subscribes at
+  the granularity it needs — DataPoint for single-field sensors /
+  switches / selects, management-point for climate and water heater,
+  device-wide for the refresh button and the rate-limit sensor.
+  Identical polls now produce zero redundant `async_write_ha_state`
+  calls.
+- **Logging hygiene**: request / response bodies in the cloud client
+  moved from `INFO` to `DEBUG` to keep cloud identifiers out of default
+  logs.
+- **Type safety**: all modules typed; `mypy --strict
+  --python-version 3.14` reports 0 errors (baseline was 49). `__all__`
+  declared on every public module.
 - **Hook runner**: migrated from `pre-commit` to
   [`prek`](https://github.com/j178/prek), a drop-in Rust rewrite. The
-  `.pre-commit-config.yaml` is unchanged; CI uses `j178/prek-action@v2`.
-  `pre-commit` itself still works locally — both share the same config.
+  `.pre-commit-config.yaml` is unchanged; CI uses
+  `j178/prek-action@v2`; `pre-commit` itself still works locally.
 
 ### Security
 
 - Bandit baseline reviewed; the two low-severity false positives
-  (`OAUTH2_TOKEN` URL constant, `random.randint` jitter) are now
-  annotated with `# nosec` and a justification.
-- `.gitleaks.toml` added with allowlist for the documented test JWT and
-  fixture paths.
+  (`OAUTH2_TOKEN` URL constant, `random.randint` jitter) are annotated
+  with `# nosec` plus justification.
+- `.gitleaks.toml` added with an allowlist for the documented test JWT
+  and fixture paths.
 
 ## [4.4.10] — 2026-04-15
 

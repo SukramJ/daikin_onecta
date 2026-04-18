@@ -60,8 +60,13 @@ class DaikinRefreshButton(CoordinatorEntity[OnectaDataUpdateCoordinator], Button
     def available(self) -> bool:
         return self._device.available
 
+    async def async_added_to_hass(self) -> None:
+        """Subscribe to the device so availability changes repaint the button."""
+        await super().async_added_to_hass()
+        self.async_on_remove(self._device.add_listener(self._handle_model_update))
+
     @callback
-    def _handle_coordinator_update(self) -> None:
+    def _handle_model_update(self) -> None:
         self.async_write_ha_state()
 
     async def async_press(self) -> None:

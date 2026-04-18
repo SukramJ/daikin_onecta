@@ -9,7 +9,7 @@ wrapper pattern.
 This module provides a small class hierarchy that wraps a single raw
 management-point dict and exposes typed accessors for the common and
 per-type fields. Platforms will migrate from the raw JSON walks in steps
-7.6 – 7.8; for now the classes live alongside the existing code.
+7.6 - 7.8; for now the classes live alongside the existing code.
 
 The ``raw`` attribute is deliberately kept available so partially
 migrated callers can reach into unmapped fields without duplicating the

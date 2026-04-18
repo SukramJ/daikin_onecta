@@ -41,10 +41,9 @@ The ADR template is the same Michael-Nygard format used by
 ## Helpful starting points
 
 - Big picture: [`docs/architecture.md`](docs/architecture.md).
-- ROADMAP and progress: [`ROADMAP.md`](ROADMAP.md). The progress
-  dashboard at the bottom and the per-phase summaries are the canonical
-  status; the checkboxes in the per-phase tables are the day-to-day
-  tracking.
+- History of past refactors: [`changelog.md`](changelog.md) — the 4.5.0
+  entry lists the extracted `client/` and `model/` layers, the
+  resilience primitives, and the model event-listener rewrite.
 - Existing decisions: [`docs/adr/`](docs/adr/).
 - Test fixtures: `tests/fixtures/*.json` are real (scrubbed) Daikin
   cloud responses — reuse them rather than fabricating new mock data.
