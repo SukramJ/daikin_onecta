@@ -35,4 +35,4 @@ jobs:
       - name: Run prek on all files
         uses: j178/prek-action@v2
         with:
-          extra-args: --all-files --color=always
+          extra-args: --all-files
