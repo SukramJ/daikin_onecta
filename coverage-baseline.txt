@@ -1,0 +1,33 @@
+Baseline coverage report (Phase 0.1)
+Generated: 2026-04-17
+Tool: pytest --cov=custom_components.daikin_onecta
+Python: 3.13.13
+
+Module                                                       Stmts   Miss  Cover
+--------------------------------------------------------------------------------
+custom_components/daikin_onecta/__init__.py                     51     10    80%
+custom_components/daikin_onecta/application_credentials.py       6      0   100%
+custom_components/daikin_onecta/binary_sensor.py                80      0   100%
+custom_components/daikin_onecta/button.py                       41      0   100%
+custom_components/daikin_onecta/climate.py                     511     11    98%
+custom_components/daikin_onecta/config_flow.py                  62     16    74%
+custom_components/daikin_onecta/const.py                        31      0   100%
+custom_components/daikin_onecta/coordinator.py                  67      4    94%
+custom_components/daikin_onecta/daikin_api.py                   79      6    92%
+custom_components/daikin_onecta/device.py                      104      1    99%
+custom_components/daikin_onecta/diagnostics.py                  38      0   100%
+custom_components/daikin_onecta/select.py                      126      1    99%
+custom_components/daikin_onecta/sensor.py                      233      0   100%
+custom_components/daikin_onecta/switch.py                      114      2    98%
+custom_components/daikin_onecta/system_health.py                19      1    95%
+custom_components/daikin_onecta/water_heater.py                225      3    99%
+--------------------------------------------------------------------------------
+TOTAL                                                         1787     55    97%
+
+Notes:
+- Total: 97% line coverage. Already above the Phase-1 target of 80% and the
+  Phase-8 target of 85%.
+- Lowest-covered modules: config_flow (74%), __init__ (80%).
+- Snapshot tests report 2852 failed snapshots — these are pre-existing
+  syrupy diffs that need cleanup, not a regression introduced here.
+- Branch coverage is currently disabled (setup.cfg [coverage:run] branch=False).

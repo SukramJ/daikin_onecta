@@ -28,7 +28,7 @@ jobs:
           pip install --constraint=.github/workflows/constraints.txt pip
           pip install -r requirements_test_pre_commit.txt
       - name: Cache prek hooks
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cache/prek
           key: prek-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}

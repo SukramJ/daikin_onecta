@@ -52,7 +52,7 @@ jobs:
           cd custom_components/daikin_onecta
           zip -r "../../dist/daikin_onecta-${{ needs.validate.outputs.version }}.zip" .
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: "v${{ needs.validate.outputs.version }}"
           generate_release_notes: true
