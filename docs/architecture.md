@@ -2,8 +2,8 @@
 
 This document gives a one-page picture of how `daikin_onecta` is wired
 together. For day-to-day commands and conventions, see
-[`CONTRIBUTING.md`](../CONTRIBUTING.md). For the rationale behind
-specific decisions, see [`adr/`](adr/).
+[`CONTRIBUTING.md`](https://github.com/jwillemsen/daikin_onecta/blob/master/CONTRIBUTING.md).
+For the rationale behind specific decisions, see the ADRs listed below.
 
 ## Layer diagram
 

@@ -2,7 +2,7 @@
 
 This document records security-relevant defaults in `daikin_onecta` so
 they don't drift unnoticed. The user-facing reporting policy lives in
-[`SECURITY.md`](../SECURITY.md).
+[`SECURITY.md`](https://github.com/jwillemsen/daikin_onecta/blob/master/SECURITY.md).
 
 ## Transport / TLS
 
@@ -54,5 +54,5 @@ Two `# noqa: Sxxx # nosec Bxxx` markers exist with justifications:
 - `coordinator.py` random jitter (B311) — non-cryptographic, purely for
   load spreading across users.
 
-See [`bandit-baseline.txt`](../bandit-baseline.txt) for the complete
-review.
+See [`bandit-baseline.txt`](https://github.com/jwillemsen/daikin_onecta/blob/master/bandit-baseline.txt)
+for the complete review.

@@ -52,3 +52,4 @@ nav:
       - 0003 — Domain-model package layout: adr/0003-domain-model-package-layout.md
       - 0004 — Cloud lock and scan_ignore: adr/0004-cloud-lock-and-scan-ignore.md
       - 0005 — Polling strategy: adr/0005-polling-strategy.md
+      - 0006 — Model event listeners: adr/0006-model-event-listeners.md

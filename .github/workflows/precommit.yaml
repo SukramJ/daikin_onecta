@@ -35,4 +35,4 @@ jobs:
       - name: Run prek on all files
         uses: j178/prek-action@v2
         with:
-          extra_args: --all-files --show-diff-on-failure --color=always
+          extra-args: --all-files --color=always
