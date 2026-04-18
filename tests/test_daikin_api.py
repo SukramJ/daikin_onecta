@@ -14,7 +14,7 @@ from aiohttp import ClientError
 from aiohttp import ClientResponseError
 from homeassistant.exceptions import ConfigEntryAuthFailed
 
-from custom_components.daikin_onecta.daikin_api import DaikinApi
+from custom_components.daikin_onecta.client.api import DaikinApi
 from custom_components.daikin_onecta.exceptions import DaikinApiError
 from custom_components.daikin_onecta.exceptions import DaikinAuthError
 from custom_components.daikin_onecta.support import CircuitState
@@ -24,8 +24,8 @@ def _make_api(hass) -> DaikinApi:
     entry = MagicMock()
     impl = MagicMock()
     with (
-        patch("custom_components.daikin_onecta.daikin_api.config_entry_oauth2_flow.OAuth2Session"),
-        patch("custom_components.daikin_onecta.daikin_api.async_get_clientsession"),
+        patch("custom_components.daikin_onecta.client.api.config_entry_oauth2_flow.OAuth2Session"),
+        patch("custom_components.daikin_onecta.client.api.async_get_clientsession"),
     ):
         api = DaikinApi(hass, entry, impl)
     api.session = MagicMock()

@@ -42,8 +42,8 @@ async def async_setup_entry(
             "domesticHotWaterTank",
             "domesticHotWaterFlowThrough",
         }
-        management_points = device.daikin_data.get("managementPoints", [])
-        for management_point in management_points:
+        for mp in device.iter_management_points():
+            management_point = mp.raw
             management_point_type = management_point["managementPointType"]
             if management_point_type in supported_management_point_types:
                 async_add_entities([DaikinWaterTank(device, coordinator, management_point_type, management_point["embeddedId"])])
@@ -113,10 +113,9 @@ class DaikinWaterTank(CoordinatorEntity[OnectaDataUpdateCoordinator], WaterHeate
         # devices with a matching management point, so the search here cannot
         # return ``None``.
         hwd: dict[str, Any] | None = None
-        management_points = self._device.daikin_data.get("managementPoints", [])
-        for management_point in management_points:
-            if management_point["managementPointType"] == self._management_point_type:
-                hwd = management_point
+        for mp in self._device.iter_management_points():
+            if mp.management_point_type == self._management_point_type:
+                hwd = mp.raw
         return hwd
 
     @property

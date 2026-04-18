@@ -89,12 +89,12 @@ async def async_setup_entry(
         modes = []
         device_model = device.daikin_data["deviceModel"]
         supported_management_point_types = {"climateControl"}
-        managementPoints = device.daikin_data.get("managementPoints", [])
         embedded_id = ""
-        for management_point in managementPoints:
-            management_point_type = management_point["managementPointType"]
+        for mp in device.iter_management_points():
+            management_point = mp.raw
+            management_point_type = mp.management_point_type
             if management_point_type in supported_management_point_types:
-                embedded_id = management_point.get("embeddedId")
+                embedded_id = mp.embedded_id or ""
                 # Check if we have a temperatureControl
                 temperatureControl = management_point.get("temperatureControl")
                 if temperatureControl is not None:
@@ -174,12 +174,9 @@ class DaikinClimate(CoordinatorEntity[OnectaDataUpdateCoordinator], ClimateEntit
 
     def climate_control(self) -> dict[str, Any] | None:
         cc: dict[str, Any] | None = None
-        supported_management_point_types = {"climateControl"}
-        management_points = self._device.daikin_data.get("managementPoints", [])
-        for management_point in management_points:
-            management_point_type = management_point["managementPointType"]
-            if management_point_type in supported_management_point_types:
-                cc = management_point
+        for mp in self._device.iter_management_points():
+            if mp.management_point_type == "climateControl":
+                cc = mp.raw
         return cc
 
     def operation_mode(self) -> dict[str, Any] | None:
@@ -214,13 +211,10 @@ class DaikinClimate(CoordinatorEntity[OnectaDataUpdateCoordinator], ClimateEntit
 
     def sensory_data(self, setpoint: str) -> dict[str, Any] | None:
         sensoryData: dict[str, Any] | None = None
-        supported_management_point_types = {"climateControl"}
-        management_points = self._device.daikin_data.get("managementPoints", [])
-        for management_point in management_points:
-            management_point_type = management_point["managementPointType"]
-            if management_point_type in supported_management_point_types:
+        for mp in self._device.iter_management_points():
+            if mp.management_point_type == "climateControl":
                 # Check if we have a sensoryData
-                sensoryData = management_point.get("sensoryData")
+                sensoryData = mp.raw.get("sensoryData")
                 _LOGGER.info("Climate: Device sensoryData %s", sensoryData)
                 if sensoryData is not None:
                     value = sensoryData.get("value")

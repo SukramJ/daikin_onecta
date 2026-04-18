@@ -118,8 +118,8 @@ async def async_setup_entry(
     for dev_id, device in onecta_data.devices.items():
         # For each device we provide a remaining day sensor
         sensors.append(DaikinLimitSensor(hass, config_entry, device, coordinator, "remaining_day"))
-        management_points = device.daikin_data.get("managementPoints", [])
-        for management_point in management_points:
+        for mp in device.iter_management_points():
+            management_point = mp.raw
             management_point_type = management_point["managementPointType"]
             embedded_id = management_point["embeddedId"]
 
@@ -247,42 +247,43 @@ class DaikinEnergySensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorE
 
     def sensor_value(self) -> float | None:
         energy_value: float | None = None
-        for management_point in self._device.daikin_data["managementPoints"]:
-            if self._embedded_id == management_point["embeddedId"]:
-                management_point_type = management_point["managementPointType"]
-                cd = management_point.get("consumptionData")
-                if cd is not None:
-                    # Retrieve the available operationModes, we can only provide consumption data for
-                    # supported operation modes
-                    cdv = cd.get("value")
-                    if cdv is not None:
-                        cdve = cdv.get(self._sensor_type)
-                        if cdve is not None:
-                            for mode in cdve:
-                                # Only handle consumptionData for the operation mode supported by this sensor
-                                if mode == self._operation_mode:
-                                    period_data = cdve[mode].get(SENSOR_PERIODS_ARRAY[self._period])
-                                    if period_data is not None:
-                                        energy_values = [0 if v is None else v for v in period_data]
-                                        if self._period == SENSOR_PERIOD_WEEKLY:
-                                            start_index = 7
-                                            end_index = len(energy_values)
-                                        elif self._period == SENSOR_PERIOD_MONTHLY:
-                                            start_index = 11 + date.today().month
-                                            end_index = start_index + 1
-                                        else:
-                                            start_index = 12
-                                            end_index = len(energy_values)
-                                        energy_value = round(sum(energy_values[start_index:end_index]), 3)
-                                        _LOGGER.info(
-                                            "Device '%s' has energy value '%s' for '%s' mode %s %s period %s",
-                                            self._device.name,
-                                            energy_value,
-                                            self._sensor_type,
-                                            management_point_type,
-                                            mode,
-                                            self._period,
-                                        )
+        mp = self._device.find_management_point(self._embedded_id)
+        if mp is not None:
+            management_point = mp.raw
+            management_point_type = management_point["managementPointType"]
+            cd = management_point.get("consumptionData")
+            if cd is not None:
+                # Retrieve the available operationModes, we can only provide consumption data for
+                # supported operation modes
+                cdv = cd.get("value")
+                if cdv is not None:
+                    cdve = cdv.get(self._sensor_type)
+                    if cdve is not None:
+                        for mode in cdve:
+                            # Only handle consumptionData for the operation mode supported by this sensor
+                            if mode == self._operation_mode:
+                                period_data = cdve[mode].get(SENSOR_PERIODS_ARRAY[self._period])
+                                if period_data is not None:
+                                    energy_values = [0 if v is None else v for v in period_data]
+                                    if self._period == SENSOR_PERIOD_WEEKLY:
+                                        start_index = 7
+                                        end_index = len(energy_values)
+                                    elif self._period == SENSOR_PERIOD_MONTHLY:
+                                        start_index = 11 + date.today().month
+                                        end_index = start_index + 1
+                                    else:
+                                        start_index = 12
+                                        end_index = len(energy_values)
+                                    energy_value = round(sum(energy_values[start_index:end_index]), 3)
+                                    _LOGGER.info(
+                                        "Device '%s' has energy value '%s' for '%s' mode %s %s period %s",
+                                        self._device.name,
+                                        energy_value,
+                                        self._sensor_type,
+                                        management_point_type,
+                                        mode,
+                                        self._period,
+                                    )
 
         return energy_value
 
@@ -345,18 +346,18 @@ class DaikinValueSensor(CoordinatorEntity[OnectaDataUpdateCoordinator], SensorEn
 
     def sensor_value(self) -> Any:
         res: Any = None
-        managementPoints = self._device.daikin_data.get("managementPoints", [])
-        for management_point in managementPoints:
-            if self._embedded_id == management_point["embeddedId"]:
-                if self._sub_type is not None:
-                    sub_type_data = management_point.get(self._sub_type)
-                    if sub_type_data is not None:
-                        management_point_v = sub_type_data.get("value")
-                        if management_point_v is not None:
-                            management_point = management_point_v
-                cd = management_point.get(self._value)
-                if cd is not None:
-                    res = cd.get("value")
+        mp = self._device.find_management_point(self._embedded_id)
+        if mp is not None:
+            management_point: Any = mp.raw
+            if self._sub_type is not None:
+                sub_type_data = management_point.get(self._sub_type)
+                if sub_type_data is not None:
+                    management_point_v = sub_type_data.get("value")
+                    if management_point_v is not None:
+                        management_point = management_point_v
+            cd = management_point.get(self._value)
+            if cd is not None:
+                res = cd.get("value")
         _LOGGER.debug("Device '%s' sensor '%s' value '%s'", self._device.name, self._value, res)
         return res
 

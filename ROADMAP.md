@@ -139,15 +139,15 @@ Goal: bring `daikin_onecta` up to the engineering level of [`aiohomematic`](http
 | #    | Task                                                                                                                   | Effort | Risk | Status |
 | ---- | ---------------------------------------------------------------------------------------------------------------------- | ------ | ---- | ------ |
 | 7.1  | Design package layout: `client/`, `model/`, `support/`, `platforms/` (write ADR)                                       | M      | 🟡   | [x]    |
-| 7.2  | `client/api.py`: pure cloud API (HTTP, OAuth, retry, circuit breaker), no HA knowledge                                 | L      | 🔴   | [ ]    |
-| 7.3  | `model/device.py`: `DaikinDevice` (typed, no JSON walks in entities)                                                   | L      | 🔴   | [ ]    |
-| 7.4  | `model/management_point.py`: typed ManagementPoint classes per type (climateControl, domesticHotWaterTank, gateway, …) | L      | 🔴   | [ ]    |
-| 7.5  | `model/data_point.py`: unified interface for value/min/max/stepValue (analogous to aiohomematic DataPoint)             | L      | 🔴   | [ ]    |
-| 7.6  | Refactor `climate.py`: HA glue only, logic in the model                                                                | L      | 🔴   | [ ]    |
-| 7.7  | Refactor `water_heater.py`: HA glue only                                                                               | M      | 🔴   | [ ]    |
-| 7.8  | `sensor.py`: iterate via `model.iter_data_points()` instead of JSON walks                                              | M      | 🔴   | [ ]    |
-| 7.9  | Event/callback system for model updates instead of direct `setJsonData()` pushes                                       | L      | 🔴   | [ ]    |
-| 7.10 | Optional: `store/` for caching the last successful cloud snapshots (resilience during cloud outages)                   | L      | 🟡   | [ ]    |
+| 7.2  | `client/api.py`: pure cloud API (HTTP, OAuth, retry, circuit breaker), no HA knowledge                                 | L      | 🔴   | [x]    |
+| 7.3  | `model/device.py`: `DaikinDevice` (typed, no JSON walks in entities)                                                   | L      | 🔴   | [x]    |
+| 7.4  | `model/management_point.py`: typed ManagementPoint classes per type (climateControl, domesticHotWaterTank, gateway, …) | L      | 🔴   | [x]    |
+| 7.5  | `model/data_point.py`: unified interface for value/min/max/stepValue (analogous to aiohomematic DataPoint)             | L      | 🔴   | [x]    |
+| 7.6  | Refactor `climate.py`: HA glue only, logic in the model                                                                | L      | 🔴   | [x]    |
+| 7.7  | Refactor `water_heater.py`: HA glue only                                                                               | M      | 🔴   | [x]    |
+| 7.8  | `sensor.py`: iterate via `model.iter_data_points()` instead of JSON walks                                              | M      | 🔴   | [x]    |
+| 7.9  | Event/callback system for model updates instead of direct `setJsonData()` pushes                                       | L      | 🔴   | [-]    |
+| 7.10 | Optional: `store/` for caching the last successful cloud snapshots (resilience during cloud outages)                   | L      | 🟡   | [-]    |
 
 ---
 
@@ -234,16 +234,16 @@ Goal: bring `daikin_onecta` up to the engineering level of [`aiohomematic`](http
 | 4         | Type safety                | 10 / 10                | 🟩       |
 | 5         | Exceptions & validation    | 6 / 6                  | 🟩       |
 | 6         | Robustness (retry/breaker) | 7 / 7                  | 🟩       |
-| 7         | Domain model               | 1 / 10 (ADR only)      | 🟨       |
+| 7         | Domain model               | 8 / 10 (7.9/7.10 def.) | 🟩       |
 | 8         | Test suite                 | 12 / 12 (8.2 deferred) | 🟩       |
 | 9         | Security                   | 6 / 7 (9.5 deferred)   | 🟩       |
 | 10        | Documentation              | 9 / 10 (10.9 open)     | 🟨       |
 | 11        | Release discipline         | 5 / 5                  | 🟩       |
-| **Total** |                            | **91 / 102**           | **89 %** |
+| **Total** |                            | **98 / 102**           | **96 %** |
 
 **Status symbols:** ⬜ not started · 🟨 in progress · 🟩 done · `[-]` deferred / out of scope
 
-**Last update:** 2026-04-18 — phases 0–6 + 8 + 11 done, 9 effectively done (one deferred), 10 substantial; phase 7 implementation still pending. Phase 2.6 closed: pylint rated 10.00/10, hook enabled via upstream `pylint-dev/pylint` repo with HA runtime `additional_dependencies`; HA-framework warnings (unused-argument, abstract-method, attribute-defined-outside-init, too-many-nested-blocks) moved into the pylint disable list with justification; real issues fixed in code (3 pointless-string-statements removed, `type` → `consumption_type` in sensor.py, `swing_mode` → `swing_horizontal_mode` in climate.py, justified inline disables for 2 protected-access and 2 import-outside-toplevel sites).
+**Last update:** 2026-04-18 — phases 0–8 + 11 done (7.9/7.10 deferred), 9 effectively done (9.5 deferred), 10 substantial (10.9 still open). Phase 7 completed: `client/api.py` + `model/{device,management_point,data_point}.py` are the canonical homes; old `daikin_api.py`/`device.py` are re-export shims per ADR 0003. Platforms `climate.py`, `water_heater.py`, `sensor.py` migrated off raw `daikin_data["managementPoints"]` walks and use `device.iter_management_points()` / `device.find_management_point(embedded_id)` via the typed `ManagementPoint` wrappers. 7.9 (event/callback system instead of `setJsonData()` pushes) deferred — it replaces the established `_handle_coordinator_update` pattern and is an architectural switch best scoped into its own phase. 7.10 (local snapshot cache for cloud outages) deferred — ROADMAP already marks it "Optional", and the out-of-scope section explicitly rejects an `aiohomematic_storage` equivalent absent concrete resilience requirements. 141 tests green, 19 prek hooks green.
 
 ### Phase 0–3 summary
 
